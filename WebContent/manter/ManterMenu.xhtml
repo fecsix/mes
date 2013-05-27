@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Menu" rendered="#{empty menuBean.menu.id}" />
+				<h:outputText value="Editar menu"
+					rendered="#{not empty menuBean.menu.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Menu</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty menuBean.menu.id}" />
+				<p:inputText id="id" value="#{menuBean.menu.id}" readonly="true"
+					rendered="#{not empty menuBean.menu.id}" />
+				<h:inputHidden value="#{menuBean.menu.id}" />
+
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{menuBean.menu.nome}" />
+
+				<p:outputLabel value="URL:" for="URL" />
+				<p:inputText id="URL" value="#{menuBean.menu.URL}" />
+
+				<p:outputLabel value="Ícone:" for="icone" />
+				<h:selectOneMenu id="icone" value="#{menuBean.menu.icone}">
+					<f:selectItems value="#{comumBean.icone}" var="ic"
+						itemLabel="#{ic}" itemValue="#{ic}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Nível:" for="nivel" />
+				<p:inputText id="nivel" value="#{menuBean.menu.nivel}" />
+
+				<p:outputLabel value="Posição:" for="posicao" />
+				<p:inputText id="posicao" value="#{menuBean.menu.posicao}" />
+
+				<p:outputLabel value="Ativo:" for="ativo" />
+				<h:selectOneMenu id="ativo" value="#{menuBean.menu.ativo}">
+					<f:selectItems value="#{comumBean.simNao}" var="sn"
+						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Menu pai:" for="menuPai" />
+				<h:selectOneMenu id="menuPai" value="#{menuBean.menu.menuPai}">
+					<f:selectItem itemLabel="::Nenhum::" itemValue="" />
+					<f:selectItems value="#{menuBean.menus}" var="menu"
+						itemValue="#{menu}" itemLabel="#{menu.nome} (#{menu.id})" />
+				</h:selectOneMenu>
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar" action="#{menuBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarMenu?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Nova Tarefa"
+					rendered="#{empty tarefaBean.tarefa.id}" />
+				<h:outputText value="Editar Tarefa"
+					rendered="#{not empty tarefaBean.tarefa.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados da Tarefa</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty tarefaBean.tarefa.id}" />
+				<p:inputText id="id" value="#{tarefaBean.tarefa.id}" readonly="true"
+					rendered="#{not empty tarefaBean.tarefa.id}" />
+				<h:inputHidden value="#{tarefaBean.tarefa.id}" />
+
+				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:inputText id="descricao" value="#{tarefaBean.tarefa.descricao}" />
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar" action="#{tarefaBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarTarefa?faces-redirect=true" />
+				</h:panelGrid>
+
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

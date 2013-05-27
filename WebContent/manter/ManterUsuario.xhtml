@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Usuário"
+					rendered="#{empty usuarioBean.usuario.id}" />
+				<h:outputText value="Editar Usuário"
+					rendered="#{not empty usuarioBean.usuario.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Usuário</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty usuarioBean.usuario.id}" />
+				<p:inputText id="id" value="#{usuarioBean.usuario.id}"
+					readonly="true" rendered="#{not empty usuarioBean.usuario.id}" />
+				<h:inputHidden value="#{usuarioBean.usuario.id}" />
+
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{usuarioBean.usuario.nome}" />
+
+				<p:outputLabel value="Login:" for="login" />
+				<p:inputText id="login" value="#{usuarioBean.usuario.login}" />
+
+				<p:outputLabel value="Senha:" for="senha" />
+				<p:inputText id="senha" value="#{usuarioBean.usuario.senha}" />
+
+				<p:outputLabel value="Ativo:" for="ativo" />
+				<h:selectOneMenu id="ativo" value="#{usuarioBean.usuario.ativo}">
+					<f:selectItems value="#{comumBean.simNao}" var="sn"
+						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Perfil:" for="perfil" />
+				<h:selectOneMenu id="perfil" value="#{usuarioBean.usuario.perfil}">
+					<f:selectItems value="#{perfilBean.perfis}" var="perfil"
+						itemValue="#{perfil}" itemLabel="#{perfil.nome}" />
+				</h:selectOneMenu>
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar" action="#{usuarioBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarUsuario?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

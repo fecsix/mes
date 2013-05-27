@@ -1,0 +1,6 @@
+<beans>
+	<interceptors>
+		<class>br.com.controle.mes.dao.TransactionInterceptor
+		</class>
+	</interceptors>
+</beans>

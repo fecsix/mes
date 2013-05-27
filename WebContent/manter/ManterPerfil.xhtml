@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+
+			<h2>
+				<h:outputText value="Novo Perfil"
+					rendered="#{empty perfilBean.perfil.id}" />
+				<h:outputText value="Editar perfil"
+					rendered="#{not empty perfilBean.perfil.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Perfil</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty perfilBean.perfil.id}" />
+				<p:inputText id="id" value="#{perfilBean.perfil.id}" readonly="true"
+					rendered="#{not empty perfilBean.perfil.id}" />
+				<h:inputHidden value="#{perfilBean.perfil.id}" />
+
+				<p:outputLabel value="Nome:" for="nome" />
+				<p:inputText id="nome" value="#{perfilBean.perfil.nome}" />
+
+				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:inputText id="descricao" value="#{perfilBean.perfil.descricao}" />
+
+				<p:outputLabel value="Ativo:" for="ativo" />
+				<h:selectOneMenu id="ativo" value="#{perfilBean.perfil.ativo}">
+					<f:selectItems value="#{comumBean.simNao}" var="sn"
+						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Menus:" />
+				<p:tree value="#{perfilBean.root}" var="node" id="menus"
+					selectionMode="checkbox" selection="#{perfilBean.selectedNodes}">
+					<p:treeNode>
+						<h:outputText value="#{node}" />
+					</p:treeNode>
+				</p:tree>
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar" action="#{perfilBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarPerfil?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

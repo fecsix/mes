@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>Listagem de Menus</h2>
+		<h:form id="lista">
+			<p:dataTable value="#{menuBean.menus}" var="menu" paginator="true"
+				rows="5">
+
+				<p:column headerText="ID">
+					<h:outputText value="#{menu.id}" />
+				</p:column>
+
+				<p:column headerText="Nome">
+					<h:commandLink value="#{menu.nome}" id="edit"
+						action="/manter/ManterMenu">
+						<f:setPropertyActionListener value="#{menu}"
+							target="#{menuBean.menu}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="Apagar">
+					<h:commandLink value="Apagar" id="delete"
+						action="#{menuBean.remove(menu)}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>
