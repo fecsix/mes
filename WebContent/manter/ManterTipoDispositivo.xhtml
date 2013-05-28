@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Tipo de Dispositivo"
+					rendered="#{empty tipoDispositivoBean.tipoDispositivo.id}" />
+				<h:outputText value="Editar Tipo de Dispositivo"
+					rendered="#{not empty tipoDispositivoBean.tipoDispositivo.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Tipo de Dispositivo</legend>
+
+				<h:outputLabel value="Código" for="endereco" />
+				<h:inputText id="codigo"
+					value="#{tipoDispositivoBean.tipoDispositivo.codigo}" />
+
+				<h:outputLabel value="Descrição:" for="descricao" />
+				<h:inputTextarea id="descricao"
+					value="#{tipoDispositivoBean.tipoDispositivo.descricao}" />
+
+				<h:outputLabel value="Marca" for="marca" />
+				<h:inputText id="marca"
+					value="#{tipoDispositivoBean.tipoDispositivo.marca}" />
+
+				<h:outputLabel value="Modelo" for="modelo" />
+				<h:inputText id="modelo"
+					value="#{tipoDispositivoBean.tipoDispositivo.modelo}" />
+
+
+				<h:outputLabel value="Registrador Contador"
+					for="registradorContador" />
+				<h:inputText id="registradorContador"
+					value="#{tipoDispositivoBean.tipoDispositivo.registradorContador}" />
+
+				<h:outputLabel value="Registrador Totalizador"
+					for="registradorTotalizador" />
+				<h:inputText id="registradorTotalizador"
+					value="#{tipoDispositivoBean.tipoDispositivo.registradorTotalizador}" />
+
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar"
+						action="#{tipoDispositivoBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarTipoDispositivo?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -7,6 +7,10 @@
 		<class>br.com.controle.mes.model.Perfil</class>
 		<class>br.com.controle.mes.model.Tarefa</class>
 		<class>br.com.controle.mes.model.Usuario</class>
+		<class>br.com.controle.mes.model.ConfiguracaoPorta</class>
+		<class>br.com.controle.mes.model.TipoDispositivo</class>
+		<class>br.com.controle.mes.model.Dispositivo</class>
+
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

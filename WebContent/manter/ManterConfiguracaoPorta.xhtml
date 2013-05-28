@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Nova Porta Serial"
+					rendered="#{empty configuracaoPortaBean.configuracaoPorta.id}" />
+				<h:outputText value="Editar Porta Serial"
+					rendered="#{not empty configuracaoPortaBean.configuracaoPorta.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados da Porta Serial</legend>
+
+				<h:outputLabel value="Código" for="endereco" />
+				<h:inputText id="codigo"
+					value="#{configuracaoPortaBean.configuracaoPorta.codigo}" />
+
+				<h:outputLabel value="Descrição:" for="descricao" />
+				<h:inputTextarea id="descricao"
+					value="#{configuracaoPortaBean.configuracaoPorta.descricao}" />
+
+				<h:outputLabel value="BaudRate" for="baudRate" />
+				<h:inputText id="baudRate"
+					value="#{configuracaoPortaBean.configuracaoPorta.baudRate}" />
+
+				<h:outputLabel value="DataBits" for="dataBits" />
+				<h:inputText id="dataBits"
+					value="#{configuracaoPortaBean.configuracaoPorta.dataBits}" />
+
+
+				<h:outputLabel value="StopBits" for="stopBits" />
+				<h:inputText id="stopBits"
+					value="#{configuracaoPortaBean.configuracaoPorta.stopBits}" />
+
+				<h:outputLabel value="Parity" for="parity" />
+				<h:inputText id="parity"
+					value="#{configuracaoPortaBean.configuracaoPorta.parity}" />
+
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar"
+						action="#{configuracaoPortaBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarTConfiguracaoPorta?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>
