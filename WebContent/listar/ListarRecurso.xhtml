@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>Listagem de Recursos</h2>
+		<h:form id="lista">
+			<p:dataTable value="#{recursoBean.recursos}" var="recurso"
+				paginator="true" rows="5">
+				<p:column headerText="ID">
+					<h:outputText value="#{recurso.id}" />
+				</p:column>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{recurso.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:commandLink value="#{recurso.descricao}" id="edit"
+						action="/manter/ManterRecurso">
+						<f:setPropertyActionListener value="#{recurso}"
+							target="#{recursoBean.recurso}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="Apagar">
+					<h:commandLink value="Apagar" id="delete"
+						action="#{recursoBean.remove(recurso)}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -5,10 +5,19 @@ import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 import br.com.controle.mes.enumerate.SimNao;
+import br.com.controle.mes.enumerate.TipoCentroTrabalho;
 
 @RequestScoped
 @Named
 public class ComumBean {
+	
+	public SelectItem[] getTipoCentroTrabalho() {
+		SelectItem[] items = new SelectItem[TipoCentroTrabalho.values().length];
+		int i = 0;
+		for (TipoCentroTrabalho item : TipoCentroTrabalho.values())
+			items[i++] = new SelectItem(item, item.getDescricao());
+		return items;
+	}
 
 	public SelectItem[] getSimNao() {
 		SelectItem[] items = new SelectItem[SimNao.values().length];
