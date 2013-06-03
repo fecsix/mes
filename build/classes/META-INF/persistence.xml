@@ -10,13 +10,16 @@
 		<class>br.com.controle.mes.model.ConfiguracaoPorta</class>
 		<class>br.com.controle.mes.model.TipoDispositivo</class>
 		<class>br.com.controle.mes.model.Dispositivo</class>
+		<class>br.com.controle.mes.model.GrupoItem</class>
+		<class>br.com.controle.mes.model.Unidade</class>
+		<class>br.com.controle.mes.model.Item</class>
 
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/mes" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="" />
+			<property name="javax.persistence.jdbc.password" value="admin" />
 
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.show_sql" value="true" />
