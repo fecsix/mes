@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Dispositivo"
+					rendered="#{empty dispositivoBean.dispositivo.id}" />
+				<h:outputText value="Editar Dispositivo"
+					rendered="#{not empty dispositivoBean.dispositivo.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Dispositivo</legend>
+							
+					<h:outputLabel value="Código" for="endereco" />
+				<h:inputText id="codigo"
+					value="#{dispositivoBean.dispositivo.codigo}" />
+				
+				<h:outputLabel value="Descrição:" for="descricao" />
+				<h:inputTextarea id="descricao"
+					value="#{dispositivoBean.dispositivo.descricao}" />
+				
+				<h:outputLabel value="Endereço Escravo" for="endereco" />
+				<h:inputText id="endereco"
+					value="#{dispositivoBean.dispositivo.enderecoEscravo}"
+ />
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar" action="#{dispositivoBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarDispositivo?faces-redirect=true" />
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

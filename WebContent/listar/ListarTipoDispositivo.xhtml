@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>Listagem de Tipos de Dispositivos</h2>
+		<h:form id="lista">
+			<p:dataTable value="#{tipoDispositivoBean.tipoDispositivos}"
+				var="tipoDispositivo" paginator="true" rows="5">
+				<p:column headerText="Código">
+					<h:outputText value="#{tipoDispositivo.codigo}" />
+				</p:column>
+				<p:column headerText="Descrição">
+					<h:outputText value="#{tipoDispositivo.descricao}" />
+				</p:column>
+
+				<p:column headerText="Editar">
+					<h:commandLink value="Editar" id="edit"
+						action="/manter/ManterTipoDispositivo">
+						<f:setPropertyActionListener value="#{tipoDispositivo}"
+							target="#{tipoDispositivoBean.tipoDispositivo}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="Apagar">
+					<h:commandLink value="Apagar" id="delete"
+						action="#{tipoDispositivoBean.remove(tipoDispositivo)}" />
+				</p:column>
+
+
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

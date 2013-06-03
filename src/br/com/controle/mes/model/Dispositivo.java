@@ -6,26 +6,33 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-@Entity(name = "MESFornecedor")
-public class Fornecedor implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+@Entity(name = "MESDispositivo")
+public class Dispositivo implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvFornecedor", nullable = false)
+	@Column(name = "cvDispositivo", nullable = false)
 	private Long id;
 
-	@NotEmpty(message = "Código do Fornecedor deve ser preenchido.")
-	@Column(name = "ccCodFornecedor", length = 20, nullable = false)
+	@NotEmpty(message = "Código do dispositivo deve ser preenchida")
+	@Column(name = "ccDispositivo", length = 50, nullable = false)
 	private String codigo;
 
-	@NotEmpty(message = "Descrição do Fornecedor eve ser preenchida")
+	@NotEmpty(message = "Descrição do dispositivo deve ser preenchida")
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
+
+	@Column(name = "cvEnderecoEscravo")
+	private Long enderecoEscravo;
+
+	@ManyToOne
+	@JoinColumn(name = "cvTipoDispositivo")
+	private TipoDispositivo tipoDispositivo;
 
 	public Long getId() {
 		return id;
@@ -43,12 +50,28 @@ public class Fornecedor implements Serializable {
 		this.descricao = descricao;
 	}
 
+	public Long getEnderecoEscravo() {
+		return enderecoEscravo;
+	}
+
+	public void setEnderecoEscravo(Long enderecoEscravo) {
+		this.enderecoEscravo = enderecoEscravo;
+	}
+
 	public String getCodigo() {
 		return codigo;
 	}
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public TipoDispositivo getTipoDispositivo() {
+		return tipoDispositivo;
+	}
+
+	public void setTipoDispositivo(TipoDispositivo tipoDispositivo) {
+		this.tipoDispositivo = tipoDispositivo;
 	}
 
 	@Override
@@ -67,7 +90,7 @@ public class Fornecedor implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Fornecedor other = (Fornecedor) obj;
+		Dispositivo other = (Dispositivo) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -78,8 +101,7 @@ public class Fornecedor implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Fornecedor [id=" + id + ", codigo=" + codigo + ", descricao="
-				+ descricao + "]";
+		return "Tarefa [id=" + id + ", descricao=" + descricao + "]";
 	}
 
 }
