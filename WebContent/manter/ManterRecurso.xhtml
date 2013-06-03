@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Recurso"
+					rendered="#{empty recursoBean.recurso.id}" />
+				<h:outputText value="Editar Tarefa"
+					rendered="#{not empty recursoBean.recurso.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Recurso</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty recursoBean.recurso.id}" />
+				<p:inputText id="id"
+					value="#{recursoBean.recurso.id}" readonly="true"
+					rendered="#{not empty recursoBean.recurso.id}" />
+				<h:inputHidden value="#{recursoBean.recurso.id}" />
+
+				<p:outputLabel value="Código:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{recursoBean.recurso.codigo}" />
+
+				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{recursoBean.recurso.descricao}" />
+
+
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar"
+						action="#{recursoBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarRecurso?faces-redirect=true" />
+				</h:panelGrid>
+
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>
