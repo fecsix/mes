@@ -14,7 +14,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.controle.mes.model.enumerate.StatusOP;
+import br.com.controle.mes.enumerate.StatusOP;
 
 @Entity(name = "MESOrdemProducao")
 public class OrdemProducao implements Serializable {
@@ -37,11 +37,11 @@ public class OrdemProducao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cvRoteiro")
 	private Roteiro roteiro;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvCliente")
 	private Cliente cliente;
-	
+
 	@Column(name = "cvQtdePlanejada", nullable = false)
 	private Long qtdePlanejada;
 

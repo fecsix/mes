@@ -14,7 +14,7 @@ import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.model.Tarefa;
-import br.com.controle.mes.model.enumerate.TipoTarefa;
+import br.com.controle.mes.enumerate.TipoTarefa;
 import br.com.controle.mes.util.BuscarAnotacoes;
 import br.com.controle.mes.util.GerarMensagem;
 
@@ -52,7 +52,7 @@ public class TarefaBean implements Serializable {
 	@Transactional
 	@Auditavel
 	public String gravar() {
-		if (dadosOk()){
+		if (dadosOk()) {
 			if (tarefa.getId() != null)
 				dao.atualiza(tarefa);
 			else
@@ -63,26 +63,31 @@ public class TarefaBean implements Serializable {
 		}
 		return "";
 	}
-	
-	private boolean dadosOk(){
+
+	private boolean dadosOk() {
 		boolean dadosOk = true;
 		if (tarefa != null) {
 			if (tarefa.getTipo() == null
 					|| TipoTarefa.valueOf(tarefa.getTipo().toString()) == null) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Tipo de Tarefa Inválida !!");
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+						"Tipo de Tarefa Inválida !!");
 				dadosOk = false;
 			}
-			if (tarefa.getDescricao().length() <= 0 || tarefa.getDescricao().length() > getTamanhoCampo("descricao")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Descrição Inválida !!");
+			if (tarefa.getDescricao().length() <= 0
+					|| tarefa.getDescricao().length() > getTamanhoCampo("descricao")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+						"Descrição Inválida !!");
 				dadosOk = false;
 			}
-			if (tarefa.getCodigo().length() <= 0 || tarefa.getCodigo().length() > getTamanhoCampo("codigo")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Código Inválido !!");
+			if (tarefa.getCodigo().length() <= 0
+					|| tarefa.getCodigo().length() > getTamanhoCampo("codigo")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+						"Código Inválido !!");
 				dadosOk = false;
 			}
-		}else{
-			GerarMensagem
-			.addMsg(FacesMessage.SEVERITY_ERROR, "Tarefa não informada !!");
+		} else {
+			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+					"Tarefa não informada !!");
 			dadosOk = false;
 		}
 		return dadosOk;
@@ -97,18 +102,18 @@ public class TarefaBean implements Serializable {
 
 	@Transactional
 	public String excluir() {
-		if (exclusaoPermitida()){
+		if (exclusaoPermitida()) {
 			dao.remove(tarefa);
 			return paginaListarTarefa();
 		}
 		return "";
 	}
-	
-	private boolean exclusaoPermitida(){
+
+	private boolean exclusaoPermitida() {
 		boolean excluir = true;
 		if (tarefa == null || tarefa.getId() <= 0) {
-			GerarMensagem
-			.addMsg(FacesMessage.SEVERITY_ERROR, "Tarefa não informada !!");
+			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+					"Tarefa não informada !!");
 			excluir = false;
 		}
 		return excluir;
@@ -118,7 +123,7 @@ public class TarefaBean implements Serializable {
 		if (tarefaId != null && tarefaId != 0)
 			tarefa = dao.buscaPorId(tarefaId);
 	}
-	
+
 	public String getTipoTarefa() {
 		if (tarefa != null && tarefa.getTipo() != null) {
 			return tarefa.getTipo().toString();
@@ -131,7 +136,7 @@ public class TarefaBean implements Serializable {
 			tarefa.setTipo(TipoTarefa.valueOf(tipo));
 		}
 	}
-	
+
 	public List<String> getListaTipoTarefa() {
 		List<String> lista = new ArrayList<String>();
 		for (TipoTarefa objeto : TipoTarefa.values()) {
@@ -140,24 +145,24 @@ public class TarefaBean implements Serializable {
 		Collections.sort(lista);
 		return lista;
 	}
-	
-	public int getTamanhoCampo(String campo){
+
+	public int getTamanhoCampo(String campo) {
 		return new BuscarAnotacoes().getTamanhoCampo(Tarefa.class, campo);
 	}
-	
+
 	/*
 	 * CONTROLE DE NAVEGAÇÃO
 	 */
-	
-	public String paginaListarTarefa(){
+
+	public String paginaListarTarefa() {
 		return "/listar/ListarTarefa";
 	}
-	
-	public String paginaManterTarefa(){
+
+	public String paginaManterTarefa() {
 		return "/manter/ManterTarefa";
 	}
-	
-	public String novaTarefa(){
+
+	public String novaTarefa() {
 		tarefa = new Tarefa();
 		return paginaManterTarefa();
 	}

@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import br.com.controle.mes.model.enumerate.TipoTarefa;
+import br.com.controle.mes.enumerate.TipoTarefa;
 
 @Entity(name = "MESTarefa")
 public class Tarefa implements Serializable {
@@ -21,10 +21,10 @@ public class Tarefa implements Serializable {
 
 	@Column(name = "ccCodigo", length = 20, nullable = false)
 	private String codigo;
-	
+
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
-	
+
 	@Column(name = "cvTipo", nullable = false)
 	private TipoTarefa tipo;
 
@@ -43,7 +43,6 @@ public class Tarefa implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 
 	public String getCodigo() {
 		return codigo;
@@ -60,7 +59,6 @@ public class Tarefa implements Serializable {
 	public void setTipo(TipoTarefa tipo) {
 		this.tipo = tipo;
 	}
-
 
 	@Override
 	public int hashCode() {

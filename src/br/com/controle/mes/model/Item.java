@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import br.com.controle.mes.model.enumerate.TipoItem;
+import br.com.controle.mes.enumerate.TipoItem;
 
 @Entity(name = "MESItem")
 public class Item implements Serializable {

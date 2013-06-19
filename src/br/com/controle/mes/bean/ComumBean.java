@@ -6,12 +6,12 @@ import javax.inject.Named;
 
 import br.com.controle.mes.enumerate.SimNao;
 import br.com.controle.mes.enumerate.TipoCentroTrabalho;
-import br.com.controle.mes.model.enumerate.StatusOP;
+import br.com.controle.mes.enumerate.StatusOP;
 
 @RequestScoped
 @Named
 public class ComumBean {
-	
+
 	public SelectItem[] getTipoCentroTrabalho() {
 		SelectItem[] items = new SelectItem[TipoCentroTrabalho.values().length];
 		int i = 0;
@@ -35,7 +35,7 @@ public class ComumBean {
 			items[i++] = new SelectItem(item, item.getDescricao());
 		return items;
 	}
-	
+
 	public SelectItem[] getIcone() {
 		SelectItem[] items = new SelectItem[170];
 		items[0] = new SelectItem("ui-icon-carat-1-n", "ui-icon-carat-1-n");
