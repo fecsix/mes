@@ -9,8 +9,6 @@ import javax.persistence.Id;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.controle.mes.enumerate.SimNao;
-
 @Entity(name = "MESRecurso")
 public class Recurso implements Serializable {
 

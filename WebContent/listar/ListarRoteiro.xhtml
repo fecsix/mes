@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>Listagem de Roteiros</h2>
+		<h:form id="lista">
+			<p:dataTable value="#{roteiroBean.roteiros}" var="roteiro"
+				paginator="true" rows="5">
+				<p:column headerText="ID">
+					<h:outputText value="#{roteiro.id}" />
+				</p:column>
+				<p:column headerText="Codigo">
+					<h:outputText value="#{roteiro.codigo}" />
+				</p:column>
+				<p:column headerText="Item">
+					<h:commandLink value="#{roteiro.item.descricao}" id="edit"
+						action="/manter/ManterRoteiro">
+						<f:setPropertyActionListener value="#{roteiro}"
+							target="#{roteiroBean.roteiro}" />
+					</h:commandLink>
+				</p:column>
+
+				<p:column headerText="Apagar">
+					<h:commandLink value="Apagar" id="delete"
+						action="#{roteiroBean.remove(roteiro)}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

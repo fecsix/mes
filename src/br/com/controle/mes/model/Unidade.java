@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity(name="MESUnidade")
 public class Unidade implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
-	@Column(name = "cvId", nullable = false)
+	@Column(name = "cvUnidade", nullable = false)
 	private Long id;
 
 	//@NotEmpty(message = "Código da Unidade deve ser preenchida")

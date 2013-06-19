@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Nova Ordem de Produção"
+					rendered="#{empty ordemProducaoBean.ordemProducao.id}" />
+				<h:outputText value="Editar Ordem Produção"
+					rendered="#{not empty ordemProducaoBean.ordemProducao.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados da Ordem de Produção</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty ordemProducaoBean.ordemProducao.id}" />
+				<p:inputText id="id"
+					value="#{ordemProducaoBean.ordemProducao.id}" readonly="true"
+					rendered="#{not empty ordemProducaoBean.ordemProducao.id}" />
+				<h:inputHidden value="#{ordemProducaoBean.ordemProducao.id}" />
+			
+				<p:outputLabel value="Código OP:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{ordemProducaoBean.ordemProducao.codigo}" />
+				
+				<h:outputLabel value="Item:" />
+				<h:selectOneMenu id="item"
+					value="#{ordemProducaoBean.ordemProducao.item}">
+					<f:selectItems value="#{itemBean.itens}"
+						var="item" itemLabel="#{item.descricao}"
+						itemValue="#{item}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Roteiro:" />
+				<h:selectOneMenu id="roteiro"
+					value="#{ordemProducaoBean.ordemProducao.roteiro}">
+					<f:selectItems value="#{roteiroBean.roteiros}"
+						var="roteiro" itemLabel="#{roteiro.codigo}"
+						itemValue="#{roteiro}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Cliente:" />
+				<h:selectOneMenu id="cliente"
+					value="#{ordemProducaoBean.ordemProducao.cliente}">
+					<f:selectItems value="#{clienteBean.clientes}"
+						var="cliente" itemLabel="#{cliente.descricao}"
+						itemValue="#{cliente}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Quantidade Planejada:" for="qtdePlanejada" />
+				<p:inputText id="qtdePlanejada"
+					value="#{ordemProducaoBean.ordemProducao.qtdePlanejada}" />
+				
+				<p:outputLabel value="Quantidade Boa:" for="qtdeBoa" />
+				<p:inputText id="qtdeBoa"
+					value="#{ordemProducaoBean.ordemProducao.qtdeBoa}" />
+						
+				<p:outputLabel value="Quantidade Refugada:" for="qtdeRefugada" />
+				<p:inputText id="qtdeRefugada"
+					value="#{ordemProducaoBean.ordemProducao.qtdeRefugada}" />
+
+				<h:outputLabel value="Data Início:" />
+				<p:calendar pattern="dd/MM/yyyy"
+					value="#{ordemProducaoBean.ordemProducao.dataInicio.time}" />
+					
+				<h:outputLabel value="Data Entrega:" />
+				<p:calendar pattern="dd/MM/yyyy"
+					value="#{ordemProducaoBean.ordemProducao.dataEntrega.time}" />
+	
+				<p:outputLabel value="Status:" for="status" />
+				<h:selectOneMenu id="status"
+					value="#{ordemProducaoBean.ordemProducao.statusOP}">
+					<f:selectItems value="#{comumBean.statusOP}" var="statuse"
+						itemLabel="#{statuse.descricao}" itemValue="#{statuse}" />
+				</h:selectOneMenu>
+				
+				
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar"
+						action="#{ordemProducaoBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarOrdemProducao?faces-redirect=true" />
+				</h:panelGrid>
+				
+				
+				
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 
 public class DAOFactory implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Produces
 	public DAO createDAO(InjectionPoint injectionPoint, EntityManager em) {
 		ParameterizedType type = (ParameterizedType) injectionPoint.getType();

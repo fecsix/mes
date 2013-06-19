@@ -9,40 +9,39 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import br.com.controle.mes.model.enumerate.TipoItem;
 
-@Entity(name="MESItem")
+@Entity(name = "MESItem")
 public class Item implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvId", nullable = false)
+	@Column(name = "cvItem", nullable = false)
 	private Long id;
 
-	//@NotEmpty(message = "Código do Item deve ser preenchida")
+	// @NotEmpty(message = "Código do Item deve ser preenchida")
 	@Column(name = "ccCodigo", length = 20, nullable = false)
 	private String codigo;
-	
-	//@NotEmpty(message = "Descrição do Item deve ser preenchida")
+
+	// @NotEmpty(message = "Descrição do Item deve ser preenchida")
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
-	
+
 	@Column(name = "cvTipoItem", nullable = false)
 	private TipoItem tipoItem;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvUnidade", nullable = false)
 	private Unidade unidade;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvGrupoItem", nullable = false)
 	private GrupoItem grupoItem;
-	
+
 	@Column(name = "cvCustoItem")
 	private float custoItem;
-	
 
 	public Long getId() {
 		return id;
@@ -59,7 +58,6 @@ public class Item implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 
 	public String getCodigo() {
 		return codigo;

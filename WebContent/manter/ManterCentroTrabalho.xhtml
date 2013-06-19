@@ -14,38 +14,38 @@
 			<h:messages styleClass="erros" />
 			<h2>
 				<h:outputText value="Novo Centro de Trabalho"
-					rendered="#{empty centroDeTrabalhoBean.centroDeTrabalho.id}" />
+					rendered="#{empty centroTrabalhoBean.centroTrabalho.id}" />
 				<h:outputText value="Editar Tarefa"
-					rendered="#{not empty centroDeTrabalhoBean.centroDeTrabalho.id}" />
+					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
 			</h2>
 			<fieldset>
 				<legend>Dados do Centro de Trabalho</legend>
 
 				<p:outputLabel value="ID:" for="id"
-					rendered="#{not empty centroDeTrabalhoBean.centroDeTrabalho.id}" />
+					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
 				<p:inputText id="id"
-					value="#{centroDeTrabalhoBean.centroDeTrabalho.id}" readonly="true"
-					rendered="#{not empty centroDeTrabalhoBean.centroDeTrabalho.id}" />
-				<h:inputHidden value="#{centroDeTrabalhoBean.centroDeTrabalho.id}" />
+					value="#{centroTrabalhoBean.centroTrabalho.id}" readonly="true"
+					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
+				<h:inputHidden value="#{centroTrabalhoBean.centroTrabalho.id}" />
 
 				<p:outputLabel value="Código:" for="codigo" />
 				<p:inputText id="codigo"
-					value="#{centroDeTrabalhoBean.centroDeTrabalho.codigo}" />
+					value="#{centroTrabalhoBean.centroTrabalho.codigo}" />
 
 				<p:outputLabel value="Descrição:" for="descricao" />
 				<p:inputText id="descricao"
-					value="#{centroDeTrabalhoBean.centroDeTrabalho.descricao}" />
+					value="#{centroTrabalhoBean.centroTrabalho.descricao}" />
 
 				<p:outputLabel value="Tipo:" for="tipo" />
 				<h:selectOneMenu id="tipo"
-					value="#{centroDeTrabalhoBean.centroDeTrabalho.tipoCentroTrabalho}">
+					value="#{centroTrabalhoBean.centroTrabalho.tipoCentroTrabalho}">
 					<f:selectItems value="#{comumBean.tipoCentroTrabalho}" var="tipoe"
 						itemLabel="#{tipoe.descricao}" itemValue="#{tipoe}" />
 				</h:selectOneMenu>
 
 				<h:outputLabel value="Fornecedor:" />
 				<h:selectOneMenu id="fornecedor"
-					value="#{centroDeTrabalhoBean.centroDeTrabalho.fornecedor}">
+					value="#{centroTrabalhoBean.centroTrabalho.fornecedor}">
 					<f:selectItems value="#{fornecedorBean.fornecedores}"
 						var="fornecedor" itemLabel="#{fornecedor.descricao}"
 						itemValue="#{fornecedor}" />
@@ -53,7 +53,7 @@
 
 				<h:panelGrid columns="2">
 					<h:commandButton value="Gravar"
-						action="#{centroDeTrabalhoBean.gravar}" />
+						action="#{centroTrabalhoBean.gravar}" />
 					<h:commandButton value="Voltar" immediate="true"
 						action="/listar/ListarCentroTrabalho?faces-redirect=true" />
 				</h:panelGrid>

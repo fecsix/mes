@@ -7,9 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-import br.com.controle.mes.enumerate.SimNao;
+import br.com.controle.mes.model.enumerate.TipoTarefa;
 
 @Entity(name = "MESTarefa")
 public class Tarefa implements Serializable {
@@ -18,22 +16,17 @@ public class Tarefa implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvTarefa", nullable = false)
+	@Column(name = "cvId", nullable = false)
 	private Long id;
 
-	@NotEmpty(message = "Descrição da tarefa deve ser preenchida")
+	@Column(name = "ccCodigo", length = 20, nullable = false)
+	private String codigo;
+	
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
-
-	private SimNao simNao;
-
-	public SimNao getSimNao() {
-		return simNao;
-	}
-
-	public void setSimNao(SimNao simNao) {
-		this.simNao = simNao;
-	}
+	
+	@Column(name = "cvTipo", nullable = false)
+	private TipoTarefa tipo;
 
 	public Long getId() {
 		return id;
@@ -50,6 +43,24 @@ public class Tarefa implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public TipoTarefa getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoTarefa tipo) {
+		this.tipo = tipo;
+	}
+
 
 	@Override
 	public int hashCode() {
@@ -78,8 +89,7 @@ public class Tarefa implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Tarefa [id=" + id + ", descricao=" + descricao + ", simNao="
-				+ simNao + "]";
+		return "Tarefa [id=" + id + ", descricao=" + descricao + "]";
 	}
 
 }

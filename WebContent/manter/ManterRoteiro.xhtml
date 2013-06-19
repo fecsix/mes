@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+			<h2>
+				<h:outputText value="Novo Roteiro"
+					rendered="#{empty roteiroBean.roteiro.id}" />
+				<h:outputText value="Editar Roteiro"
+					rendered="#{not empty roteiroBean.roteiro.id}" />
+			</h2>
+			<fieldset>
+				<legend>Dados do Roteiro</legend>
+
+				<p:outputLabel value="ID:" for="id"
+					rendered="#{not empty roteiroBean.roteiro.id}" />
+				<p:inputText id="id"
+					value="#{roteiroBean.roteiro.id}" readonly="true"
+					rendered="#{not empty roteiroBean.roteiro.id}" />
+				<h:inputHidden value="#{roteiroBean.roteiro.id}" />
+				
+				<h:outputLabel value="Item:" />
+				<h:selectOneMenu id="item"
+					value="#{roteiroBean.roteiro.item}">
+					<f:selectItems value="#{itemBean.itens}"
+						var="item" itemLabel="#{item.descricao}"
+						itemValue="#{item}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Código:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{roteiroBean.roteiro.codigo}" />
+
+				<p:outputLabel value="Operação:" for="operacao" />
+				<p:inputText id="operacao"
+					value="#{roteiroBean.roteiro.operacao}" />
+
+				<p:outputLabel value="Sequencia:" for="sequencia" />
+				<p:inputText id="sequencia"
+					value="#{roteiroBean.roteiro.sequencia}" />
+					
+				<h:outputLabel value="Recurso:" />
+				<h:selectOneMenu id="recurso"
+					value="#{roteiroBean.roteiro.recurso}">
+					<f:selectItems value="#{recursoBean.recursos}"
+						var="recurso" itemLabel="#{recurso.descricao}"
+						itemValue="#{recurso}" />
+				</h:selectOneMenu>
+
+				<h:outputLabel value="Centro Trabalho:" />
+				<h:selectOneMenu id="centroTrabalho"
+					value="#{roteiroBean.roteiro.centroTrabalho}">
+					<f:selectItems value="#{centroTrabalhoBean.centroTrabalhos}"
+						var="centroTrabalho" itemLabel="#{centroTrabalho.descricao}"
+						itemValue="#{centroTrabalho}" />
+				</h:selectOneMenu>
+				
+				<h:outputLabel value="Tarefa:" />
+				<h:selectOneMenu id="tarefa"
+					value="#{roteiroBean.roteiro.tarefa}">
+					<f:selectItems value="#{tarefaBean.tarefas}"
+						var="tarefa" itemLabel="#{tarefa.descricao}"
+						itemValue="#{tarefa}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="Tempo Setup:" for="tempoSetup" />
+				<p:inputText id="tempoSetup"
+					value="#{roteiroBean.roteiro.tempoSetup}" />
+
+				<p:outputLabel value="Tempo Execução:" for="tempoExecucao" />
+				<p:inputText id="tempoExecucao"
+					value="#{roteiroBean.roteiro.tempoExecucao}" />
+					
+				<h:outputLabel value="Data Início:" />
+				<p:calendar pattern="dd/MM/yyyy"
+					value="#{roteiroBean.roteiro.dataInicio.time}" />
+					
+				<h:outputLabel value="Data Término:" />
+				<p:calendar pattern="dd/MM/yyyy"
+					value="#{roteiroBean.roteiro.dataFim.time}" />
+	
+				<h:panelGrid columns="2">
+					<h:commandButton value="Gravar"
+						action="#{roteiroBean.gravar}" />
+					<h:commandButton value="Voltar" immediate="true"
+						action="/listar/ListarRoteiro?faces-redirect=true" />
+				</h:panelGrid>
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

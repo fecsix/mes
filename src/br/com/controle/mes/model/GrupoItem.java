@@ -7,14 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 @Entity(name="MESGrupoItem")
 public class GrupoItem implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
-	@Column(name = "cvId", nullable = false)
+	@Column(name = "cvGrupoItem", nullable = false)
 	private Long id;
 
 	//@NotEmpty(message = "Código do Grupo de Item deve ser preenchida")

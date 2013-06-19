@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+	
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+
+		<h2> Cadastro de Item </h2>
+		<h:form id="cadastro">
+		
+			<h:inputHidden value="#{itemBean.item.id}" />
+			
+			<p:panelGrid columns="2" styleClass="semBorda">  
+			      
+	    		<p:outputLabel for="codigo" value="Código:" />  
+	    		<p:inputText id="codigo" value="#{itemBean.item.codigo}" 
+	    			size="#{itemBean.getTamanhoCampo('codigo')}" maxlength="#{itemBean.getTamanhoCampo('codigo')}"/> 
+	  
+	    		<p:outputLabel for="descricao" value="Descrição:" />  
+	    		<p:inputText id="descricao" value="#{itemBean.item.descricao}" 
+	    			size="#{itemBean.getTamanhoCampo('descricao')}" maxlength="#{itemBean.getTamanhoCampo('descricao')}"/>  
+	    		
+	    		<p:outputLabel for="tipoItem" value="Tipo de Item:" />  
+		        <p:selectOneMenu id="tipoItem" value="#{itemBean.item.tipoItem}" >  
+		            <f:selectItems value="#{itemBean.listaTipoItem}"  />  
+		        </p:selectOneMenu>
+		        
+		        
+		        <p:outputLabel for="unidade" value="Unidade:" />
+		        <h:panelGrid columns="2" style="semBorda">
+		        	<p:inputText id="unidade" value="#{itemBean.varCodigoUnidade}" 
+	    				size="#{unidadeBean.getTamanhoCampo('codigo')}" maxlength="#{unidadeBean.getTamanhoCampo('codigo')}" >
+	    				<p:ajax event="change" update="descUnidade" listener="#{itemBean.populaUnidade}"/>  
+	    			</p:inputText>
+	    			<p:outputLabel id="descUnidade" for="unidade" value="#{itemBean.item.unidade.descricao}" style="text-align: left;"/> 
+	    		</h:panelGrid>
+	    		  
+		        
+		        
+	  
+	    		<f:facet name="footer">  
+	        		<p:commandButton value="Salvar" icon="ui-icon-check" style="margin:0" action="#{itemBean.gravar}" ajax="false"/> 
+	        		<p:spacer width="10"/>
+	        		<p:commandButton value="Excluir" icon="ui-icon-trash" style="margin:0" oncomplete="confirmDeleteItem.show()" /> 
+	        		<p:spacer width="10"/>
+	        		<p:commandButton value="Voltar" icon="ui-icon-arrowreturnthick-1-w" style="margin:0" action="#{itemBean.paginaListarItem}" ajax="false" immediate="true"/> 
+	    		</f:facet>  
+			</p:panelGrid>
+	
+		</h:form>
+		
+		<p:confirmDialog message="Deseja Excluir o Item?" severity="alert" widgetVar="confirmDeleteItem" appendToBody="true" style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{itemBean.item.id}" />
+				<p:commandButton value="Sim" oncomplete="confirmDeleteItem.hide()" action="#{itemBean.excluir}" ajax="false" /> 
+		        <p:commandButton value="Não" onclick="confirmDeleteItem.hide()" />
+	        </h:form>
+        </p:confirmDialog> 
+
+	 
+	</ui:define>
+</ui:composition>
+
+</html>

@@ -14,6 +14,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity(name = "MESDispositivo")
 public class Dispositivo implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name = "cvDispositivo", nullable = false)

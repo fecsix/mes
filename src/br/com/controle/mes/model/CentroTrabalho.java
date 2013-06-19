@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import br.com.controle.mes.enumerate.TipoCentroTrabalho;
 
 @Entity(name = "MESCentroTrabalho")
-public class CentroDeTrabalho implements Serializable {
+public class CentroTrabalho implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -94,7 +94,7 @@ public class CentroDeTrabalho implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CentroDeTrabalho other = (CentroDeTrabalho) obj;
+		CentroTrabalho other = (CentroTrabalho) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -48,6 +48,20 @@ public class DAO<T> implements Serializable {
 	public T buscaPorId(Long id) {
 		return (T) em.find(classe, id);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public T load(String codigo) {
+		CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+		query.where(em.getCriteriaBuilder().equal(query.from(classe).get("codigo"),codigo));
+		
+	//	Criteria c = criaCriteria(lista, null, null, null);
+	//	return (T) c.uniqueResult();
+	//	CriteriaQuery<T> query = em.getCriteriaBuilder().createQuery(classe);
+	//	query.select(query.from(classe));
+		
+		return (T) em.createQuery(query).getSingleResult();
+	
+	}
 
 	public int contaTodos() {
 		long result = (Long) em.createQuery(

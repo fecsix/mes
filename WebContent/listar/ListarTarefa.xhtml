@@ -12,24 +12,27 @@
 
 		<h2>Listagem de Tarefas</h2>
 		<h:form id="lista">
-			<p:dataTable value="#{tarefaBean.tarefas}" var="tarefa"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{tarefa.id}" />
+		
+			<p:outputPanel style="text-align:left"  layout="block">  
+		    	<p:commandButton value="Incluir" icon="ui-icon-plus" style="margin:0" action="#{tarefaBean.novaTarefa}" ajax="false"/>
+		    </p:outputPanel> 
+		
+			<p:dataTable id="tableTarefas" value="#{tarefaBean.tarefas}" var="tarefa" 
+				paginator="true" rows="5" sortMode="multiple" >
+				<p:column sortBy="#{tarefa.codigo}" headerText="Código" filterBy="#{tarefa.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{tarefa.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
-					<h:commandLink value="#{tarefa.descricao}" id="edit"
-						action="/manter/ManterTarefa">
-						<f:setPropertyActionListener value="#{tarefa}"
-							target="#{tarefaBean.tarefa}" />
-					</h:commandLink>
+				<p:column sortBy="#{tarefa.descricao}" headerText="Descrição" filterBy="#{tarefa.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{tarefa.descricao}" />
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{tarefaBean.remove(tarefa)}" />
+				<p:column sortBy="#{tarefa.tipo.descricao}" headerText="Tipo" filterBy="#{tarefa.tipo.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{tarefa.tipo.descricao}" />
 				</p:column>
-
+				<p:column style="width:4%">
+					<p:commandButton id="edit" icon="ui-icon-pencil" action="#{tarefaBean.paginaManterTarefa}" title="Editar" ajax="false">  
+		                <f:setPropertyActionListener value="#{tarefa}" target="#{tarefaBean.tarefa}" />  
+		            </p:commandButton> 
+		        </p:column>
 			</p:dataTable>
 
 		</h:form>

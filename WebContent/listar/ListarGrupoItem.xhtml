@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>Listagem de Grupo de Itens</h2>
+		<h:form id="lista">
+		
+			<p:outputPanel style="text-align:left"  layout="block">  
+		    	<p:commandButton value="Incluir" icon="ui-icon-plus" style="margin:0" action="#{grupoItemBean.novoGrupoItem}" ajax="false"/>
+		    </p:outputPanel> 
+		
+			<p:dataTable id="tableGrupoItem" value="#{grupoItemBean.listaGrupoItem}" var="grupoItem" 
+				paginator="true" rows="5" sortMode="multiple" >
+				<p:column sortBy="#{grupoItem.codigo}" headerText="Código" filterBy="#{grupoItem.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{grupoItem.codigo}" />
+				</p:column>
+				<p:column sortBy="#{grupoItem.descricao}" headerText="Descrição" filterBy="#{grupoItem.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{grupoItem.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<p:commandButton id="edit" icon="ui-icon-pencil" action="#{grupoItemBean.paginaManterGrupoItem}" title="Editar" ajax="false">  
+		                <f:setPropertyActionListener value="#{grupoItem}" target="#{grupoItemBean.grupoItem}" />  
+		            </p:commandButton> 
+		        </p:column>
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>
