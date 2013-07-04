@@ -23,7 +23,7 @@ public class Menu implements Serializable {
 	@Column(name = "cvMenu", nullable = false)
 	private Long id;
 
-	@NotEmpty(message = "Nome do menu deve ser preenchido")
+	@NotEmpty
 	@Column(name = "ccNome", length = 30, nullable = false)
 	private String nome;
 

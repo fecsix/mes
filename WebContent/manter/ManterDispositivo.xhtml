@@ -11,36 +11,72 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="dispositivoValidator" />
+			<h:inputHidden id="id" value="#{dispositivoBean.dispositivo.id}" />
 			<h2>
-				<h:outputText value="Novo Dispositivo"
+				<h:outputText value="#{bundle['LABEL_NOVO_DISPOSITIVO']}"
 					rendered="#{empty dispositivoBean.dispositivo.id}" />
-				<h:outputText value="Editar Dispositivo"
+				<h:outputText value="#{bundle['LABEL_EDITAR_DISPOSITIVO']}"
 					rendered="#{not empty dispositivoBean.dispositivo.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Dispositivo</legend>
-							
-					<h:outputLabel value="Código" for="endereco" />
-				<h:inputText id="codigo"
-					value="#{dispositivoBean.dispositivo.codigo}" />
-				
-				<h:outputLabel value="Descrição:" for="descricao" />
-				<h:inputTextarea id="descricao"
-					value="#{dispositivoBean.dispositivo.descricao}" />
-				
-				<h:outputLabel value="Endereço Escravo" for="endereco" />
-				<h:inputText id="endereco"
-					value="#{dispositivoBean.dispositivo.enderecoEscravo}"
- />
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar" action="#{dispositivoBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarDispositivo?faces-redirect=true" />
-				</h:panelGrid>
 
-			</fieldset>
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{dispositivoBean.dispositivo.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{dispositivoBean.getTamanhoCampo('codigo')}" />
+
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{dispositivoBean.dispositivo.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{dispositivoBean.getTamanhoCampo('descricao')}" />
+
+				<p:outputLabel value="#{bundle['LABEL_ENDERECO_ESCRAVO']}:"
+					for="enderecoEscravo" />
+				<p:inputText id="enderecoEscravo"
+					value="#{dispositivoBean.dispositivo.enderecoEscravo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{dispositivoBean.getTamanhoCampo('enderecoEscravo')}" />
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{dispositivoBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{dispositivoBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteDispositivo.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{dispositivoBean.paginaListarDispositivo}" ajax="false"
+						immediate="true" />
+				</f:facet>
+
+			</p:panelGrid>
+
 		</h:form>
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_DISPOSITIVO']}"
+			severity="alert" widgetVar="confirmDeleteDispositivo"
+			appendToBody="true" style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{dispositivoBean.dispositivo.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteDispositivo.hide()"
+					action="#{dispositivoBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteDispositivo.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

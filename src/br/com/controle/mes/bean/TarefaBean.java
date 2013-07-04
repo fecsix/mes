@@ -1,8 +1,6 @@
 package br.com.controle.mes.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -13,10 +11,11 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.Tarefa;
 import br.com.controle.mes.enumerate.TipoTarefa;
+import br.com.controle.mes.model.Tarefa;
 import br.com.controle.mes.util.BuscarAnotacoes;
 import br.com.controle.mes.util.GerarMensagem;
+import br.com.controle.mes.util.Util;
 
 @RequestScoped
 @Named
@@ -28,10 +27,13 @@ public class TarefaBean implements Serializable {
 
 	private List<Tarefa> tarefas;
 
-	private Long tarefaId = 3l;
+	private Long tarefaId;
 
 	@Inject
 	private DAO<Tarefa> dao;
+
+	@Inject
+	private Util util;
 
 	public Tarefa getTarefa() {
 		return tarefa;
@@ -51,17 +53,29 @@ public class TarefaBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
 		if (dadosOk()) {
-			if (tarefa.getId() != null)
-				dao.atualiza(tarefa);
-			else
-				dao.adiciona(tarefa);
-			this.tarefa = new Tarefa();
+			gravar();
 			this.tarefas = dao.listaTodos();
 			return paginaListarTarefa();
 		}
 		return "";
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		if (dadosOk()) {
+			gravar();
+			this.tarefa = new Tarefa();
+		}
+	}
+
+	private void gravar() {
+		if (tarefa.getId() != null)
+			dao.atualiza(tarefa);
+		else
+			dao.adiciona(tarefa);
 	}
 
 	private boolean dadosOk() {
@@ -96,7 +110,6 @@ public class TarefaBean implements Serializable {
 	public List<Tarefa> getTarefas() {
 		if (tarefas == null)
 			tarefas = dao.listaTodos();
-
 		return tarefas;
 	}
 
@@ -137,14 +150,13 @@ public class TarefaBean implements Serializable {
 		}
 	}
 
-	public List<String> getListaTipoTarefa() {
-		List<String> lista = new ArrayList<String>();
-		for (TipoTarefa objeto : TipoTarefa.values()) {
-			lista.add(objeto.toString());
-		}
-		Collections.sort(lista);
-		return lista;
-	}
+	// public List<String> getListaTipoTarefa() {
+	// List<String> lista = new ArrayList<String>();
+	// for (TipoTarefa tipoTarefa : TipoTarefa.values())
+	// lista.add(tipoTarefa.toString());
+	// Collections.sort(lista);
+	// return lista;
+	// }
 
 	public int getTamanhoCampo(String campo) {
 		return new BuscarAnotacoes().getTamanhoCampo(Tarefa.class, campo);
@@ -155,11 +167,11 @@ public class TarefaBean implements Serializable {
 	 */
 
 	public String paginaListarTarefa() {
-		return "/listar/ListarTarefa";
+		return "/listar/ListarTarefa?faces-redirect=true";
 	}
 
 	public String paginaManterTarefa() {
-		return "/manter/ManterTarefa";
+		return "/manter/ManterTarefa?faces-redirect=true";
 	}
 
 	public String novaTarefa() {

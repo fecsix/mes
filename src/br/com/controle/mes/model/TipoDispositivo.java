@@ -23,7 +23,7 @@ public class TipoDispositivo implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código do tipo do dispositivo deve ser preenchida")
-	@Column(name = "ccTipoDispositivo", length = 50, nullable = false)
+	@Column(name = "ccTipoDispositivo", length = 20, nullable = false)
 	private String codigo;
 
 	@NotEmpty(message = "Descrição do tipo do  dispositivo deve ser preenchida")

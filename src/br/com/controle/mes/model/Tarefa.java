@@ -16,10 +16,10 @@ public class Tarefa implements Serializable {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvId", nullable = false)
+	@Column(name = "cvTarefa", nullable = false)
 	private Long id;
 
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	@Column(name = "ccTarefa", length = 20, nullable = false)
 	private String codigo;
 
 	@Column(name = "ccDescricao", length = 50, nullable = false)

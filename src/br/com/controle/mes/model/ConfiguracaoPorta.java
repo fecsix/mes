@@ -20,7 +20,7 @@ public class ConfiguracaoPorta implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código da configuracao da Porta deve ser preenchida")
-	@Column(name = "ccConfiguracaoPorta", length = 10, nullable = false)
+	@Column(name = "ccConfiguracaoPorta", length = 20, nullable = false)
 	private String codigo;
 
 	@NotEmpty(message = "Descrição da configuracao da Porta deve ser preenchida")

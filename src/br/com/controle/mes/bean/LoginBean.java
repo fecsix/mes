@@ -33,7 +33,8 @@ public class LoginBean implements Serializable {
 
 	@Transactional
 	public String efetuaLogin() {
-		if (dao.existe(usuario)) {
+		usuario = dao.existe(usuario);
+		if (usuario != null) {
 			usuarioLogado.setUsuario(usuario);
 			return "listar/ListarTarefa?faces-redirect=true";
 		} else {
@@ -51,7 +52,6 @@ public class LoginBean implements Serializable {
 	}
 
 	public String logout() {
-		System.out.println("vaza...");
 		usuarioLogado.setUsuario(null);
 		usuarioLogado.setMenuModel(null);
 		return "/login?faces-redirect=true";

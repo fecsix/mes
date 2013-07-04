@@ -18,6 +18,7 @@ import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.enumerate.SimNao;
 import br.com.controle.mes.model.Menu;
 import br.com.controle.mes.model.Perfil;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -120,8 +121,20 @@ public class PerfilBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.perfis = daoPerfil.listaTodos();
+		return paginaListarPerfil();
+	}
 
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.perfil = new Perfil();
+	}
+
+	private void gravar() {
 		List<Menu> lista = new ArrayList<Menu>();
 		for (TreeNode node : selectedNodes) {
 			int inicio = node.getData().toString().lastIndexOf("(");
@@ -134,17 +147,30 @@ public class PerfilBean implements Serializable {
 			daoPerfil.atualiza(perfil);
 		else
 			daoPerfil.adiciona(perfil);
-
-		this.perfil = new Perfil();
-		this.perfis = daoPerfil.listaTodos();
-
-		return "/listar/ListarPerfil";
 	}
 
 	@Transactional
-	public void remove(Perfil perfil) {
+	public String excluir() {
 		daoPerfil.remove(perfil);
 		this.perfis = daoPerfil.listaTodos();
+		return paginaListarPerfil();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Perfil.class, campo);
+	}
+
+	public String paginaListarPerfil() {
+		return "/listar/ListarPerfil?faces-redirect=true";
+	}
+
+	public String paginaManterPerfil() {
+		return "/manter/ManterPerfil?faces-redirect=true";
+	}
+
+	public String novoPerfil() {
+		perfil = new Perfil();
+		return paginaManterPerfil();
 	}
 
 }

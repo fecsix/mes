@@ -25,7 +25,7 @@ public class UnidadeBean implements Serializable {
 
 	private List<Unidade> listaUnidade;
 
-	private Long unidadeId = 3l;
+	private Long unidadeId;
 
 	@Inject
 	private DAO<Unidade> dao = new DAO<>(Unidade.class);
@@ -48,17 +48,29 @@ public class UnidadeBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
 		if (dadosOk()) {
-			if (unidade.getId() != null)
-				dao.atualiza(unidade);
-			else
-				dao.adiciona(unidade);
-			this.unidade = new Unidade();
+			gravar();
 			this.listaUnidade = dao.listaTodos();
 			return paginaListarUnidade();
 		}
 		return "";
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		if (dadosOk()) {
+			gravar();
+			this.unidade = new Unidade();
+		}
+	}
+
+	private void gravar() {
+		if (unidade.getId() != null)
+			dao.atualiza(unidade);
+		else
+			dao.adiciona(unidade);
 	}
 
 	private boolean dadosOk() {

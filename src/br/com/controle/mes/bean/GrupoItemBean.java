@@ -25,7 +25,7 @@ public class GrupoItemBean implements Serializable {
 
 	private List<GrupoItem> listaGrupoItem;
 
-	private Long grupoItemId = 3l;
+	private Long grupoItemId;
 
 	@Inject
 	private DAO<GrupoItem> dao;
@@ -48,33 +48,49 @@ public class GrupoItemBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
-		if (dadosOk()){
-			if (grupoItem.getId() != null)
-				dao.atualiza(grupoItem);
-			else
-				dao.adiciona(grupoItem);
-			this.grupoItem = new GrupoItem();
+	public String salvar() {
+		if (dadosOk()) {
+			gravar();
 			this.listaGrupoItem = dao.listaTodos();
 			return paginaListarGrupoItem();
 		}
 		return "";
 	}
-	
-	private boolean dadosOk(){
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		if (dadosOk()) {
+			gravar();
+			this.grupoItem = new GrupoItem();
+		}
+	}
+
+	private void gravar() {
+		if (grupoItem.getId() != null)
+			dao.atualiza(grupoItem);
+		else
+			dao.adiciona(grupoItem);
+	}
+
+	private boolean dadosOk() {
 		boolean dadosOk = true;
 		if (grupoItem != null) {
-			if (grupoItem.getDescricao().length() <= 0 || grupoItem.getDescricao().length() > getTamanhoCampo("descricao")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Descrição Inválida !!");
+			if (grupoItem.getDescricao().length() <= 0
+					|| grupoItem.getDescricao().length() > getTamanhoCampo("descricao")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+						"Descrição Inválida !!");
 				dadosOk = false;
 			}
-			if (grupoItem.getCodigo().length() <= 0 || grupoItem.getCodigo().length() > getTamanhoCampo("codigo")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Código Inválido !!");
+			if (grupoItem.getCodigo().length() <= 0
+					|| grupoItem.getCodigo().length() > getTamanhoCampo("codigo")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+						"Código Inválido !!");
 				dadosOk = false;
 			}
-		}else{
-			GerarMensagem
-			.addMsg(FacesMessage.SEVERITY_ERROR, "Grupo de Item não informado !!");
+		} else {
+			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+					"Grupo de Item não informado !!");
 			dadosOk = false;
 		}
 		return dadosOk;
@@ -89,18 +105,18 @@ public class GrupoItemBean implements Serializable {
 
 	@Transactional
 	public String excluir() {
-		if (exclusaoPermitida()){
+		if (exclusaoPermitida()) {
 			dao.remove(grupoItem);
 			return paginaListarGrupoItem();
 		}
 		return "";
 	}
-	
-	private boolean exclusaoPermitida(){
+
+	private boolean exclusaoPermitida() {
 		boolean excluir = true;
 		if (grupoItem == null || grupoItem.getId() <= 0) {
-			GerarMensagem
-			.addMsg(FacesMessage.SEVERITY_ERROR, "Grupo de Item não informado !!");
+			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
+					"Grupo de Item não informado !!");
 			excluir = false;
 		}
 		return excluir;
@@ -110,24 +126,24 @@ public class GrupoItemBean implements Serializable {
 		if (grupoItemId != null && grupoItemId != 0)
 			grupoItem = dao.buscaPorId(grupoItemId);
 	}
-	
-	public int getTamanhoCampo(String campo){
+
+	public int getTamanhoCampo(String campo) {
 		return new BuscarAnotacoes().getTamanhoCampo(GrupoItem.class, campo);
 	}
-	
+
 	/*
 	 * CONTROLE DE NAVEGAÇÃO
 	 */
-	
-	public String paginaListarGrupoItem(){
+
+	public String paginaListarGrupoItem() {
 		return "/listar/ListarGrupoItem";
 	}
-	
-	public String paginaManterGrupoItem(){
+
+	public String paginaManterGrupoItem() {
 		return "/manter/ManterGrupoItem";
 	}
-	
-	public String novoGrupoItem(){
+
+	public String novoGrupoItem() {
 		grupoItem = new GrupoItem();
 		return paginaManterGrupoItem();
 	}

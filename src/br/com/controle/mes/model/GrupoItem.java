@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Entity(name="MESGrupoItem")
+@Entity(name = "MESGrupoItem")
 public class GrupoItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,14 +17,13 @@ public class GrupoItem implements Serializable {
 	@Column(name = "cvGrupoItem", nullable = false)
 	private Long id;
 
-	//@NotEmpty(message = "Código do Grupo de Item deve ser preenchida")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	// @NotEmpty(message = "Código do Grupo de Item deve ser preenchida")
+	@Column(name = "ccGrupoItem", length = 20, nullable = false)
 	private String codigo;
-	
-	//@NotEmpty(message = "Descrição do Grupo de Item deve ser preenchida")
+
+	// @NotEmpty(message = "Descrição do Grupo de Item deve ser preenchida")
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
-	
 
 	public Long getId() {
 		return id;
@@ -41,7 +40,6 @@ public class GrupoItem implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	
 
 	public String getCodigo() {
 		return codigo;

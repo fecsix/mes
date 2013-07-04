@@ -19,11 +19,11 @@ public class Cliente implements Serializable {
 	@Column(name = "cvCliente", nullable = false)
 	private Long id;
 
-	@NotEmpty(message = "Código do Cliente deve ser preenchido.")
-	@Column(name = "ccCodCliente", length = 20, nullable = false)
+	@NotEmpty(message = "Código do Cliente deve ser preenchido")
+	@Column(name = "ccCliente", length = 20, nullable = false)
 	private String codigo;
 
-	@NotEmpty(message = "Descrição do Cliente eve ser preenchida")
+	@NotEmpty(message = "Descrição do Cliente deve ser preenchida")
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
 

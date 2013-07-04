@@ -11,39 +11,39 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="centroTrabalhoValidator" />
+			<h:inputHidden id="id"
+				value="#{centroTrabalhoBean.centroTrabalho.id}" />
 			<h2>
-				<h:outputText value="Novo Centro de Trabalho"
+				<h:outputText value="#{bundle['LABEL_NOVO_CENTRO_TRABALHO']}"
 					rendered="#{empty centroTrabalhoBean.centroTrabalho.id}" />
-				<h:outputText value="Editar Tarefa"
+				<h:outputText value="#{bundle['LABEL_EDITAR_CENTRO_TRABALHO']}"
 					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Centro de Trabalho</legend>
 
-				<p:outputLabel value="ID:" for="id"
-					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
-				<p:inputText id="id"
-					value="#{centroTrabalhoBean.centroTrabalho.id}" readonly="true"
-					rendered="#{not empty centroTrabalhoBean.centroTrabalho.id}" />
-				<h:inputHidden value="#{centroTrabalhoBean.centroTrabalho.id}" />
+			<p:panelGrid columns="2" styleClass="dados">
 
-				<p:outputLabel value="Código:" for="codigo" />
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
 				<p:inputText id="codigo"
-					value="#{centroTrabalhoBean.centroTrabalho.codigo}" />
+					value="#{centroTrabalhoBean.centroTrabalho.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{centroTrabalhoBean.getTamanhoCampo('codigo')}" />
 
-				<p:outputLabel value="Descrição:" for="descricao" />
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
 				<p:inputText id="descricao"
-					value="#{centroTrabalhoBean.centroTrabalho.descricao}" />
+					value="#{centroTrabalhoBean.centroTrabalho.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{centroTrabalhoBean.getTamanhoCampo('descricao')}" />
 
-				<p:outputLabel value="Tipo:" for="tipo" />
+				<p:outputLabel value="#{bundle['LABEL_TIPO']}:" for="tipo" />
 				<h:selectOneMenu id="tipo"
 					value="#{centroTrabalhoBean.centroTrabalho.tipoCentroTrabalho}">
-					<f:selectItems value="#{comumBean.tipoCentroTrabalho}" var="tipoe"
-						itemLabel="#{tipoe.descricao}" itemValue="#{tipoe}" />
+					<f:selectItems value="#{comumBean.tipoCentroTrabalho}" var="tipo"
+						itemLabel="#{tipo.descricao}" itemValue="#{tipo}" />
 				</h:selectOneMenu>
 
-				<h:outputLabel value="Fornecedor:" />
+				<h:outputLabel value="#{bundle['LABEL_FORNECEDOR']}:" />
 				<h:selectOneMenu id="fornecedor"
 					value="#{centroTrabalhoBean.centroTrabalho.fornecedor}">
 					<f:selectItems value="#{fornecedorBean.fornecedores}"
@@ -51,16 +51,42 @@
 						itemValue="#{fornecedor}" />
 				</h:selectOneMenu>
 
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar"
-						action="#{centroTrabalhoBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarCentroTrabalho?faces-redirect=true" />
-				</h:panelGrid>
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{centroTrabalhoBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{centroTrabalhoBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteCentroTrabalho.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{centroTrabalhoBean.paginaListarCentroTrabalho}"
+						ajax="false" immediate="true" />
+				</f:facet>
 
+			</p:panelGrid>
 
-			</fieldset>
 		</h:form>
+
+		<p:confirmDialog
+			message="#{bundle['MESSAGE_EXCLUIR_CENTRO_TRABALHO']}"
+			severity="alert" widgetVar="confirmDeleteCentroTrabalho"
+			appendToBody="true" style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{centroTrabalhoBean.centroTrabalho.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteCentroTrabalho.hide()"
+					action="#{centroTrabalhoBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteCentroTrabalho.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

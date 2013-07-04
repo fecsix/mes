@@ -22,7 +22,7 @@ public class Item implements Serializable {
 	private Long id;
 
 	// @NotEmpty(message = "Código do Item deve ser preenchida")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	@Column(name = "ccItem", length = 20, nullable = false)
 	private String codigo;
 
 	// @NotEmpty(message = "Descrição do Item deve ser preenchida")

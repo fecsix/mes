@@ -20,7 +20,7 @@ public class Fornecedor implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código do Fornecedor deve ser preenchido.")
-	@Column(name = "ccCodFornecedor", length = 20, nullable = false)
+	@Column(name = "ccFornecedor", length = 20, nullable = false)
 	private String codigo;
 
 	@NotEmpty(message = "Descrição do Fornecedor eve ser preenchida")

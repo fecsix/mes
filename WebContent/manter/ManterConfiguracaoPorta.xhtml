@@ -11,51 +11,90 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<h:inputHidden id="id"
+				value="#{configuracaoPortaBean.configuracaoPorta.id}" />
 			<h2>
-				<h:outputText value="Nova Porta Serial"
-					rendered="#{empty configuracaoPortaBean.configuracaoPorta.id}" />
-				<h:outputText value="Editar Porta Serial"
-					rendered="#{not empty configuracaoPortaBean.configuracaoPorta.id}" />
+				<h:outputText value="#{bundle['LABEL_NOVA_TAREFA']}"
+					rendered="#{empty tarefaBean.tarefa.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_TAREFA']}"
+					rendered="#{not empty tarefaBean.tarefa.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados da Porta Serial</legend>
 
-				<h:outputLabel value="Código" for="endereco" />
-				<h:inputText id="codigo"
-					value="#{configuracaoPortaBean.configuracaoPorta.codigo}" />
+			<p:panelGrid columns="2" styleClass="dados">
 
-				<h:outputLabel value="Descrição:" for="descricao" />
-				<h:inputTextarea id="descricao"
-					value="#{configuracaoPortaBean.configuracaoPorta.descricao}" />
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{configuracaoPortaBean.configuracaoPorta.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('codigo')}" />
 
-				<h:outputLabel value="BaudRate" for="baudRate" />
-				<h:inputText id="baudRate"
-					value="#{configuracaoPortaBean.configuracaoPorta.baudRate}" />
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{configuracaoPortaBean.configuracaoPorta.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('descricao')}" />
 
-				<h:outputLabel value="DataBits" for="dataBits" />
-				<h:inputText id="dataBits"
-					value="#{configuracaoPortaBean.configuracaoPorta.dataBits}" />
+				<p:outputLabel value="#{bundle['LABEL_BAUDRATE']}:" for="baudRate" />
+				<p:inputText id="baudRate"
+					value="#{configuracaoPortaBean.configuracaoPorta.baudRate}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('baudRate')}" />
 
+				<p:outputLabel value="#{bundle['LABEL_DATABITS']}:" for="dataBits" />
+				<p:inputText id="dataBits"
+					value="#{configuracaoPortaBean.configuracaoPorta.dataBits}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('dataBits')}" />
 
-				<h:outputLabel value="StopBits" for="stopBits" />
-				<h:inputText id="stopBits"
-					value="#{configuracaoPortaBean.configuracaoPorta.stopBits}" />
+				<p:outputLabel value="#{bundle['LABEL_STOPBITS']}:" for="stopBits" />
+				<p:inputText id="stopBits"
+					value="#{configuracaoPortaBean.configuracaoPorta.stopBits}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('stopBits')}" />
 
-				<h:outputLabel value="Parity" for="parity" />
-				<h:inputText id="parity"
-					value="#{configuracaoPortaBean.configuracaoPorta.parity}" />
+				<p:outputLabel value="#{bundle['LABEL_PARITY']}:" for="parity" />
+				<p:inputText id="parity"
+					value="#{configuracaoPortaBean.configuracaoPorta.parity}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{configuracaoPortaBean.getTamanhoCampo('parity')}" />
 
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{configuracaoPortaBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{configuracaoPortaBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteConfiguracaoPorta.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{configuracaoPortaBean.paginaListarConfiguracaoPorta}"
+						ajax="false" immediate="true" />
+				</f:facet>
 
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar"
-						action="#{configuracaoPortaBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarTConfiguracaoPorta?faces-redirect=true" />
-				</h:panelGrid>
+			</p:panelGrid>
 
-			</fieldset>
 		</h:form>
+
+		<p:confirmDialog
+			message="#{bundle['MESSAGE_EXCLUIR_CONFIGURACAO_PORTA']}"
+			severity="alert" widgetVar="confirmDeleteConfiguracaoPorta"
+			appendToBody="true" style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{configuracaoPortaBean.configuracaoPorta.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteConfiguracaoPorta.hide()"
+					action="#{configuracaoPortaBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteConfiguracaoPorta.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

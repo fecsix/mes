@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity(name = "MESPlanoProducao")
 public class PlanoProducao implements Serializable {
 
@@ -18,6 +20,10 @@ public class PlanoProducao implements Serializable {
 	@GeneratedValue
 	@Column(name = "cvPlanoProducao", nullable = false)
 	private Long id;
+
+	@NotEmpty(message = "Código do Plano de Produção deve ser preenchido.")
+	@Column(name = "ccPlanoProducao", length = 20, nullable = false)
+	private String codigo;
 
 	@ManyToOne
 	@JoinColumn(name = "cvOrdemProducao")
@@ -50,6 +56,14 @@ public class PlanoProducao implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public OrdemProducao getOrdemProducao() {

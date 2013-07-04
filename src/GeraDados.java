@@ -233,7 +233,7 @@ public class GeraDados {
 		m22.setMenuPai(m19);
 		m22.setNivel(3);
 		m22.setPosicao(30);
-		m22.setURL("/listar/ListarConfiguracao.xhtml");
+		m22.setURL("/listar/ListarConfiguracaoPorta.xhtml");
 		em.persist(m22);
 
 		Menu m23 = new Menu();

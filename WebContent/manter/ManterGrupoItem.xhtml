@@ -9,44 +9,66 @@
 
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
-	
-		<p:messages id="messages" autoUpdate="true" closable="true" />
 
-		<h2> Cadastro de Grupo de Item </h2>
 		<h:form id="cadastro">
-		
-			<h:inputHidden value="#{grupoItemBean.grupoItem.id}" />
-			
-			<p:panelGrid columns="2">  
-			      
-	    		<p:outputLabel for="codigo" value="Código:" />  
-	    		<p:inputText id="codigo" value="#{grupoItemBean.grupoItem.codigo}" 
-	    			size="#{grupoItemBean.getTamanhoCampo('codigo')}" maxlength="#{grupoItemBean.getTamanhoCampo('codigo')}"/> 
-	  
-	    		<p:outputLabel for="descricao" value="Descrição:" />  
-	    		<p:inputText id="descricao" value="#{grupoItemBean.grupoItem.descricao}" 
-	    			size="#{grupoItemBean.getTamanhoCampo('descricao')}" maxlength="#{grupoItemBean.getTamanhoCampo('descricao')}"/>  
-	  
-	    		<f:facet name="footer">  
-	        		<p:commandButton value="Salvar" icon="ui-icon-check" style="margin:0" action="#{grupoItemBean.gravar}" ajax="false"/> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Excluir" icon="ui-icon-trash" style="margin:0" oncomplete="confirmDeleteGrupoItem.show()" /> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Voltar" icon="ui-icon-arrowreturnthick-1-w" style="margin:0" action="#{grupoItemBean.paginaListarGrupoItem}" ajax="false" immediate="true"/> 
-	    		</f:facet>  
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="grupoItemValidator" />
+			<h:inputHidden id="id" value="#{grupoItemBean.grupoItem.id}" />
+			<h2>
+				<h:outputText value="#{bundle['LABEL_NOVO_GRUPO_ITEM']}"
+					rendered="#{empty grupoItemBean.grupoItem.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_GRUPO_ITEM']}"
+					rendered="#{not empty grupoItemBean.grupoItem.id}" />
+			</h2>
+
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<p:inputText id="codigo" value="#{grupoItemBean.grupoItem.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{grupoItemBean.getTamanhoCampo('codigo')}" />
+
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{grupoItemBean.grupoItem.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{grupoItemBean.getTamanhoCampo('descricao')}" />
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{grupoItemBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{grupoItemBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteGrupoItem.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{grupoItemBean.paginaListarGrupoItem}" ajax="false"
+						immediate="true" />
+				</f:facet>
 			</p:panelGrid>
-	
+
 		</h:form>
-		
-		<p:confirmDialog message="Deseja Excluir o Grupo de Item?" severity="alert" widgetVar="confirmDeleteGrupoItem" appendToBody="true" style="text-align:center">
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_GRUPO_ITEM']}"
+			severity="alert" widgetVar="confirmDeleteGrupoItem"
+			appendToBody="true" style="text-align:center">
 			<h:form id="confirmaExclusao" style="text-align:center">
 				<h:inputHidden value="#{grupoItemBean.grupoItem.id}" />
-				<p:commandButton value="Sim" oncomplete="confirmDeleteGrupoItem.hide()" action="#{grupoItemBean.excluir}" ajax="false" /> 
-		        <p:commandButton value="Não" onclick="confirmDeleteGrupoItem.hide()" />
-	        </h:form>
-        </p:confirmDialog> 
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteGrupoItem.hide()"
+					action="#{grupoItemBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteGrupoItem.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
-	 
 	</ui:define>
 </ui:composition>
 

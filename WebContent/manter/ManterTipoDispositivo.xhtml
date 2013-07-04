@@ -11,53 +11,93 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="tipoDispositivoValidator" />
+			<h:inputHidden id="id"
+				value="#{tipoDispositivoBean.tipoDispositivo.id}" />
 			<h2>
-				<h:outputText value="Novo Tipo de Dispositivo"
+				<h:outputText value="#{bundle['LABEL_NOVO_TIPO_DISPOSITIVO']}"
 					rendered="#{empty tipoDispositivoBean.tipoDispositivo.id}" />
-				<h:outputText value="Editar Tipo de Dispositivo"
+				<h:outputText value="#{bundle['LABEL_EDITAR_TIPO_DISPOSITIVO']}"
 					rendered="#{not empty tipoDispositivoBean.tipoDispositivo.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Tipo de Dispositivo</legend>
 
-				<h:outputLabel value="Código" for="endereco" />
-				<h:inputText id="codigo"
-					value="#{tipoDispositivoBean.tipoDispositivo.codigo}" />
+			<p:panelGrid columns="2" styleClass="dados">
 
-				<h:outputLabel value="Descrição:" for="descricao" />
-				<h:inputTextarea id="descricao"
-					value="#{tipoDispositivoBean.tipoDispositivo.descricao}" />
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<p:inputText id="codigo"
+					value="#{tipoDispositivoBean.tipoDispositivo.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('codigo')}" />
 
-				<h:outputLabel value="Marca" for="marca" />
-				<h:inputText id="marca"
-					value="#{tipoDispositivoBean.tipoDispositivo.marca}" />
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<p:inputText id="descricao"
+					value="#{tipoDispositivoBean.tipoDispositivo.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('descricao')}" />
 
-				<h:outputLabel value="Modelo" for="modelo" />
-				<h:inputText id="modelo"
-					value="#{tipoDispositivoBean.tipoDispositivo.modelo}" />
+				<p:outputLabel value="#{bundle['LABEL_MARCA']}:" for="marca" />
+				<p:inputText id="marca"
+					value="#{tipoDispositivoBean.tipoDispositivo.marca}"
+					size="#{constantsBean.FIELD_50}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('marca')}" />
 
+				<p:outputLabel value="#{bundle['LABEL_MODELO']}:" for="modelo" />
+				<p:inputText id="modelo"
+					value="#{tipoDispositivoBean.tipoDispositivo.modelo}"
+					size="#{constantsBean.FIELD_50}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('modelo')}" />
 
-				<h:outputLabel value="Registrador Contador"
+				<p:outputLabel value="#{bundle['LABEL_REGISTRADOR_CONTADOR']}:"
 					for="registradorContador" />
-				<h:inputText id="registradorContador"
-					value="#{tipoDispositivoBean.tipoDispositivo.registradorContador}" />
+				<p:inputText id="registradorContador"
+					value="#{tipoDispositivoBean.tipoDispositivo.registradorContador}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('registradorContador')}" />
 
-				<h:outputLabel value="Registrador Totalizador"
+				<p:outputLabel value="#{bundle['LABEL_REGISTRADOR_TOTALIZADOR']}:"
 					for="registradorTotalizador" />
-				<h:inputText id="registradorTotalizador"
-					value="#{tipoDispositivoBean.tipoDispositivo.registradorTotalizador}" />
+				<p:inputText id="registradorTotalizador"
+					value="#{tipoDispositivoBean.tipoDispositivo.registradorTotalizador}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{tipoDispositivoBean.getTamanhoCampo('registradorTotalizador')}" />
 
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{tipoDispositivoBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{tipoDispositivoBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteTipoDispositivo.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{tipoDispositivoBean.paginaListarTipoDispositivo}"
+						ajax="false" immediate="true" />
+				</f:facet>
 
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar"
-						action="#{tipoDispositivoBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarTipoDispositivo?faces-redirect=true" />
-				</h:panelGrid>
+			</p:panelGrid>
 
-			</fieldset>
 		</h:form>
+
+		<p:confirmDialog
+			message="#{bundle['MESSAGE_EXCLUIR_TIPO_DISPOSITIVO']}"
+			severity="alert" widgetVar="confirmDeleteTipoDispositivo"
+			appendToBody="true" style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{tipoDispositivoBean.tipoDispositivo.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteTipoDispositivo.hide()"
+					action="#{tipoDispositivoBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteTipoDispositivo.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

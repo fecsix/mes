@@ -10,7 +10,9 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.CentroTrabalho;
 import br.com.controle.mes.model.OrdemProducao;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -35,14 +37,24 @@ public class OrdemProducaoBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.ordensProducao = dao.listaTodos();
+		return paginaListarOrdemProducao();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.ordemProducao = new OrdemProducao();
+	}
+
+	private void gravar() {
 		if (ordemProducao.getId() != null)
 			dao.atualiza(ordemProducao);
 		else
 			dao.adiciona(ordemProducao);
-		this.ordemProducao = new OrdemProducao();
-		this.ordensProducao = dao.listaTodos();
-		return "/listar/ListarOrdemProducao";
 	}
 
 	public List<OrdemProducao> getOrdensProducao() {
@@ -55,6 +67,24 @@ public class OrdemProducaoBean implements Serializable {
 	public void remove(OrdemProducao ordemProducao) {
 		dao.remove(ordemProducao);
 		this.ordensProducao = dao.listaTodos();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes()
+				.getTamanhoCampo(OrdemProducao.class, campo);
+	}
+
+	public String paginaListarOrdemProducao() {
+		return "/listar/ListarOrdemProducao?faces-redirect=true";
+	}
+
+	public String paginaManterOrdemProducao() {
+		return "/manter/ManterOrdemProducao?faces-redirect=true";
+	}
+
+	public String novaOrdemProducao() {
+		ordemProducao = new OrdemProducao();
+		return paginaManterOrdemProducao();
 	}
 
 }

@@ -10,35 +10,41 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Usuários</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_USUARIO']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{usuarioBean.usuarios}" var="usuario"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{usuario.id}" />
-				</p:column>
 
-				<p:column headerText="Nome">
-					<h:commandLink value="#{usuario.nome}"
-						action="/manter/ManterUsuario">
+			<p:dataTable id="tableUsuario" value="#{usuarioBean.usuarios}"
+				var="usuario" paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{usuario.nome}"
+					headerText="#{bundle['LABEL_NOME']}" filterBy="#{usuario.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+				<p:column sortBy="#{usuario.login}"
+					headerText="#{bundle['LABEL_LOGIN']}" filterBy="#{usuario.login}"
+					filterMatchMode="contains">
+					<h:outputText value="#{usuario.login}" />
+				</p:column>
+				<p:column sortBy="#{usuario.ativo.descricao}"
+					headerText="#{bundle['LABEL_ATIVO']}"
+					filterBy="#{usuario.ativo.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{usuario.ativo.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{usuarioBean.novoUsuario}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterUsuario" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{usuario}"
 							target="#{usuarioBean.usuario}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Login">
-					<h:commandLink value="#{usuario.login}"
-						action="/manter/ManterUsuario">
-						<f:setPropertyActionListener value="#{usuario}"
-							target="#{usuarioBean.usuario}" />
-					</h:commandLink>
-				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{usuarioBean.remove(usuario)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

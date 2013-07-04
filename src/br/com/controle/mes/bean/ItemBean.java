@@ -13,8 +13,8 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.Item;
 import br.com.controle.mes.enumerate.TipoItem;
+import br.com.controle.mes.model.Item;
 import br.com.controle.mes.util.BuscarAnotacoes;
 import br.com.controle.mes.util.GerarMensagem;
 
@@ -69,17 +69,29 @@ public class ItemBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
 		if (dadosOk()) {
-			if (item.getId() != null)
-				dao.atualiza(item);
-			else
-				dao.adiciona(item);
-			this.item = new Item();
+			gravar();
 			this.listaItens = dao.listaTodos();
 			return paginaListarItem();
 		}
 		return "";
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		if (dadosOk()) {
+			gravar();
+			this.item = new Item();
+		}
+	}
+
+	private void gravar() {
+		if (item.getId() != null)
+			dao.atualiza(item);
+		else
+			dao.adiciona(item);
 	}
 
 	private boolean dadosOk() {

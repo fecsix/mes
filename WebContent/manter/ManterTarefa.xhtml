@@ -9,49 +9,70 @@
 
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
-	
-		<p:messages id="messages" autoUpdate="true" closable="true" />
 
-		<h2> Cadastro de Tarefas </h2>
 		<h:form id="cadastro">
-		
-			<h:inputHidden value="#{tarefaBean.tarefa.id}" />
-			
-			<p:panelGrid columns="2">  
-			      
-	    		<p:outputLabel for="codigo" value="Código:" />  
-	    		<p:inputText id="codigo" value="#{tarefaBean.tarefa.codigo}" 
-	    			size="#{tarefaBean.getTamanhoCampo('codigo')}" maxlength="#{tarefaBean.getTamanhoCampo('codigo')}"/> 
-	  
-	    		<p:outputLabel for="descricao" value="Descrição:" />  
-	    		<p:inputText id="descricao" value="#{tarefaBean.tarefa.descricao}" 
-	    			size="#{tarefaBean.getTamanhoCampo('descricao')}" maxlength="#{tarefaBean.getTamanhoCampo('descricao')}"/>  
-	    		
-	    		<p:outputLabel for="tipoTarefa" value="Tipo de Tarefa:" />  
-		        <p:selectOneMenu id="tipoTarefa" value="#{tarefaBean.tarefa.tipo}" >  
-		            <f:selectItems value="#{tarefaBean.listaTipoTarefa}"  />  
-		        </p:selectOneMenu>
-	  
-	    		<f:facet name="footer">  
-	        		<p:commandButton value="Salvar" icon="ui-icon-check" style="margin:0" action="#{tarefaBean.gravar}" ajax="false"/> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Excluir" icon="ui-icon-trash" style="margin:0" oncomplete="confirmDeleteTarefa.show()" /> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Voltar" icon="ui-icon-arrowreturnthick-1-w" style="margin:0" action="#{tarefaBean.paginaListarTarefa}" ajax="false" immediate="true"/> 
-	    		</f:facet>  
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="tarefaValidator" />
+			<h:inputHidden id="id" value="#{tarefaBean.tarefa.id}" />
+			<h2>
+				<h:outputText value="#{bundle['LABEL_NOVA_TAREFA']}"
+					rendered="#{empty tarefaBean.tarefa.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_TAREFA']}"
+					rendered="#{not empty tarefaBean.tarefa.id}" />
+			</h2>
+
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<p:outputLabel for="codigo" value="#{bundle['LABEL_CODIGO']}:" />
+				<p:inputText id="codigo" value="#{tarefaBean.tarefa.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{tarefaBean.getTamanhoCampo('codigo')}" />
+
+				<p:outputLabel for="descricao" value="#{bundle['LABEL_DESCRICAO']}:" />
+				<p:inputText id="descricao" value="#{tarefaBean.tarefa.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{tarefaBean.getTamanhoCampo('descricao')}" />
+
+				<p:outputLabel for="tipoTarefa" value="#{bundle['LABEL_TIPO']}:" />
+				<p:selectOneMenu id="tipoTarefa" value="#{tarefaBean.tarefa.tipo}">
+					<f:selectItems value="#{comumBean.tipoTarefa}" />
+				</p:selectOneMenu>
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{tarefaBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-plus" style="margin:0"
+						action="#{tarefaBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteTarefa.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{tarefaBean.paginaListarTarefa}" ajax="false"
+						immediate="true" />
+				</f:facet>
 			</p:panelGrid>
-	
+
 		</h:form>
-		
-		<p:confirmDialog message="Deseja Excluir a Tarefa?" severity="alert" widgetVar="confirmDeleteTarefa" appendToBody="true" style="text-align:center">
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_TAREFA']}"
+			severity="alert" widgetVar="confirmDeleteTarefa" appendToBody="true"
+			style="text-align:center">
 			<h:form id="confirmaExclusao" style="text-align:center">
 				<h:inputHidden value="#{tarefaBean.tarefa.id}" />
-				<p:commandButton value="Sim" oncomplete="confirmDeleteTarefa.hide()" action="#{tarefaBean.excluir}" ajax="false" /> 
-		        <p:commandButton value="Não" onclick="confirmDeleteTarefa.hide()" />
-	        </h:form>
-        </p:confirmDialog> 
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteTarefa.hide()"
+					action="#{tarefaBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteTarefa.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
-	 
 	</ui:define>
 </ui:composition>
 

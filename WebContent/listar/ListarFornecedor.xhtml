@@ -10,29 +10,37 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Fornecedores</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_FORNECEDOR']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{fornecedorBean.fornecedores}" var="fornecedor"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{fornecedor.id}" />
-				</p:column>
-				<p:column headerText="Codigo">
+
+			<p:dataTable id="tableFornecedor"
+				value="#{fornecedorBean.fornecedores}" var="fornecedor"
+				paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{fornecedor.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}"
+					filterBy="#{fornecedor.codigo}" filterMatchMode="contains">
 					<h:outputText value="#{fornecedor.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
-					<h:commandLink value="#{fornecedor.descricao}" id="edit"
-						action="/manter/ManterFornecedor">
+				<p:column sortBy="#{fornecedor.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{fornecedor.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{fornecedor.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{fornecedorBean.novoFornecedor}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterFornecedor" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{fornecedor}"
 							target="#{fornecedorBean.fornecedor}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{fornecedorBean.remove(fornecedor)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

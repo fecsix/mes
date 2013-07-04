@@ -27,7 +27,7 @@ public class OrdemProducao implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código da Ordem de Produção deve ser preenchido.")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	@Column(name = "ccOrdemProducao", length = 20, nullable = false)
 	private String codigo;
 
 	@ManyToOne

@@ -11,6 +11,7 @@ import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.model.Cliente;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -35,14 +36,24 @@ public class ClienteBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.clientes = dao.listaTodos();
+		return paginaListarCliente();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.cliente = new Cliente();
+	}
+
+	private void gravar() {
 		if (cliente.getId() != null)
 			dao.atualiza(cliente);
 		else
 			dao.adiciona(cliente);
-		this.cliente = new Cliente();
-		this.clientes = dao.listaTodos();
-		return "/listar/ListarCliente";
 	}
 
 	public List<Cliente> getClientes() {
@@ -52,9 +63,27 @@ public class ClienteBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(Cliente cliente) {
+	public String excluir() {
 		dao.remove(cliente);
 		this.clientes = dao.listaTodos();
+		return paginaListarCliente();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Cliente.class, campo);
+	}
+
+	public String paginaListarCliente() {
+		return "/listar/ListarCliente?faces-redirect=true";
+	}
+
+	public String paginaManterCliente() {
+		return "/manter/ManterCliente?faces-redirect=true";
+	}
+
+	public String novoCliente() {
+		cliente = new Cliente();
+		return paginaManterCliente();
 	}
 
 }

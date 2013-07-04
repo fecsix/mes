@@ -23,9 +23,8 @@ public class Autorizador {
 	private NavigationHandler navigationHandler;
 
 	public void autoriza(@Observes @After @RestoreView PhaseEvent event) {
-		if ("/login.xhtml".equals(context.getViewRoot().getViewId())) {
+		if ("/login.xhtml".equals(context.getViewRoot().getViewId()))
 			return;
-		}
 
 		if (!loginBean.isLogado()) {
 			navigationHandler.handleNavigation(context, null,

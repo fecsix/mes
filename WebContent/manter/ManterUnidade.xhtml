@@ -9,44 +9,65 @@
 
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
-	
-		<p:messages id="messages" autoUpdate="true" closable="true" />
 
-		<h2> Cadastro Unidade de Medida </h2>
 		<h:form id="cadastro">
-		
-			<h:inputHidden value="#{unidadeBean.unidade.id}" />
-			
-			<p:panelGrid columns="2">  
-			      
-	    		<p:outputLabel for="codigo" value="Código:" />  
-	    		<p:inputText id="codigo" value="#{unidadeBean.unidade.codigo}" 
-	    			size="#{unidadeBean.getTamanhoCampo('codigo')}" maxlength="#{unidadeBean.getTamanhoCampo('codigo')}"/> 
-	  
-	    		<p:outputLabel for="descricao" value="Descrição:" />  
-	    		<p:inputText id="descricao" value="#{unidadeBean.unidade.descricao}" 
-	    			size="#{unidadeBean.getTamanhoCampo('descricao')}" maxlength="#{unidadeBean.getTamanhoCampo('descricao')}"/>  
-	  
-	    		<f:facet name="footer">  
-	        		<p:commandButton value="Salvar" icon="ui-icon-check" style="margin:0" action="#{unidadeBean.gravar}" ajax="false"/> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Excluir" icon="ui-icon-trash" style="margin:0" oncomplete="confirmDeleteUnidade.show()" /> 
-	        		<p:spacer width="10"/>
-	        		<p:commandButton value="Voltar" icon="ui-icon-arrowreturnthick-1-w" style="margin:0" action="#{unidadeBean.paginaListarUnidade}" ajax="false" immediate="true"/> 
-	    		</f:facet>  
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="unidadeValidator" />
+			<h:inputHidden id="id" value="#{unidadeBean.unidade.id}" />
+			<h2>
+				<h:outputText value="#{bundle['LABEL_NOVA_UNIDADE']}"
+					rendered="#{empty unidadeBean.unidade.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_UNIDADE']}"
+					rendered="#{not empty unidadeBean.unidade.id}" />
+			</h2>
+
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<p:outputLabel for="codigo" value="#{bundle['LABEL_CODIGO']}:" />
+				<p:inputText id="codigo" value="#{unidadeBean.unidade.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{unidadeBean.getTamanhoCampo('codigo')}" />
+
+				<p:outputLabel for="descricao" value="#{bundle['LABEL_DESCRICAO']}:" />
+				<p:inputText id="descricao" value="#{unidadeBean.unidade.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{unidadeBean.getTamanhoCampo('descricao')}" />
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{unidadeBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{unidadeBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteUnidade.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{unidadeBean.paginaListarUnidade}" ajax="false"
+						immediate="true" />
+				</f:facet>
 			</p:panelGrid>
-	
+
 		</h:form>
-		
-		<p:confirmDialog message="Deseja Excluir a Unidade?" severity="alert" widgetVar="confirmDeleteUnidade" appendToBody="true" style="text-align:center">
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_UNIDADE']}"
+			severity="alert" widgetVar="confirmDeleteUnidade" appendToBody="true"
+			style="text-align:center">
 			<h:form id="confirmaExclusao" style="text-align:center">
 				<h:inputHidden value="#{unidadeBean.unidade.id}" />
-				<p:commandButton value="Sim" oncomplete="confirmDeleteUnidade.hide()" action="#{unidadeBean.excluir}" ajax="false" /> 
-		        <p:commandButton value="Não" onclick="confirmDeleteUnidade.hide()" />
-	        </h:form>
-        </p:confirmDialog> 
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteUnidade.hide()"
+					action="#{unidadeBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteUnidade.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
-	 
 	</ui:define>
 </ui:composition>
 

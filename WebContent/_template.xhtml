@@ -9,7 +9,7 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>:: Control-E :: MES ::</title>
+	<title><h:outputText value="#{bundle['LABEL_PECSYS_MES']}" /></title>
 	<h:outputStylesheet library="css" name="style.css" />
 </h:head>
 
@@ -17,9 +17,20 @@
 	<div id="cabecalho">
 		<h:graphicImage library="imagens" name="logo-uber.png"
 			id="logoCompany" />
+		<h:form id="i18n">
+			<h:commandLink action="#{internacionalizacaoBean.mudarIdioma('pt')}">
+				<h:graphicImage url="/resources/imagens/br.png" height="25" />
+			</h:commandLink>
+			<h:commandLink action="#{internacionalizacaoBean.mudarIdioma('en')}">
+				<h:graphicImage url="/resources/imagens/en.png" height="25" />
+			</h:commandLink>
+			<h:commandLink action="#{internacionalizacaoBean.mudarIdioma('es')}">
+				<h:graphicImage url="/resources/imagens/es.png" height="25" />
+			</h:commandLink>
+		</h:form>
 		<div id="usuarioLogado">
 			<h:outputText rendered="#{usuarioLogado.logado}"
-				value="Logado como: #{usuarioLogado.usuario.login}" />
+				value="#{bundle['LABEL_LOGADO_COMO']}: #{usuarioLogado.usuario.login}" />
 		</div>
 	</div>
 
@@ -31,8 +42,9 @@
 		<ui:insert name="corpo" />
 	</div>
 
-	<div id="rodape">Copyright 2013. Todos os Direitos reservados a
-		Control-E.</div>
+	<div id="rodape">
+		<h:outputText value="#{bundle['LABEL_COPYRIGHT']}" />
+	</div>
 </h:body>
 
 </html>

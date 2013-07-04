@@ -11,36 +11,35 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
-
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="perfilValidator" />
+			<h:inputHidden id="id" value="#{perfilBean.perfil.id}" />
 			<h2>
-				<h:outputText value="Novo Perfil"
+				<h:outputText value="#{bundle['LABEL_NOVO_PERFIL']}"
 					rendered="#{empty perfilBean.perfil.id}" />
-				<h:outputText value="Editar perfil"
+				<h:outputText value="#{bundle['LABEL_EDITAR_PERFIL']}"
 					rendered="#{not empty perfilBean.perfil.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Perfil</legend>
 
-				<p:outputLabel value="ID:" for="id"
-					rendered="#{not empty perfilBean.perfil.id}" />
-				<p:inputText id="id" value="#{perfilBean.perfil.id}" readonly="true"
-					rendered="#{not empty perfilBean.perfil.id}" />
-				<h:inputHidden value="#{perfilBean.perfil.id}" />
+			<p:panelGrid columns="2" styleClass="dados">
 
-				<p:outputLabel value="Nome:" for="nome" />
-				<p:inputText id="nome" value="#{perfilBean.perfil.nome}" />
+				<p:outputLabel value="#{bundle['LABEL_NOME']}:" for="nome" />
+				<p:inputText id="nome" value="#{perfilBean.perfil.nome}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{perfilBean.getTamanhoCampo('nome')}" />
 
-				<p:outputLabel value="Descrição:" for="descricao" />
-				<p:inputText id="descricao" value="#{perfilBean.perfil.descricao}" />
+				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<p:inputText id="descricao" value="#{perfilBean.perfil.descricao}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{perfilBean.getTamanhoCampo('descricao')}" />
 
-				<p:outputLabel value="Ativo:" for="ativo" />
+				<p:outputLabel value="#{bundle['LABEL_ATIVO']}:" for="ativo" />
 				<h:selectOneMenu id="ativo" value="#{perfilBean.perfil.ativo}">
 					<f:selectItems value="#{comumBean.simNao}" var="sn"
 						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
 				</h:selectOneMenu>
 
-				<h:outputLabel value="Menus:" />
+				<h:outputLabel value="#{bundle['LABEL_MENUS']}:" />
 				<p:tree value="#{perfilBean.root}" var="node" id="menus"
 					selectionMode="checkbox" selection="#{perfilBean.selectedNodes}">
 					<p:treeNode>
@@ -48,14 +47,41 @@
 					</p:treeNode>
 				</p:tree>
 
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar" action="#{perfilBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarPerfil?faces-redirect=true" />
-				</h:panelGrid>
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{perfilBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{perfilBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeletePerfil.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{perfilBean.paginaListarPerfil}" ajax="false"
+						immediate="true" />
+				</f:facet>
 
-			</fieldset>
+			</p:panelGrid>
+
 		</h:form>
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_PERFIL']}"
+			severity="alert" widgetVar="confirmDeletePerfil" appendToBody="true"
+			style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{perfilBean.perfil.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeletePerfil.hide()"
+					action="#{perfilBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeletePerfil.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

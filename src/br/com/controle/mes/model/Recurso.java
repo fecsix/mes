@@ -20,13 +20,12 @@ public class Recurso implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código do Recurso deve ser preenchido.")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	@Column(name = "ccRecurso", length = 20, nullable = false)
 	private String codigo;
-	
+
 	@NotEmpty(message = "Descrição da tarefa deve ser preenchida")
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
-
 
 	public Long getId() {
 		return id;
@@ -82,7 +81,5 @@ public class Recurso implements Serializable {
 		return "Recurso [id=" + id + ", codigo=" + codigo + ", descricao="
 				+ descricao + "]";
 	}
-
-
 
 }

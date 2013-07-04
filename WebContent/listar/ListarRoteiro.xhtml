@@ -10,29 +10,36 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Roteiros</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_ROTEIRO']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{roteiroBean.roteiros}" var="roteiro"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{roteiro.id}" />
-				</p:column>
-				<p:column headerText="Codigo">
+
+			<p:dataTable id="tableRoteiro" value="#{roteiroBean.roteiros}"
+				var="roteiro" paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{roteiro.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}" filterBy="#{roteiro.codigo}"
+					filterMatchMode="contains">
 					<h:outputText value="#{roteiro.codigo}" />
 				</p:column>
-				<p:column headerText="Item">
-					<h:commandLink value="#{roteiro.item.descricao}" id="edit"
-						action="/manter/ManterRoteiro">
+				<p:column sortBy="#{roteiro.item.descricao}"
+					headerText="#{bundle['LABEL_ITEM']}"
+					filterBy="#{roteiro.item.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{roteiro.item.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{roteiroBean.novoRoteiro}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterRoteiro" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{roteiro}"
 							target="#{roteiroBean.roteiro}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{roteiroBean.remove(roteiro)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

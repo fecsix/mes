@@ -22,6 +22,7 @@ import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.MenuDAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.model.Menu;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -65,14 +66,24 @@ public class MenuBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.menus = dao.listaTodos();
+		return paginaListarMenu();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.menus = dao.listaTodos();
+	}
+
+	private void gravar() {
 		if (menu.getId() != null)
 			dao.atualiza(menu);
 		else
 			dao.adiciona(menu);
-		this.menu = new Menu();
-		this.menus = dao.listaTodos();
-		return "/listar/ListarMenu";
 	}
 
 	public List<Menu> getMenus() {
@@ -82,20 +93,23 @@ public class MenuBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(Menu menu) {
+	public String excluir() {
 		dao.remove(menu);
 		this.menus = dao.listaTodos();
+		return paginaListarMenu();
 	}
 
 	public void geraMenu() {
 
-		FacesContext fContext = FacesContext.getCurrentInstance();
-		ELContext elContext = fContext.getELContext();
-		ExpressionFactory exFactory = fContext.getApplication()
-				.getExpressionFactory();
-
 		listaMenu = menuDao.listarMenuPorUsuario(usuarioLogado.getUsuario());
-		if (listaMenu != null && listaMenu.size() > 0)
+
+		if (listaMenu != null && listaMenu.size() > 0) {
+
+			FacesContext fContext = FacesContext.getCurrentInstance();
+			ELContext elContext = fContext.getELContext();
+			ExpressionFactory exFactory = fContext.getApplication()
+					.getExpressionFactory();
+
 			for (Menu menu : listaMenu)
 				if (menu.getMenuPai() == null) {
 					Submenu submenu = new Submenu();
@@ -118,16 +132,18 @@ public class MenuBean implements Serializable {
 					this.menuModel.addSubmenu(submenu);
 				}
 
-		// adiciona o menu para Sair
-		MenuItem item = new MenuItem();
-		item.setValue("Sair");
-		item.setIcon("ui-icon-close");
-		item.setActionExpression(exFactory.createMethodExpression(elContext,
-				"#{loginBean.logout}", String.class, new Class[0]));
-		this.menuModel.addMenuItem(item);
+			// adiciona o menu para Sair
+			MenuItem item = new MenuItem();
+			item.setValue("Sair");
+			item.setIcon("ui-icon-close");
+			item.setActionExpression(exFactory.createMethodExpression(
+					elContext, "#{loginBean.logout}", String.class,
+					new Class[0]));
+			this.menuModel.addMenuItem(item);
 
-		// seta na sessão
-		usuarioLogado.setMenuModel(menuModel);
+			// seta na sessão
+			usuarioLogado.setMenuModel(menuModel);
+		}
 	}
 
 	private Submenu geraSubmenu(Menu menu) {
@@ -159,6 +175,23 @@ public class MenuBean implements Serializable {
 			if (item.getMenuPai() != null && item.getMenuPai().equals(menu))
 				return true;
 		return false;
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Menu.class, campo);
+	}
+
+	public String paginaListarMenu() {
+		return "/listar/ListarMenu?faces-redirect=true";
+	}
+
+	public String paginaManterMenu() {
+		return "/manter/ManterMenu?faces-redirect=true";
+	}
+
+	public String novoMenu() {
+		menu = new Menu();
+		return paginaManterMenu();
 	}
 
 }

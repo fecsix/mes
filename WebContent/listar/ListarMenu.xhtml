@@ -10,28 +10,33 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Menus</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_MENU']}" />
+		</h2>
 		<h:form id="lista">
-			<p:dataTable value="#{menuBean.menus}" var="menu" paginator="true"
-				rows="5">
 
-				<p:column headerText="ID">
-					<h:outputText value="#{menu.id}" />
+			<p:dataTable id="tableMenu" value="#{menuBean.menus}" var="menu"
+				paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{menu.nome}" headerText="#{bundle['LABEL_NOME']}"
+					filterBy="#{menu.nome}" filterMatchMode="contains">
+					<h:outputText value="#{menu.nome}" />
 				</p:column>
-
-				<p:column headerText="Nome">
-					<h:commandLink value="#{menu.nome}" id="edit"
-						action="/manter/ManterMenu">
+				<p:column sortBy="#{menu.URL}" headerText="#{bundle['LABEL_URL']}"
+					filterBy="#{menu.URL}" filterMatchMode="contains">
+					<h:outputText value="#{menu.URL}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{menuBean.novoMenu}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterMenu" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{menu}"
 							target="#{menuBean.menu}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{menuBean.remove(menu)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

@@ -1,16 +1,17 @@
 package br.com.controle.mes.bean;
 
-import br.com.controle.mes.dao.Auditavel;
-import br.com.controle.mes.dao.DAO;
-import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.Dispositivo;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import br.com.controle.mes.dao.Auditavel;
+import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.Dispositivo;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -45,14 +46,24 @@ public class DispositivoBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.dispositivos = dao.listaTodos();
+		return paginaListarDispositivo();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.dispositivo = new Dispositivo();
+	}
+
+	private void gravar() {
 		if (dispositivo.getId() != null)
 			dao.atualiza(dispositivo);
 		else
 			dao.adiciona(dispositivo);
-		this.dispositivo = new Dispositivo();
-		this.dispositivos = dao.listaTodos();
-		return "/listar/ListarDispositivo";
 	}
 
 	public List<Dispositivo> getDispositivos() {
@@ -63,14 +74,32 @@ public class DispositivoBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(Dispositivo dispositivo) {
+	public String excluir() {
 		dao.remove(dispositivo);
 		this.dispositivos = dao.listaTodos();
+		return paginaListarDispositivo();
 	}
 
 	public void carregaDispositivo() {
 		if (dispositivoId != null && dispositivoId != 0)
 			dispositivo = dao.buscaPorId(dispositivoId);
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Dispositivo.class, campo);
+	}
+
+	public String paginaListarDispositivo() {
+		return "/listar/ListarDispositivo?faces-redirect=true";
+	}
+
+	public String paginaManterDispositivo() {
+		return "/manter/ManterDispositivo?faces-redirect=true";
+	}
+
+	public String novoDispositivo() {
+		dispositivo = new Dispositivo();
+		return paginaManterDispositivo();
 	}
 
 }

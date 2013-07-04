@@ -11,6 +11,7 @@ import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.model.CentroTrabalho;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -35,14 +36,24 @@ public class CentroTrabalhoBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.centroTrabalhos = dao.listaTodos();
+		return paginaListarCentroTrabalho();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.centroTrabalho = new CentroTrabalho();
+	}
+
+	private void gravar() {
 		if (centroTrabalho.getId() != null)
 			dao.atualiza(centroTrabalho);
 		else
 			dao.adiciona(centroTrabalho);
-		this.centroTrabalho = new CentroTrabalho();
-		this.centroTrabalhos = dao.listaTodos();
-		return "/listar/ListarCentroDeTrabalho";
 	}
 
 	public List<CentroTrabalho> getCentroTrabalhos() {
@@ -52,9 +63,28 @@ public class CentroTrabalhoBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(CentroTrabalho centroTrabalho) {
+	public String excluir() {
 		dao.remove(centroTrabalho);
 		this.centroTrabalhos = dao.listaTodos();
+		return paginaListarCentroTrabalho();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(CentroTrabalho.class,
+				campo);
+	}
+
+	public String paginaListarCentroTrabalho() {
+		return "/listar/ListarCentroTrabalho?faces-redirect=true";
+	}
+
+	public String paginaManterCentroTrabalho() {
+		return "/manter/ManterCentroTrabalho?faces-redirect=true";
+	}
+
+	public String novoCentroTrabalho() {
+		centroTrabalho = new CentroTrabalho();
+		return paginaManterCentroTrabalho();
 	}
 
 }

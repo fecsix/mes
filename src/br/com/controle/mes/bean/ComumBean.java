@@ -7,6 +7,7 @@ import javax.inject.Named;
 import br.com.controle.mes.enumerate.SimNao;
 import br.com.controle.mes.enumerate.TipoCentroTrabalho;
 import br.com.controle.mes.enumerate.StatusOP;
+import br.com.controle.mes.enumerate.TipoTarefa;
 
 @RequestScoped
 @Named
@@ -16,6 +17,14 @@ public class ComumBean {
 		SelectItem[] items = new SelectItem[TipoCentroTrabalho.values().length];
 		int i = 0;
 		for (TipoCentroTrabalho item : TipoCentroTrabalho.values())
+			items[i++] = new SelectItem(item, item.getDescricao());
+		return items;
+	}
+
+	public SelectItem[] getTipoTarefa() {
+		SelectItem[] items = new SelectItem[TipoTarefa.values().length];
+		int i = 0;
+		for (TipoTarefa item : TipoTarefa.values())
 			items[i++] = new SelectItem(item, item.getDescricao());
 		return items;
 	}
@@ -285,4 +294,5 @@ public class ComumBean {
 				"ui-icon-grip-diagonal-se");
 		return items;
 	}
+
 }

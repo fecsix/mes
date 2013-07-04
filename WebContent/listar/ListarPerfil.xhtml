@@ -10,28 +10,41 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Perfis</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_PERFIL']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{perfilBean.perfis}" var="perfil"
-				paginator="true" rows="5">
 
-				<p:column headerText="ID">
-					<h:outputText value="#{perfil.id}" />
+			<p:dataTable id="tablePerfil" value="#{perfilBean.perfis}"
+				var="perfil" paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{perfil.nome}"
+					headerText="#{bundle['LABEL_NOME']}" filterBy="#{perfil.nome}"
+					filterMatchMode="contains">
+					<h:outputText value="#{perfil.nome}" />
 				</p:column>
-
-				<p:column headerText="Nome">
-					<h:commandLink value="#{perfil.nome}" id="edit"
-						action="/manter/ManterPerfil">
+				<p:column sortBy="#{perfil.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{perfil.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{perfil.descricao}" />
+				</p:column>
+				<p:column sortBy="#{perfil.ativo.descricao}"
+					headerText="#{bundle['LABEL_ATIVO']}"
+					filterBy="#{perfil.ativo.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{perfil.ativo.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{perfilBean.novoPerfil}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterPerfil" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{perfil}"
 							target="#{perfilBean.perfil}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{perfilBean.remove(perfil)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

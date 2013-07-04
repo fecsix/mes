@@ -11,60 +11,84 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<h:inputHidden id="id" value="#{menuBean.menu.id}" />
 			<h2>
-				<h:outputText value="Novo Menu" rendered="#{empty menuBean.menu.id}" />
-				<h:outputText value="Editar menu"
+				<h:outputText value="#{bundle['LABEL_NOVO_MENU']}"
+					rendered="#{empty menuBean.menu.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_MENU']}"
 					rendered="#{not empty menuBean.menu.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Menu</legend>
 
-				<p:outputLabel value="ID:" for="id"
-					rendered="#{not empty menuBean.menu.id}" />
-				<p:inputText id="id" value="#{menuBean.menu.id}" readonly="true"
-					rendered="#{not empty menuBean.menu.id}" />
-				<h:inputHidden value="#{menuBean.menu.id}" />
+			<p:panelGrid columns="2" styleClass="dados">
 
-				<p:outputLabel value="Nome:" for="nome" />
-				<p:inputText id="nome" value="#{menuBean.menu.nome}" />
+				<p:outputLabel value="#{bundle['LABEL_NOME']}:" for="nome" />
+				<p:inputText id="nome" value="#{menuBean.menu.nome}"
+					size="#{constantsBean.FIELD_50}"
+					maxlength="#{menuBean.getTamanhoCampo('nome')}" />
 
-				<p:outputLabel value="URL:" for="URL" />
-				<p:inputText id="URL" value="#{menuBean.menu.URL}" />
+				<p:outputLabel value="#{bundle['LABEL_URL']}:" for="URL" />
+				<p:inputText id="URL" value="#{menuBean.menu.URL}"
+					size="#{constantsBean.FIELD_100}"
+					maxlength="#{menuBean.getTamanhoCampo('URL')}" />
 
-				<p:outputLabel value="Ícone:" for="icone" />
+				<p:outputLabel value="#{bundle['LABEL_ICONE']}:" for="icone" />
 				<h:selectOneMenu id="icone" value="#{menuBean.menu.icone}">
-					<f:selectItems value="#{comumBean.icone}" var="ic"
-						itemLabel="#{ic}" itemValue="#{ic}" />
+					<f:selectItems value="#{comumBean.icone}" var="icone"
+						itemLabel="#{icone}" itemValue="#{icone}" />
 				</h:selectOneMenu>
 
-				<p:outputLabel value="Nível:" for="nivel" />
-				<p:inputText id="nivel" value="#{menuBean.menu.nivel}" />
+				<p:outputLabel value="#{bundle['LABEL_NIVEL']}:" for="nivel" />
+				<p:inputText id="nivel" value="#{menuBean.menu.nivel}"
+					size="#{constantsBean.FIELD_50}"
+					maxlength="#{menuBean.getTamanhoCampo('nivel')}" />
 
-				<p:outputLabel value="Posição:" for="posicao" />
-				<p:inputText id="posicao" value="#{menuBean.menu.posicao}" />
+				<p:outputLabel value="#{bundle['LABEL_POSICAO']}:" for="posicao" />
+				<p:inputText id="posicao" value="#{menuBean.menu.posicao}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{menuBean.getTamanhoCampo('posicao')}" />
 
-				<p:outputLabel value="Ativo:" for="ativo" />
+				<p:outputLabel value="#{bundle['LABEL_ATIVO']}:" for="ativo" />
 				<h:selectOneMenu id="ativo" value="#{menuBean.menu.ativo}">
 					<f:selectItems value="#{comumBean.simNao}" var="sn"
 						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
 				</h:selectOneMenu>
 
-				<p:outputLabel value="Menu pai:" for="menuPai" />
-				<h:selectOneMenu id="menuPai" value="#{menuBean.menu.menuPai}">
-					<f:selectItem itemLabel="::Nenhum::" itemValue="" />
-					<f:selectItems value="#{menuBean.menus}" var="menu"
-						itemValue="#{menu}" itemLabel="#{menu.nome} (#{menu.id})" />
-				</h:selectOneMenu>
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0" action="#{menuBean.salvar}"
+						ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{menuBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteMenu.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{menuBean.paginaListarMenu}" ajax="false"
+						immediate="true" />
+				</f:facet>
 
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar" action="#{menuBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarMenu?faces-redirect=true" />
-				</h:panelGrid>
+			</p:panelGrid>
 
-			</fieldset>
 		</h:form>
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_MENU']}"
+			severity="alert" widgetVar="confirmDeleteMenu" appendToBody="true"
+			style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{menuBean.menu.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteMenu.hide()" action="#{menuBean.excluir}"
+					ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteMenu.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

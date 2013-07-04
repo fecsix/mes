@@ -10,30 +10,41 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Portas Seriais</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_PORTA_SERIAL']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{configuracaoPortaBean.configuracaoPortas}"
-				var="configuracaoPorta" paginator="true" rows="5">
-				<p:column headerText="Código">
+
+			<p:dataTable id="tableConfiguracaoPorta"
+				value="#{configuracaoPortaBean.configuracaoPortas}"
+				var="configuracaoPorta" paginator="true"
+				rows="#{constantsBean.ROWS_NUMBER}" sortMode="multiple">
+
+				<p:column sortBy="#{configuracaoPorta.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}"
+					filterBy="#{configuracaoPorta.codigo}" filterMatchMode="contains">
 					<h:outputText value="#{configuracaoPorta.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
+				<p:column sortBy="#{configuracaoPorta.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{configuracaoPorta.descricao}"
+					filterMatchMode="contains">
 					<h:outputText value="#{configuracaoPorta.descricao}" />
 				</p:column>
-
-				<p:column headerText="Editar">
-					<h:commandLink value="Editar" id="edit"
-						action="/manter/ManterConfiguracaoPorta">
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{configuracaoPortaBean.novaConfiguracaoPorta}"
+							ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterConfiguracaoPorta" title="Editar"
+						ajax="false">
 						<f:setPropertyActionListener value="#{configuracaoPorta}"
 							target="#{configuracaoPortaBean.configuracaoPorta}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{configuracaoPortaBean.remove(configuracaoPorta)}" />
-				</p:column>
-
 
 			</p:dataTable>
 		</h:form>

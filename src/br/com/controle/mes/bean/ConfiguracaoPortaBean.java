@@ -1,16 +1,17 @@
 package br.com.controle.mes.bean;
 
-import br.com.controle.mes.dao.Auditavel;
-import br.com.controle.mes.dao.DAO;
-import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.ConfiguracaoPorta;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import br.com.controle.mes.dao.Auditavel;
+import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.ConfiguracaoPorta;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -45,14 +46,24 @@ public class ConfiguracaoPortaBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.configuracaoPortas = dao.listaTodos();
+		return paginaListarConfiguracaoPorta();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.configuracaoPorta = new ConfiguracaoPorta();
+	}
+
+	private void gravar() {
 		if (configuracaoPorta.getId() != null)
 			dao.atualiza(configuracaoPorta);
 		else
 			dao.adiciona(configuracaoPorta);
-		this.configuracaoPorta = new ConfiguracaoPorta();
-		this.configuracaoPortas = dao.listaTodos();
-		return "/listar/ListarConfiguracaoPorta";
 	}
 
 	public List<ConfiguracaoPorta> getConfiguracaoPortas() {
@@ -63,14 +74,33 @@ public class ConfiguracaoPortaBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(ConfiguracaoPorta configuracaoPorta) {
+	public String excluir() {
 		dao.remove(configuracaoPorta);
 		this.configuracaoPortas = dao.listaTodos();
+		return paginaListarConfiguracaoPorta();
 	}
 
 	public void carregaConfiguracaoPorta() {
 		if (configuracaoPortaId != null && configuracaoPortaId != 0)
 			configuracaoPorta = dao.buscaPorId(configuracaoPortaId);
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(ConfiguracaoPorta.class,
+				campo);
+	}
+
+	public String paginaListarConfiguracaoPorta() {
+		return "/listar/ListarConfiguracaoPorta?faces-redirect=true";
+	}
+
+	public String paginaManterConfiguracaoPorta() {
+		return "/manter/ManterConfiguracaoPorta?faces-redirect=true";
+	}
+
+	public String novaConfiguracaoPorta() {
+		configuracaoPorta = new ConfiguracaoPorta();
+		return paginaManterConfiguracaoPorta();
 	}
 
 }

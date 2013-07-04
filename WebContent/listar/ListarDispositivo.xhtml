@@ -10,36 +10,45 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Dispositivos</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_DISPOSITIVO']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{dispositivoBean.dispositivos}" var="dispositivo"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{dispositivo.id}" />
+
+			<p:dataTable id="tableDispositivo"
+				value="#{dispositivoBean.dispositivos}" var="dispositivo"
+				paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{dispositivo.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}"
+					filterBy="#{dispositivo.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{dispositivo.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
+				<p:column sortBy="#{dispositivo.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{dispositivo.descricao}" filterMatchMode="contains">
 					<h:outputText value="#{dispositivo.descricao}" />
 				</p:column>
-					<p:column headerText="Endereço Escravo">
+				<p:column sortBy="#{dispositivo.enderecoEscravo}"
+					headerText="#{bundle['LABEL_ENDERECO_ESCRAVO']}"
+					filterBy="#{dispositivo.enderecoEscravo}"
+					filterMatchMode="contains">
 					<h:outputText value="#{dispositivo.enderecoEscravo}" />
 				</p:column>
-				
-
-				<p:column headerText="Editar">
-					<h:commandLink value="Editar" id="edit"
-						action="/manter/ManterDispositivo">
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{dispositivoBean.novoDispositivo}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterDispositivo" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{dispositivo}"
 							target="#{dispositivoBean.dispositivo}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{dispositivoBean.remove(dispositivo)}" />
-				</p:column>
-
-
 			</p:dataTable>
+
 		</h:form>
 
 	</ui:define>

@@ -1,6 +1,7 @@
 package br.com.controle.mes.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -16,7 +17,9 @@ public class UsuarioDAO implements Serializable {
 	// Injetado pelo CDI
 	private EntityManager em;
 
-	public boolean existe(Usuario usuario) {
+	public Usuario existe(Usuario usuario) {
+
+		Usuario usuarioEncontrado = null;
 
 		Query query = em
 				.createQuery(
@@ -25,9 +28,22 @@ public class UsuarioDAO implements Serializable {
 				.setParameter("login", usuario.getLogin())
 				.setParameter("senha", usuario.getSenha());
 
-		boolean encontrado = !query.getResultList().isEmpty();
+		List<Usuario> lista = query.getResultList();
 
-		return encontrado;
+		if (lista != null && lista.size() == 1)
+			usuarioEncontrado = lista.get(0);
+
+		return usuarioEncontrado;
+	}
+
+	public boolean existe(String login) {
+
+		Query query = em.createQuery("from MESUsuario where login = :login ")
+				.setParameter("login", login);
+
+		boolean encontrou = !query.getResultList().isEmpty();
+
+		return encontrou;
 	}
 
 }

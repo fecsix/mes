@@ -24,6 +24,14 @@ body{
 	margin-left: -450px;
 }
 
+#i18n {
+	float:right;
+	position: absolute;
+	top: 0px;
+	right: 50%;
+	margin-right: -450px;
+}
+
 #usuarioLogado  {
 	color: white;
 	display: block;

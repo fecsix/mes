@@ -10,7 +10,9 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.CentroTrabalho;
 import br.com.controle.mes.model.Recurso;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -35,14 +37,24 @@ public class RecursoBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.recursos = dao.listaTodos();
+		return paginaListarRecurso();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.recurso = new Recurso();
+	}
+
+	private void gravar() {
 		if (recurso.getId() != null)
 			dao.atualiza(recurso);
 		else
 			dao.adiciona(recurso);
-		this.recurso = new Recurso();
-		this.recursos = dao.listaTodos();
-		return "/listar/ListarRecurso";
 	}
 
 	public List<Recurso> getRecursos() {
@@ -52,9 +64,27 @@ public class RecursoBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(Recurso recurso) {
+	public String excluir() {
 		dao.remove(recurso);
 		this.recursos = dao.listaTodos();
+		return paginaListarRecurso();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Recurso.class, campo);
+	}
+
+	public String paginaListarRecurso() {
+		return "/listar/ListarRecurso?faces-redirect=true";
+	}
+
+	public String paginaManterRecurso() {
+		return "/manter/ManterRecurso?faces-redirect=true";
+	}
+
+	public String novoRecurso() {
+		recurso = new Recurso();
+		return paginaManterRecurso();
 	}
 
 }

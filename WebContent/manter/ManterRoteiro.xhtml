@@ -11,91 +11,118 @@
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
-			<h:messages styleClass="erros" />
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="roteiroValidator" />
+			<h:inputHidden id="id" value="#{roteiroBean.roteiro.id}" />
 			<h2>
-				<h:outputText value="Novo Roteiro"
+				<h:outputText value="#{bundle['LABEL_NOVO_ROTEIRO']}"
 					rendered="#{empty roteiroBean.roteiro.id}" />
-				<h:outputText value="Editar Roteiro"
+				<h:outputText value="#{bundle['LABEL_EDITAR_ROTEIRO']}"
 					rendered="#{not empty roteiroBean.roteiro.id}" />
 			</h2>
-			<fieldset>
-				<legend>Dados do Roteiro</legend>
 
-				<p:outputLabel value="ID:" for="id"
-					rendered="#{not empty roteiroBean.roteiro.id}" />
-				<p:inputText id="id"
-					value="#{roteiroBean.roteiro.id}" readonly="true"
-					rendered="#{not empty roteiroBean.roteiro.id}" />
-				<h:inputHidden value="#{roteiroBean.roteiro.id}" />
-				
-				<h:outputLabel value="Item:" />
-				<h:selectOneMenu id="item"
-					value="#{roteiroBean.roteiro.item}">
-					<f:selectItems value="#{itemBean.itens}"
-						var="item" itemLabel="#{item.descricao}"
-						itemValue="#{item}" />
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<p:inputText id="codigo" value="#{roteiroBean.roteiro.codigo}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{roteiroBean.getTamanhoCampo('codigo')}" />
+
+				<p:outputLabel value="#{bundle['LABEL_ITEM']}:" for="item" />
+				<h:selectOneMenu id="item" value="#{roteiroBean.roteiro.item}">
+					<f:selectItems value="#{itemBean.listaItens}" var="item"
+						itemLabel="#{item.descricao}" itemValue="#{item}" />
 				</h:selectOneMenu>
 
-				<p:outputLabel value="Código:" for="codigo" />
-				<p:inputText id="codigo"
-					value="#{roteiroBean.roteiro.codigo}" />
+				<p:outputLabel value="#{bundle['LABEL_OPERACAO']}:" for="operacao" />
+				<p:inputText id="operacao" value="#{roteiroBean.roteiro.operacao}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{roteiroBean.getTamanhoCampo('operacao')}" />
 
-				<p:outputLabel value="Operação:" for="operacao" />
-				<p:inputText id="operacao"
-					value="#{roteiroBean.roteiro.operacao}" />
+				<p:outputLabel value="#{bundle['LABEL_SEQUENCIA']}:" for="sequencia" />
+				<p:inputText id="sequencia" value="#{roteiroBean.roteiro.sequencia}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{roteiroBean.getTamanhoCampo('sequencia')}" />
 
-				<p:outputLabel value="Sequencia:" for="sequencia" />
-				<p:inputText id="sequencia"
-					value="#{roteiroBean.roteiro.sequencia}" />
-					
-				<h:outputLabel value="Recurso:" />
-				<h:selectOneMenu id="recurso"
-					value="#{roteiroBean.roteiro.recurso}">
-					<f:selectItems value="#{recursoBean.recursos}"
-						var="recurso" itemLabel="#{recurso.descricao}"
-						itemValue="#{recurso}" />
+				<p:outputLabel value="#{bundle['LABEL_RECURSO']}:" for="recurso" />
+				<h:selectOneMenu id="recurso" value="#{roteiroBean.roteiro.recurso}">
+					<f:selectItems value="#{recursoBean.recursos}" var="recurso"
+						itemLabel="#{recurso.descricao}" itemValue="#{recurso}" />
 				</h:selectOneMenu>
 
-				<h:outputLabel value="Centro Trabalho:" />
+				<p:outputLabel value="#{bundle['LABEL_CENTRO_TRABALHO']}:"
+					for="centroTrabalho" />
 				<h:selectOneMenu id="centroTrabalho"
 					value="#{roteiroBean.roteiro.centroTrabalho}">
 					<f:selectItems value="#{centroTrabalhoBean.centroTrabalhos}"
 						var="centroTrabalho" itemLabel="#{centroTrabalho.descricao}"
 						itemValue="#{centroTrabalho}" />
 				</h:selectOneMenu>
-				
-				<h:outputLabel value="Tarefa:" />
-				<h:selectOneMenu id="tarefa"
-					value="#{roteiroBean.roteiro.tarefa}">
-					<f:selectItems value="#{tarefaBean.tarefas}"
-						var="tarefa" itemLabel="#{tarefa.descricao}"
-						itemValue="#{tarefa}" />
+
+				<p:outputLabel value="#{bundle['LABEL_TAREFA']}:" for="tarefa" />
+				<h:selectOneMenu id="tarefa" value="#{roteiroBean.roteiro.tarefa}">
+					<f:selectItems value="#{tarefaBean.tarefas}" var="tarefa"
+						itemLabel="#{tarefa.descricao}" itemValue="#{tarefa}" />
 				</h:selectOneMenu>
 
-				<p:outputLabel value="Tempo Setup:" for="tempoSetup" />
+				<p:outputLabel value="#{bundle['LABEL_TEMPO_SETUP']}:"
+					for="tempoSetup" />
 				<p:inputText id="tempoSetup"
-					value="#{roteiroBean.roteiro.tempoSetup}" />
+					value="#{roteiroBean.roteiro.tempoSetup}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{roteiroBean.getTamanhoCampo('tempoSetup')}" />
 
-				<p:outputLabel value="Tempo Execução:" for="tempoExecucao" />
+				<p:outputLabel value="#{bundle['LABEL_TEMPO_EXECUCAO']}:"
+					for="tempoExecucao" />
 				<p:inputText id="tempoExecucao"
-					value="#{roteiroBean.roteiro.tempoExecucao}" />
-					
-				<h:outputLabel value="Data Início:" />
-				<p:calendar pattern="dd/MM/yyyy"
+					value="#{roteiroBean.roteiro.tempoExecucao}"
+					size="#{constantsBean.FIELD_20}"
+					maxlength="#{roteiroBean.getTamanhoCampo('tempoExecucao')}" />
+
+				<p:outputLabel value="#{bundle['LABEL_DATA_INICIO']}:"
+					for="dataInicio" />
+				<p:calendar id="dataInicio" pattern="dd/MM/yyyy"
 					value="#{roteiroBean.roteiro.dataInicio.time}" />
-					
-				<h:outputLabel value="Data Término:" />
-				<p:calendar pattern="dd/MM/yyyy"
+
+				<p:outputLabel value="#{bundle['LABEL_DATA_FIM']}:" for="dataFim" />
+				<p:calendar id="dataFim" pattern="dd/MM/yyyy"
 					value="#{roteiroBean.roteiro.dataFim.time}" />
-	
-				<h:panelGrid columns="2">
-					<h:commandButton value="Gravar"
-						action="#{roteiroBean.gravar}" />
-					<h:commandButton value="Voltar" immediate="true"
-						action="/listar/ListarRoteiro?faces-redirect=true" />
-				</h:panelGrid>
-			</fieldset>
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{roteiroBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{roteiroBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteRoteiro.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{roteiroBean.paginaListarRoteiro}" ajax="false"
+						immediate="true" />
+				</f:facet>
+
+			</p:panelGrid>
+
 		</h:form>
+
+		<p:confirmDialog message="#{bundle['MESSAGE_EXCLUIR_ROTEIRO']}"
+			severity="alert" widgetVar="confirmDeleteRoteiro" appendToBody="true"
+			style="text-align:center">
+			<h:form id="confirmaExclusao" style="text-align:center">
+				<h:inputHidden value="#{roteiroBean.roteiro.id}" />
+				<p:commandButton value="#{bundle['BUTTON_SIM']}"
+					oncomplete="confirmDeleteRoteiro.hide()"
+					action="#{roteiroBean.excluir}" ajax="false" />
+				<p:commandButton value="#{bundle['BUTTON_NAO']}"
+					onclick="confirmDeleteRoteiro.hide()" />
+			</h:form>
+		</p:confirmDialog>
 
 	</ui:define>
 </ui:composition>

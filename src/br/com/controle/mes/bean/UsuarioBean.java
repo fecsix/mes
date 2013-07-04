@@ -10,7 +10,9 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.CentroTrabalho;
 import br.com.controle.mes.model.Usuario;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -35,14 +37,24 @@ public class UsuarioBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.usuarios = dao.listaTodos();
+		return paginaListarUsuario();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.usuario = new Usuario();
+	}
+
+	private void gravar() {
 		if (usuario.getId() != null)
 			dao.atualiza(usuario);
 		else
 			dao.adiciona(usuario);
-		this.usuario = new Usuario();
-		this.usuarios = dao.listaTodos();
-		return "/listar/ListarUsuario";
 	}
 
 	public List<Usuario> getUsuarios() {
@@ -52,9 +64,27 @@ public class UsuarioBean implements Serializable {
 	}
 
 	@Transactional
-	public void remove(Usuario usuario) {
+	public String excluir() {
 		dao.remove(usuario);
 		this.usuarios = dao.listaTodos();
+		return paginaListarUsuario();
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(Usuario.class, campo);
+	}
+
+	public String paginaListarUsuario() {
+		return "/listar/ListarUsuario";
+	}
+
+	public String paginaManterUsuario() {
+		return "/manter/ManterUsuario";
+	}
+
+	public String novoUsuario() {
+		usuario = new Usuario();
+		return paginaManterUsuario();
 	}
 
 }

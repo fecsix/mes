@@ -1,16 +1,18 @@
 package br.com.controle.mes.bean;
 
-import br.com.controle.mes.dao.Auditavel;
-import br.com.controle.mes.dao.DAO;
-import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.TipoDispositivo;
-
 import java.io.Serializable;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import br.com.controle.mes.dao.Auditavel;
+import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.CentroTrabalho;
+import br.com.controle.mes.model.TipoDispositivo;
+import br.com.controle.mes.util.BuscarAnotacoes;
 
 @RequestScoped
 @Named
@@ -20,7 +22,7 @@ public class TipoDispositivoBean implements Serializable {
 
 	private TipoDispositivo tipoDispositivo = new TipoDispositivo();
 
-	private List<TipoDispositivo> tipoDispositivos;
+	private List<TipoDispositivo> tiposDispositivo;
 
 	private Long tipoDispositivoId;
 
@@ -45,32 +47,61 @@ public class TipoDispositivoBean implements Serializable {
 
 	@Transactional
 	@Auditavel
-	public String gravar() {
+	public String salvar() {
+		gravar();
+		this.tiposDispositivo = dao.listaTodos();
+		return paginaListarTipoDispositivo();
+	}
+
+	@Transactional
+	@Auditavel
+	public void salvarNovo() {
+		gravar();
+		this.tipoDispositivo = new TipoDispositivo();
+	}
+
+	private void gravar() {
 		if (tipoDispositivo.getId() != null)
 			dao.atualiza(tipoDispositivo);
 		else
 			dao.adiciona(tipoDispositivo);
-		this.tipoDispositivo = new TipoDispositivo();
-		this.tipoDispositivos = dao.listaTodos();
-		return "/listar/ListarTipoDispositivo";
 	}
 
-	public List<TipoDispositivo> getTipoDispositivos() {
-		if (tipoDispositivos == null)
-			tipoDispositivos = dao.listaTodos();
+	public List<TipoDispositivo> getTiposDispositivo() {
+		if (tiposDispositivo == null)
+			tiposDispositivo = dao.listaTodos();
 
-		return tipoDispositivos;
+		return tiposDispositivo;
 	}
 
 	@Transactional
-	public void remove(TipoDispositivo tipoDispositivo) {
+	public String excluir() {
 		dao.remove(tipoDispositivo);
-		this.tipoDispositivos = dao.listaTodos();
+		this.tiposDispositivo = dao.listaTodos();
+		return paginaListarTipoDispositivo();
 	}
 
 	public void carregaTipoDispositivo() {
 		if (tipoDispositivoId != null && tipoDispositivoId != 0)
 			tipoDispositivo = dao.buscaPorId(tipoDispositivoId);
+	}
+
+	public int getTamanhoCampo(String campo) {
+		return new BuscarAnotacoes().getTamanhoCampo(TipoDispositivo.class,
+				campo);
+	}
+
+	public String paginaListarTipoDispositivo() {
+		return "/listar/ListarTipoDispositivo?faces-redirect=true";
+	}
+
+	public String paginaManterTipoDispositivo() {
+		return "/manter/ManterTipoDispositivo?faces-redirect=true";
+	}
+
+	public String novoTipoDispositivo() {
+		tipoDispositivo = new TipoDispositivo();
+		return paginaManterTipoDispositivo();
 	}
 
 }

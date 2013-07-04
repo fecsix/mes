@@ -10,29 +10,36 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Recursos</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_RECURSO']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{recursoBean.recursos}" var="recurso"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{recurso.id}" />
-				</p:column>
-				<p:column headerText="Codigo">
+
+			<p:dataTable id="tableRecurso" value="#{recursoBean.recursos}"
+				var="recurso" paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{recurso.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}" filterBy="#{recurso.codigo}"
+					filterMatchMode="contains">
 					<h:outputText value="#{recurso.codigo}" />
 				</p:column>
-				<p:column headerText="Descrição">
-					<h:commandLink value="#{recurso.descricao}" id="edit"
-						action="/manter/ManterRecurso">
+				<p:column sortBy="#{recurso.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{recurso.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{recurso.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{recursoBean.novoRecurso}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterRecurso" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{recurso}"
 							target="#{recursoBean.recurso}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{recursoBean.remove(recurso)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

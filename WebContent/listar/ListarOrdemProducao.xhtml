@@ -10,29 +10,39 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Ordens de Produção</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_ORDEM_PRODUCAO']}" />
+		</h2>
+
 		<h:form id="lista">
-			<p:dataTable value="#{ordemProducaoBean.ordensProducao}" var="ordemProducao"
-				paginator="true" rows="5">
-				<p:column headerText="ID">
-					<h:outputText value="#{ordemProducao.id}" />
-				</p:column>
-				<p:column headerText="Codigo">
+
+			<p:dataTable id="tableOrdemProducao"
+				value="#{ordemProducaoBean.ordensProducao}" var="ordemProducao"
+				paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{ordemProducao.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}"
+					filterBy="#{ordemProducao.codigo}" filterMatchMode="contains">
 					<h:outputText value="#{ordemProducao.codigo}" />
 				</p:column>
-				<p:column headerText="Item">
-					<h:commandLink value="#{ordemProducao.item.descricao}" id="edit"
-						action="/manter/ManterOrdemProducao">
+				<p:column sortBy="#{ordemProducao.item.descricao}"
+					headerText="#{bundle['LABEL_ITEM']}"
+					filterBy="#{ordemProducao.item.descricao}"
+					filterMatchMode="contains">
+					<h:outputText value="#{ordemProducao.item.descricao}" />
+				</p:column>
+
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{ordemProducaoBean.novaOrdemProducao}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterOrdemProducao" title="Editar" ajax="false">
 						<f:setPropertyActionListener value="#{ordemProducao}"
 							target="#{ordemProducaoBean.ordemProducao}" />
-					</h:commandLink>
+					</p:commandButton>
 				</p:column>
-
-				<p:column headerText="Apagar">
-					<h:commandLink value="Apagar" id="delete"
-						action="#{ordemProducaoBean.remove(ordemProducao)}" />
-				</p:column>
-
 			</p:dataTable>
 
 		</h:form>

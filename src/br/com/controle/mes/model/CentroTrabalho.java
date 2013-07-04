@@ -24,7 +24,7 @@ public class CentroTrabalho implements Serializable {
 	private Long id;
 
 	@NotEmpty(message = "Código do Centro de Trabalho deve ser preenchido.")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
+	@Column(name = "ccCentroTrabalho", length = 20, nullable = false)
 	private String codigo;
 
 	@NotEmpty(message = "Descrição do Centro De Trabalho deve ser preenchida.")

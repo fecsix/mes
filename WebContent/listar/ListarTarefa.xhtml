@@ -10,29 +10,41 @@
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
 
-		<h2>Listagem de Tarefas</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_TAREFA']}" />
+		</h2>
+
 		<h:form id="lista">
-		
-			<p:outputPanel style="text-align:left"  layout="block">  
-		    	<p:commandButton value="Incluir" icon="ui-icon-plus" style="margin:0" action="#{tarefaBean.novaTarefa}" ajax="false"/>
-		    </p:outputPanel> 
-		
-			<p:dataTable id="tableTarefas" value="#{tarefaBean.tarefas}" var="tarefa" 
-				paginator="true" rows="5" sortMode="multiple" >
-				<p:column sortBy="#{tarefa.codigo}" headerText="Código" filterBy="#{tarefa.codigo}" filterMatchMode="contains">
+
+			<p:dataTable id="tableTarefa" value="#{tarefaBean.tarefas}"
+				var="tarefa" paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
+				sortMode="multiple">
+				<p:column sortBy="#{tarefa.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}" filterBy="#{tarefa.codigo}"
+					filterMatchMode="contains">
 					<h:outputText value="#{tarefa.codigo}" />
 				</p:column>
-				<p:column sortBy="#{tarefa.descricao}" headerText="Descrição" filterBy="#{tarefa.descricao}" filterMatchMode="contains">
+				<p:column sortBy="#{tarefa.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{tarefa.descricao}" filterMatchMode="contains">
 					<h:outputText value="#{tarefa.descricao}" />
 				</p:column>
-				<p:column sortBy="#{tarefa.tipo.descricao}" headerText="Tipo" filterBy="#{tarefa.tipo.descricao}" filterMatchMode="contains">
+				<p:column sortBy="#{tarefa.tipo.descricao}"
+					headerText="#{bundle['LABEL_TIPO']}"
+					filterBy="#{tarefa.tipo.descricao}" filterMatchMode="contains">
 					<h:outputText value="#{tarefa.tipo.descricao}" />
 				</p:column>
 				<p:column style="width:4%">
-					<p:commandButton id="edit" icon="ui-icon-pencil" action="#{tarefaBean.paginaManterTarefa}" title="Editar" ajax="false">  
-		                <f:setPropertyActionListener value="#{tarefa}" target="#{tarefaBean.tarefa}" />  
-		            </p:commandButton> 
-		        </p:column>
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{tarefaBean.novaTarefa}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="/manter/ManterTarefa" title="Editar" ajax="false">
+						<f:setPropertyActionListener value="#{tarefa}"
+							target="#{tarefaBean.tarefa}" />
+					</p:commandButton>
+				</p:column>
 			</p:dataTable>
 
 		</h:form>

@@ -8,14 +8,16 @@
 
 <ui:composition template="/_template.xhtml">
 	<ui:define name="corpo">
-		<h2>Login do sistema</h2>
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LOGIN_SISTEMA']}" />
+		</h2>
 		<h:form id="loginForm">
 			<h:panelGrid columns="2" styleClass="campos">
-				<h:outputLabel value="Login:" />
+				<h:outputLabel value="#{bundle['LABEL_LOGIN']}:" />
 				<h:inputText value="#{loginBean.usuario.login}" />
-				<h:outputLabel value="Senha:" />
+				<h:outputLabel value="#{bundle['LABEL_SENHA']}:" />
 				<h:inputSecret value="#{loginBean.usuario.senha}" password="true" />
-				<h:commandButton value="Efetuar Login"
+				<h:commandButton value="#{bundle['BUTTON_EFETUAR_LOGIN']}"
 					action="#{loginBean.efetuaLogin}" />
 			</h:panelGrid>
 		</h:form>

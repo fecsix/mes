@@ -23,25 +23,25 @@ public class Roteiro implements Serializable {
 	@GeneratedValue
 	@Column(name = "cvRoteiro", nullable = false)
 	private Long id;
-	
+
+	@NotEmpty(message = "Código do Roteiro deve ser preenchido.")
+	@Column(name = "ccRoteiro", length = 20, nullable = false)
+	private String codigo;
+
 	@ManyToOne
 	@JoinColumn(name = "cvItem")
 	private Item item;
-
-	@NotEmpty(message = "Código do Roteiro deve ser preenchido.")
-	@Column(name = "ccCodigo", length = 20, nullable = false)
-	private String codigo;
 
 	@Column(name = "cvOperacao", nullable = false)
 	private Long operacao;
 
 	@Column(name = "cvSequencia", nullable = false)
 	private Long sequencia;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvTarefa")
 	private Tarefa tarefa;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvRecurso")
 	private Recurso recurso;
@@ -49,7 +49,7 @@ public class Roteiro implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cvCentroTrabalho")
 	private CentroTrabalho centroTrabalho;
-	
+
 	@Column(name = "cvTempoSetup", nullable = false)
 	private Long tempoSetup;
 
@@ -57,9 +57,11 @@ public class Roteiro implements Serializable {
 	private Long tempoExecucao;
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "cdInicio")
 	private Calendar dataInicio = Calendar.getInstance();
 
 	@Temporal(TemporalType.DATE)
+	@Column(name = "cdFim")
 	private Calendar dataFim = Calendar.getInstance();
 
 	public Long getId() {
@@ -188,8 +190,5 @@ public class Roteiro implements Serializable {
 		return "Roteiro [id=" + id + ", item=" + item + ", codigo=" + codigo
 				+ ", operacao=" + operacao + ", sequencia=" + sequencia + "]";
 	}
-
-
-	
 
 }
