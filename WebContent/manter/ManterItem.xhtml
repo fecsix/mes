@@ -21,25 +21,33 @@
 					rendered="#{not empty itemBean.item.id}" />
 			</h2>
 
-			<p:panelGrid columns="2" styleClass="dados">
+			<p:panelGrid columns="2" styleClass="semBorda">
 
-				<p:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
-				<p:inputText id="codigo" value="#{clienteBean.cliente.codigo}"
+				<p:outputLabel for="codigo" value="#{bundle['LABEL_CODIGO']}:" />
+				<p:inputText id="codigo" value="#{itemBean.item.codigo}"
 					size="#{constantsBean.FIELD_20}"
-					maxlength="#{clienteBean.getTamanhoCampo('codigo')}" />
+					maxlength="#{itemBean.getTamanhoCampo('codigo')}" />
 
-				<p:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
-				<p:inputText id="descricao" value="#{clienteBean.cliente.descricao}"
+				<p:outputLabel for="descricao" value="#{bundle['LABEL_DESCRICAO']}:" />
+				<p:inputText id="descricao" value="#{itemBean.item.descricao}"
 					size="#{constantsBean.FIELD_100}"
-					maxlength="#{clienteBean.getTamanhoCampo('descricao')}" />
+					maxlength="#{itemBean.getTamanhoCampo('descricao')}" />
 
-				<p:outputLabel value="#{bundle['LABEL_TIPO_ITEM']}:" for="tipoItem" />
+				<p:outputLabel for="tipoItem" value="#{bundle['LABEL_TIPO_ITEM']}:" />
 				<p:selectOneMenu id="tipoItem" value="#{itemBean.item.tipoItem}">
-					<f:selectItems value="#{itemBean.listaTipoItem}" />
+					<f:selectItems value="#{comumBean.tipoItem}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="#{bundle['LABEL_UNIDADE']}:" for="unidade" />
-				<h:panelGrid columns="2" style="semBorda">
+				<h:panelGrid columns="2" styleClass="semBorda" cellpadding="0"
+					cellspacing="0" border="0">
+					<p:outputLabel for="unidade" value="#{bundle['LABEL_UNIDADE']}:" />
+					<p:commandButton icon="ui-icon-search"
+						title="#{bundle['LABEL_PROCURAR']}"
+						style="width: 0px; height: 0px;"
+						oncomplete="selecionaUnidade.show()" />
+				</h:panelGrid>
+				<h:panelGrid id="panelUnidade" columns="2" styleClass="semBorda"
+					cellpadding="0" cellspacing="0" border="0">
 					<p:inputText id="unidade" value="#{itemBean.varCodigoUnidade}"
 						size="#{constantsBean.FIELD_20}"
 						maxlength="#{unidadeBean.getTamanhoCampo('codigo')}">
@@ -51,13 +59,36 @@
 						style="text-align: left;" />
 				</h:panelGrid>
 
+				<h:panelGrid columns="2" styleClass="semBorda" cellpadding="0"
+					cellspacing="0" border="0">
+					<p:outputLabel for="grupoItem"
+						value="#{bundle['LABEL_GRUPO_ITEM']}:" />
+					<p:commandButton icon="ui-icon-search"
+						title="#{bundle['LABEL_PROCURAR']}"
+						style="width: 0px; height: 0px;"
+						oncomplete="selecionaGrupoItem.show()" />
+				</h:panelGrid>
+				<h:panelGrid id="panelGrupoItem" columns="2" styleClass="semBorda"
+					cellpadding="0" cellspacing="0" border="0">
+					<p:inputText id="grupoItem" value="#{itemBean.varCodigoGrupoItem}"
+						size="#{constantsBean.FIELD_20}"
+						maxlength="#{grupoItemBean.getTamanhoCampo('codigo')}">
+						<p:ajax event="change" update="descGrupoItem"
+							listener="#{itemBean.populaGrupoItem}" />
+					</p:inputText>
+					<p:outputLabel id="descGrupoItem" for="grupoItem"
+						value="#{itemBean.item.grupoItem.descricao}"
+						style="text-align: left;" />
+				</h:panelGrid>
+
+
 				<f:facet name="footer">
 					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
 						icon="ui-icon-check" style="margin:0" action="#{itemBean.salvar}"
 						ajax="false" />
 					<p:spacer width="10" />
 					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
-						icon="ui-icon-check" style="margin:0"
+						icon="ui-icon-plus" style="margin:0"
 						action="#{itemBean.salvarNovo}" ajax="false" />
 					<p:spacer width="10" />
 					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
@@ -69,7 +100,6 @@
 						action="#{itemBean.paginaListarItem}" ajax="false"
 						immediate="true" />
 				</f:facet>
-
 			</p:panelGrid>
 
 		</h:form>
@@ -80,12 +110,71 @@
 			<h:form id="confirmaExclusao" style="text-align:center">
 				<h:inputHidden value="#{itemBean.item.id}" />
 				<p:commandButton value="#{bundle['BUTTON_SIM']}"
-					oncomplete="confirmDeleteItem.hide()" action="#{itemBean.excluir}"
-					ajax="false" />
+					oncomplete="confirmDeleteItem.hide()" action="#{itemBean.excluir}" />
 				<p:commandButton value="#{bundle['BUTTON_NAO']}"
 					onclick="confirmDeleteItem.hide()" />
 			</h:form>
 		</p:confirmDialog>
+
+		<p:dialog header="#{bundle['LABEL_LISTAGEM_UNIDADE']}"
+			widgetVar="selecionaUnidade" resizable="false"
+			style="text-align:center">
+			<h:form id="formUnidade" style="text-align:center">
+				<p:dataTable id="tableUnidade" value="#{unidadeBean.listaUnidade}"
+					var="unidade" paginator="true" rows="5" sortMode="multiple">
+					<p:column sortBy="#{unidade.codigo}"
+						headerText="#{bundle['LABEL_CODIGO']}"
+						filterBy="#{unidade.codigo}" filterMatchMode="contains">
+						<h:outputText value="#{unidade.codigo}" />
+					</p:column>
+					<p:column sortBy="#{unidade.descricao}"
+						headerText="#{bundle['LABEL_DESCRICAO']}"
+						filterBy="#{unidade.descricao}" filterMatchMode="contains">
+						<h:outputText value="#{unidade.descricao}" />
+					</p:column>
+					<p:column style="width:4%">
+						<p:commandButton id="seleciona" icon="ui-icon-check"
+							oncomplete="selecionaUnidade.hide()"
+							title="#{bundle['LABEL_SELECIONAR']}"
+							update=":cadastro:panelUnidade">
+							<f:setPropertyActionListener value="#{unidade}"
+								target="#{itemBean.item.unidade}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="#{bundle['LABEL_LISTAGEM_GRUPO_ITEM']}"
+			widgetVar="selecionaGrupoItem" resizable="false"
+			style="text-align:center">
+			<h:form id="formGrupoItem" style="text-align:center">
+				<p:dataTable id="tableGrupoItem"
+					value="#{grupoItemBean.listaGrupoItem}" var="grupoItem"
+					paginator="true" rows="5" sortMode="multiple">
+					<p:column sortBy="#{grupoItem.codigo}"
+						headerText="#{bundle['LABEL_CODIGO']}"
+						filterBy="#{grupoItem.codigo}" filterMatchMode="contains">
+						<h:outputText value="#{grupoItem.codigo}" />
+					</p:column>
+					<p:column sortBy="#{grupoItem.descricao}"
+						headerText="#{bundle['LABEL_DESCRICAO']}"
+						filterBy="#{grupoItem.descricao}" filterMatchMode="contains">
+						<h:outputText value="#{grupoItem.descricao}" />
+					</p:column>
+					<p:column style="width:4%">
+						<p:commandButton id="seleciona" icon="ui-icon-check"
+							oncomplete="selecionaGrupoItem.hide()"
+							title="#{bundle['LABEL_SELECIONAR']}"
+							update=":cadastro:panelGrupoItem">
+							<f:setPropertyActionListener value="#{grupoItem}"
+								target="#{itemBean.item.grupoItem}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
 
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_ITEM']}" />
+		</h2>
+		<h:form id="lista">
+
+			<p:dataTable id="tableItens" value="#{itemBean.listaItens}"
+				var="item" paginator="true" rows="5" sortMode="multiple">
+
+				<p:column sortBy="#{item.codigo}"
+					headerText="#{bundle['LABEL_CODIGO']}" filterBy="#{item.codigo}"
+					filterMatchMode="contains">
+					<h:outputText value="#{item.codigo}" />
+				</p:column>
+				<p:column sortBy="#{item.descricao}"
+					headerText="#{bundle['LABEL_DESCRICAO']}"
+					filterBy="#{item.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{item.descricao}" />
+				</p:column>
+				<p:column sortBy="#{item.tipoItem.descricao}"
+					headerText="#{bundle['LABEL_TIPO_ITEM']}"
+					filterBy="#{item.tipoItem.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{item.tipoItem.descricao}" />
+				</p:column>
+				<p:column sortBy="#{item.unidade.descricao}"
+					headerText="#{bundle['LABEL_UNIDADE']}"
+					filterBy="#{item.unidade.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{item.unidade.descricao}" />
+				</p:column>
+				<p:column sortBy="#{item.grupoItem.descricao}"
+					headerText="#{bundle['LABEL_GRUPO_ITEM']}"
+					filterBy="#{item.grupoItem.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{item.grupoItem.descricao}" />
+				</p:column>
+				<p:column style="width:4%">
+					<f:facet name="header">
+						<p:commandButton icon="ui-icon-plus" style="margin:0"
+							action="#{itemBean.novoItem}" ajax="false" />
+					</f:facet>
+					<p:commandButton id="edit" icon="ui-icon-pencil"
+						action="#{itemBean.paginaManterItem}" title="Editar" ajax="false">
+						<f:setPropertyActionListener value="#{item}"
+							target="#{itemBean.item}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

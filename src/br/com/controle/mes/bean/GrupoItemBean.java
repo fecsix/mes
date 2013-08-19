@@ -1,12 +1,5 @@
 package br.com.controle.mes.bean;
 
-import br.com.controle.mes.dao.Auditavel;
-import br.com.controle.mes.dao.DAO;
-import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.GrupoItem;
-import br.com.controle.mes.util.BuscarAnotacoes;
-import br.com.controle.mes.util.GerarMensagem;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +7,13 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import br.com.controle.mes.dao.Auditavel;
+import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.GrupoItem;
+import br.com.controle.mes.util.BuscarAnotacoes;
+import br.com.controle.mes.util.GerarMensagem;
 
 @RequestScoped
 @Named
@@ -125,6 +125,10 @@ public class GrupoItemBean implements Serializable {
 	public void carregaGrupoItem() {
 		if (grupoItemId != null && grupoItemId != 0)
 			grupoItem = dao.buscaPorId(grupoItemId);
+	}
+
+	public GrupoItem carregaGrupoItem(String codigo) {
+		return dao.load(codigo);
 	}
 
 	public int getTamanhoCampo(String campo) {
