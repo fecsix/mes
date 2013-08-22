@@ -1,22 +1,20 @@
 package br.com.controle.mes.bean;
 
+import br.com.controle.mes.dao.Auditavel;
+import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.Transactional;
+import br.com.controle.mes.model.Item;
+import br.com.controle.mes.enumerate.TipoItem;
+import br.com.controle.mes.util.BuscarAnotacoes;
+import br.com.controle.mes.util.GerarMensagem;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
-
-import br.com.controle.mes.dao.Auditavel;
-import br.com.controle.mes.dao.DAO;
-import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.enumerate.TipoItem;
-import br.com.controle.mes.model.Item;
-import br.com.controle.mes.util.BuscarAnotacoes;
-import br.com.controle.mes.util.GerarMensagem;
 
 @RequestScoped
 @Named
@@ -34,6 +32,12 @@ public class ItemBean implements Serializable {
 
 	@Inject
 	private DAO<Item> dao;
+	
+	@Inject
+	private GrupoItemBean grupoItemBean;
+	
+	@Inject
+	private UnidadeBean unidadeBean;
 
 	public Item getItem() {
 		return item;
@@ -50,6 +54,7 @@ public class ItemBean implements Serializable {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
+	
 
 	public String getVarCodigoUnidade() {
 		return item.getUnidade().getCodigo();
@@ -70,54 +75,67 @@ public class ItemBean implements Serializable {
 	@Transactional
 	@Auditavel
 	public String salvar() {
-		if (dadosOk()) {
-			gravar();
+		if (dadosOk()){
+			this.gravar();
+			this.item = new Item();
 			this.listaItens = dao.listaTodos();
 			return paginaListarItem();
 		}
 		return "";
 	}
-
+	
 	@Transactional
 	@Auditavel
-	public void salvarNovo() {
-		if (dadosOk()) {
-			gravar();
+	public String salvarNovo() {
+		if (dadosOk()){
+			this.gravar();
 			this.item = new Item();
 		}
+		return "";
 	}
-
-	private void gravar() {
+	
+	public void gravar() {
 		if (item.getId() != null)
 			dao.atualiza(item);
 		else
 			dao.adiciona(item);
 	}
-
-	private boolean dadosOk() {
+	
+	private boolean dadosOk(){
 		boolean dadosOk = true;
+		
+		if (varCodigoUnidade.length()>0)
+			this.populaUnidade();
+		if (varCodigoGrupoItem.length()>0)
+			this.populaGrupoItem();
+		
 		if (item != null) {
 			if (item.getTipoItem() == null
 					|| TipoItem.valueOf(item.getTipoItem().toString()) == null) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
-						"Tipo de Item Inválido !!");
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Tipo de Item Inválido !!");
 				dadosOk = false;
 			}
-			if (item.getDescricao().length() <= 0
-					|| item.getDescricao().length() > getTamanhoCampo("descricao")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
-						"Descrição Inválida !!");
+			if (item.getDescricao().length() <= 0 || item.getDescricao().length() > getTamanhoCampo("descricao")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Descrição Inválida !!");
 				dadosOk = false;
 			}
-			if (item.getCodigo().length() <= 0
-					|| item.getCodigo().length() > getTamanhoCampo("codigo")) {
-				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
-						"Código Inválido !!");
+			if (item.getCodigo().length() <= 0 || item.getCodigo().length() > getTamanhoCampo("codigo")) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Código Inválido !!");
 				dadosOk = false;
 			}
-		} else {
-			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
-					"Item não informado !!");
+			if (item.getUnidade() == null
+					|| item.getUnidade().getId() <= 0 ) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Unidade não informada !!");
+				dadosOk = false;
+			}
+			if (item.getGrupoItem() == null
+					|| item.getGrupoItem().getId() <= 0 ) {
+				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR, "Grupo de item não informado !!");
+				dadosOk = false;
+			}
+		}else{
+			GerarMensagem
+			.addMsg(FacesMessage.SEVERITY_ERROR, "Item não informado !!");
 			dadosOk = false;
 		}
 		return dadosOk;
@@ -132,18 +150,18 @@ public class ItemBean implements Serializable {
 
 	@Transactional
 	public String excluir() {
-		if (exclusaoPermitida()) {
+		if (exclusaoPermitida()){
 			dao.remove(item);
 			return paginaListarItem();
 		}
 		return "";
 	}
-
-	private boolean exclusaoPermitida() {
+	
+	private boolean exclusaoPermitida(){
 		boolean excluir = true;
 		if (item == null || item.getId() <= 0) {
-			GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
-					"Item não informado !!");
+			GerarMensagem
+			.addMsg(FacesMessage.SEVERITY_ERROR, "Item não informado !!");
 			excluir = false;
 		}
 		return excluir;
@@ -153,7 +171,7 @@ public class ItemBean implements Serializable {
 		if (itemId != null && itemId != 0)
 			item = dao.buscaPorId(itemId);
 	}
-
+	
 	public String getTipoItem() {
 		if (item != null && item.getTipoItem() != null) {
 			return item.getTipoItem().toString();
@@ -166,40 +184,44 @@ public class ItemBean implements Serializable {
 			item.setTipoItem(TipoItem.valueOf(tipo));
 		}
 	}
-
-	public List<String> getListaTipoItem() {
-		List<String> lista = new ArrayList<String>();
-		for (TipoItem objeto : TipoItem.values()) {
-			lista.add(objeto.toString());
-		}
-		Collections.sort(lista);
-		return lista;
-	}
-
-	public int getTamanhoCampo(String campo) {
+	
+//	public List<String> getListaTipoItem() {
+//		List<String> lista = new ArrayList<String>();
+//		for (TipoItem objeto : TipoItem.values()) {
+//			lista.add(objeto.toString());
+//		}
+//		Collections.sort(lista);
+//		return lista;
+//	}
+	
+	public int getTamanhoCampo(String campo){
 		return new BuscarAnotacoes().getTamanhoCampo(Item.class, campo);
 	}
-
-	public void populaUnidade() {
-		System.out.println("entrou");
-		System.out.println(varCodigoUnidade);
-		item.setUnidade(new UnidadeBean().carregaUnidade(varCodigoUnidade));
+	
+	public void populaUnidade(){
+		item.setUnidade(unidadeBean.carregaUnidade(varCodigoUnidade));
 	}
-
+	
+	public void populaGrupoItem(){
+		item.setGrupoItem(grupoItemBean.carregaGrupoItem(varCodigoGrupoItem));
+	}
+	
 	/*
 	 * CONTROLE DE NAVEGAÇÃO
 	 */
-
-	public String paginaListarItem() {
+	
+	public String paginaListarItem(){
 		return "/listar/ListarItem";
 	}
-
-	public String paginaManterItem() {
+	
+	public String paginaManterItem(){
 		return "/manter/ManterItem";
 	}
-
-	public String novoItem() {
+	
+	public String novoItem(){
 		item = new Item();
+		varCodigoUnidade = new String();
+		varCodigoGrupoItem = new String();
 		return paginaManterItem();
 	}
 

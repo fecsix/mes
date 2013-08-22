@@ -11,37 +11,34 @@ import javax.persistence.ManyToOne;
 
 import br.com.controle.mes.enumerate.TipoItem;
 
-@Entity(name = "MESItem")
+@Entity(name="MESItem")
 public class Item implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
 	@Column(name = "cvItem", nullable = false)
-	private Long id;
+	private Long id = 0L;
 
-	// @NotEmpty(message = "Código do Item deve ser preenchida")
 	@Column(name = "ccItem", length = 20, nullable = false)
-	private String codigo;
-
-	// @NotEmpty(message = "Descrição do Item deve ser preenchida")
+	private String codigo = new String();
+	
 	@Column(name = "ccDescricao", length = 50, nullable = false)
-	private String descricao;
-
+	private String descricao = new String();
+	
 	@Column(name = "cvTipoItem", nullable = false)
 	private TipoItem tipoItem;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "cvUnidade", nullable = false)
-	private Unidade unidade;
-
+	private Unidade unidade = new Unidade();
+	
 	@ManyToOne
 	@JoinColumn(name = "cvGrupoItem", nullable = false)
-	private GrupoItem grupoItem;
-
+	private GrupoItem grupoItem = new GrupoItem();
+	
 	@Column(name = "cvCustoItem")
-	private float custoItem;
+	private float custoItem = 0f;;
+	
 
 	public Long getId() {
 		return id;
@@ -58,6 +55,7 @@ public class Item implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
 
 	public String getCodigo() {
 		return codigo;
