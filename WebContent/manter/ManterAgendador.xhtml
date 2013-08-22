@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+		<h:form id="cadastro">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<s:validateForm validatorId="agendadorValidator" />
+			<h:inputHidden id="id" value="#{agendadorBean.agendador.id}" />
+			<h2>
+				<h:outputText value="#{bundle['LABEL_NOVO_AGENDADOR']}"
+					rendered="#{empty agendadorBean.agendador.id}" />
+				<h:outputText value="#{bundle['LABEL_EDITAR_AGENDADOR']}"
+					rendered="#{not empty agendadorBean.agendador.id}" />
+			</h2>
+
+			<p:panelGrid columns="2" styleClass="dados">
+
+				<h:outputLabel value="#{bundle['LABEL_CODIGO']}:" for="codigo" />
+				<h:inputText id="codigo" value="#{agendadorBean.agendador.codigo}" />
+
+				<h:outputLabel value="#{bundle['LABEL_DESCRICAO']}:" for="descricao" />
+				<h:inputTextarea id="descricao"
+					value="#{agendadorBean.agendador.descricao}" />
+
+				<h:outputLabel value="#{bundle['LABEL_MINUTOS_INTERVALO']}:"
+					for="minutosIntervalo" />
+				<h:inputText id="minutosIntervalo"
+					value="#{agendadorBean.agendador.minutosIntervalo}" />
+
+				<p:outputLabel value="#{bundle['LABEL_ATIVO']}:" for="ativo" />
+				<h:selectOneMenu id="ativo" value="#{agendadorBean.agendador.ativo}">
+					<f:selectItems value="#{comumBean.simNao}" var="sn"
+						itemLabel="#{sn.descricao}" itemValue="#{sn}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="#{bundle['LABEL_PORTA_SERIAL']}:"
+					for="configuracaoPorta" />
+				<h:selectOneMenu id="configuracaoPorta"
+					value="#{agendadorBean.agendador.configuracaoPorta}">
+					<f:selectItems value="#{configuracaoPortaBean.configuracaoPortas}"
+						var="conf" itemValue="#{conf}" itemLabel="#{conf.codigo}" />
+				</h:selectOneMenu>
+
+
+				<f:facet name="footer">
+					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
+						icon="ui-icon-check" style="margin:0" 
+						action="#{agendadorBean.salvar}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_SALVAR_NOVO']}"
+						icon="ui-icon-check" style="margin:0"
+						action="#{agendadorBean.salvarNovo}" ajax="false" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_APAGAR']}"
+						icon="ui-icon-trash" style="margin:0"
+						oncomplete="confirmDeleteAgendador.show()" />
+					<p:spacer width="10" />
+					<p:commandButton value="#{bundle['BUTTON_VOLTAR']}"
+						icon="ui-icon-arrowreturnthick-1-w" style="margin:0"
+						action="#{agendadorBean.paginaListarAgendador}" ajax="false"
+						immediate="true" />
+				</f:facet>
+
+			</p:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

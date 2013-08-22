@@ -41,6 +41,28 @@
 					value="#{dispositivoBean.dispositivo.enderecoEscravo}"
 					size="#{constantsBean.FIELD_20}"
 					maxlength="#{dispositivoBean.getTamanhoCampo('enderecoEscravo')}" />
+					
+					<p:outputLabel value="#{bundle['LABEL_TIPO_DISPOSITIVO']}:" for="tipoDispositivo" />
+				<h:selectOneMenu id="tipoDispositivo"
+					value="#{dispositivoBean.dispositivo.tipoDispositivo}">
+					<f:selectItems value="#{tipoDispositivoBean.tiposDispositivo}"
+						var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.descricao}" />
+				</h:selectOneMenu>
+
+				<p:outputLabel value="#{bundle['LABEL_AGENDADOR']}:"  for="agendador" />
+				<h:selectOneMenu id="agendador"
+					value="#{dispositivoBean.dispositivo.agendador}">
+					<f:selectItems value="#{agendadorBean.agendadores}" var="agend"
+						itemValue="#{agend}" itemLabel="#{agend.descricao}" />
+				</h:selectOneMenu>
+				
+				<p:outputLabel value="#{bundle['LABEL_RECURSO']}:"  for="recurso" />
+				<h:selectOneMenu id="recurso"
+					value="#{dispositivoBean.dispositivo.recurso}">
+					<f:selectItems value="#{recursoBean.recursos}" var="rec"
+						itemValue="#{rec}" itemLabel="#{rec.descricao}" />
+				</h:selectOneMenu>
+					
 
 				<f:facet name="footer">
 					<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
