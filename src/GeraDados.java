@@ -474,6 +474,7 @@ public class GeraDados {
 		u1.setNome("Administrador");
 		u1.setLogin("admin");
 		u1.setSenha("123");
+		u1.setMatricula(1);
 		u1.setPerfil(p1);
 		u1.setAtivo(SimNao.SIM);
 		em.persist(u1);
@@ -482,6 +483,7 @@ public class GeraDados {
 		u2.setNome("Wilson");
 		u2.setLogin("wilson");
 		u2.setSenha("123");
+		u1.setMatricula(2);
 		u2.setPerfil(p2);
 		u2.setAtivo(SimNao.SIM);
 		em.persist(u2);

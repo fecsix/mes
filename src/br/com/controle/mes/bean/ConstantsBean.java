@@ -21,6 +21,10 @@ public class ConstantsBean implements Serializable {
 
 	private final String FIELD_100 = "100";
 
+	public static final String INIT_PAGE = "listar/ListarTarefa?faces-redirect=true";
+
+	public static final String INIT_PAGE_NOTE = "apontamento/MenuApontamento?faces-redirect=true";
+
 	public String getROWS_NUMBER() {
 		return ROWS_NUMBER;
 	}

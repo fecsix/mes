@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -22,6 +23,10 @@ public class Usuario implements Serializable {
 	@GeneratedValue
 	@Column(name = "cvUsuario", nullable = false)
 	private Long id;
+
+	@NotNull(message = "Matrícula do usuário deve ser preenchida")
+	@Column(name = "cvMatricula", nullable = false)
+	private Integer matricula;
 
 	@NotEmpty(message = "Nome do usuário deve ser preenchido")
 	@Column(name = "ccNome", length = 50, nullable = false)
@@ -47,6 +52,14 @@ public class Usuario implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Integer getMatricula() {
+		return matricula;
+	}
+
+	public void setMatricula(Integer matricula) {
+		this.matricula = matricula;
 	}
 
 	public String getNome() {
@@ -116,8 +129,9 @@ public class Usuario implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", login=" + login + ", senha=" + senha
-				+ ", ativo=" + ativo + ", perfil=" + perfil + "]";
+		return "Usuario [id=" + id + ", matricula=" + matricula + ", nome="
+				+ nome + ", login=" + login + ", senha=" + senha + ", ativo="
+				+ ativo + ", perfil=" + perfil + "]";
 	}
 
 }

@@ -11,6 +11,7 @@ import javax.persistence.Column;
 @Named
 public class BuscarAnotacoes {
 
+	@SuppressWarnings("rawtypes")
 	public int getTamanhoCampo(Class classe, String campo) {
 		try {
 			Field field = classe.getDeclaredField(campo);

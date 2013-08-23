@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+		<h2>
+			<h:outputText value="#{bundle['LABEL_LOGIN_SISTEMA']}" />
+		</h2>
+		<h:form id="loginForm">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="2" styleClass="campos">
+
+				<h:outputLabel value="#{bundle['LABEL_MATRICULA']}:" for="matricula" />
+				<h:inputText id="matricula" value="#{loginBean.usuario.matricula}"
+					size="#{constantsBean.FIELD_50}"/>
+				<h:commandButton value="#{bundle['BUTTON_EFETUAR_LOGIN']}"
+					action="#{loginBean.efetuaLoginMatricula}" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

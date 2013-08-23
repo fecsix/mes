@@ -36,10 +36,23 @@ public class LoginBean implements Serializable {
 		usuario = dao.existe(usuario);
 		if (usuario != null) {
 			usuarioLogado.setUsuario(usuario);
-			return "listar/ListarTarefa?faces-redirect=true";
+			return ConstantsBean.INIT_PAGE;
 		} else {
 			usuarioLogado.setUsuario(null);
 			return "login?faces-redirect=true";
+		}
+	}
+
+	@Transactional
+	public String efetuaLoginMatricula() {
+		System.out.println("ssssss");
+		usuario = dao.existeMatricula(usuario);
+		if (usuario != null) {
+			usuarioLogado.setUsuario(usuario);
+			return ConstantsBean.INIT_PAGE_NOTE;
+		} else {
+			usuarioLogado.setUsuario(null);
+			return "loginApontamento?faces-redirect=true";
 		}
 	}
 

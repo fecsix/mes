@@ -170,7 +170,7 @@ public class ValidaCampo {
 		return false;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public boolean isEnumValido(Class classe, String expressao) {
 		if (classe != null && classe.isEnum()) {
 			for (Object objeto : classe.getEnumConstants()) {
@@ -255,4 +255,3 @@ public class ValidaCampo {
 	}
 
 }
-

@@ -17,6 +17,7 @@ public class UsuarioDAO implements Serializable {
 	// Injetado pelo CDI
 	private EntityManager em;
 
+	@SuppressWarnings("unchecked")
 	public Usuario existe(Usuario usuario) {
 
 		Usuario usuarioEncontrado = null;
@@ -27,6 +28,24 @@ public class UsuarioDAO implements Serializable {
 								+ "and login = :login and senha = :senha")
 				.setParameter("login", usuario.getLogin())
 				.setParameter("senha", usuario.getSenha());
+
+		List<Usuario> lista = query.getResultList();
+
+		if (lista != null && lista.size() == 1)
+			usuarioEncontrado = lista.get(0);
+
+		return usuarioEncontrado;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Usuario existeMatricula(Usuario usuario) {
+
+		Usuario usuarioEncontrado = null;
+
+		Query query = em.createQuery(
+				"from MESUsuario where ativo = 1 "
+						+ "and matricula = :matricula").setParameter(
+				"matricula", usuario.getMatricula());
 
 		List<Usuario> lista = query.getResultList();
 
