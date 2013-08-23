@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,15 +16,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity(name = "MESTipoDispositivo")
 public class TipoDispositivo implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@GeneratedValue
 	@Column(name = "cvTipoDispositivo", nullable = false)
 	private Long id;
 
 	@NotEmpty(message = "Código do tipo do dispositivo deve ser preenchida")
-	@Column(name = "ccTipoDispositivo", length = 20, nullable = false)
+	@Column(name = "ccTipoDispositivo", length = 50, nullable = false)
 	private String codigo;
 
 	@NotEmpty(message = "Descrição do tipo do  dispositivo deve ser preenchida")
@@ -41,10 +40,6 @@ public class TipoDispositivo implements Serializable {
 
 	@Column(name = "cvRegistradorTotalizador", nullable = true)
 	private String registradorTotalizador;
-
-	@OneToMany
-	@JoinColumn(name = "cvDispositivo")
-	private List<Dispositivo> dispositivos;
 
 	public Long getId() {
 		return id;
@@ -100,14 +95,6 @@ public class TipoDispositivo implements Serializable {
 
 	public void setRegistradorTotalizador(String registradorTotalizador) {
 		this.registradorTotalizador = registradorTotalizador;
-	}
-
-	public List<Dispositivo> getDispositivos() {
-		return dispositivos;
-	}
-
-	public void setDispositivos(List<Dispositivo> dispositivos) {
-		this.dispositivos = dispositivos;
 	}
 
 	@Override

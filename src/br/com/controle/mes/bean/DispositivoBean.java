@@ -23,8 +23,6 @@ public class DispositivoBean implements Serializable {
 
 	private List<Dispositivo> dispositivos;
 
-	private Long dispositivoId;
-
 	@Inject
 	private DAO<Dispositivo> dao;
 
@@ -34,14 +32,6 @@ public class DispositivoBean implements Serializable {
 
 	public void setDispositivo(Dispositivo dispositivo) {
 		this.dispositivo = dispositivo;
-	}
-
-	public Long getDispositivoId() {
-		return dispositivoId;
-	}
-
-	public void setDispositivoId(Long dispositivoId) {
-		this.dispositivoId = dispositivoId;
 	}
 
 	@Transactional
@@ -69,7 +59,6 @@ public class DispositivoBean implements Serializable {
 	public List<Dispositivo> getDispositivos() {
 		if (dispositivos == null)
 			dispositivos = dao.listaTodos();
-
 		return dispositivos;
 	}
 
@@ -78,11 +67,6 @@ public class DispositivoBean implements Serializable {
 		dao.remove(dispositivo);
 		this.dispositivos = dao.listaTodos();
 		return paginaListarDispositivo();
-	}
-
-	public void carregaDispositivo() {
-		if (dispositivoId != null && dispositivoId != 0)
-			dispositivo = dao.buscaPorId(dispositivoId);
 	}
 
 	public int getTamanhoCampo(String campo) {

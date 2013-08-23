@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_template.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<h:messages styleClass="erros" />
+
+			<fieldset>
+				<legend>Rodar Leitura Dispositivos</legend>
+
+				<h:panelGrid columns="1">
+
+					<h:outputText id="txt_count"
+						value="#{dadosLeituraDispositivoBean.valorContador}" />
+
+					<p:poll interval="10"
+						listener="#{dadosLeituraDispositivoBean.rodarAgendador}"
+						update="txt_count" />
+
+				</h:panelGrid>
+
+			</fieldset>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

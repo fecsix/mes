@@ -11,34 +11,40 @@
 	<ui:define name="corpo">
 
 		<h2>
-			<h:outputText value="#{bundle['LABEL_LISTAGEM_TIPO_DISPOSITIVO']}" />
+			<h:outputText value="#{bundle['LABEL_LISTAGEM_AGENDADOR']}" />
 		</h2>
 
 		<h:form id="lista">
 
-			<p:dataTable id="tableTipoDispositivo"
-				value="#{tipoDispositivoBean.tiposDispositivo}" var="tipoDispositivo"
+			<p:dataTable id="tableAgendador"
+				value="#{agendadorBean.agendadores}" var="agendador"
 				paginator="true" rows="#{constantsBean.ROWS_NUMBER}"
 				sortMode="multiple">
-				<p:column sortBy="#{tipoDispositivo.codigo}"
+				<p:column sortBy="#{agendador.codigo}"
 					headerText="#{bundle['LABEL_CODIGO']}"
-					filterBy="#{tipoDispositivo.codigo}" filterMatchMode="contains">
-					<h:outputText value="#{tipoDispositivo.codigo}" />
+					filterBy="#{agendador.codigo}" filterMatchMode="contains">
+					<h:outputText value="#{agendador.codigo}" />
 				</p:column>
-				<p:column sortBy="#{tipoDispositivo.descricao}"
+				<p:column sortBy="#{agendador.descricao}"
 					headerText="#{bundle['LABEL_DESCRICAO']}"
-					filterBy="#{tipoDispositivo.descricao}" filterMatchMode="contains">
-					<h:outputText value="#{tipoDispositivo.descricao}" />
+					filterBy="#{agendador.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{agendador.descricao}" />
+				</p:column>
+				<p:column sortBy="#{agendador.minutosIntervalo}"
+					headerText="#{bundle['LABEL_MINUTOS_INTERVALO']}"
+					filterBy="#{agendador.minutosIntervalo}"
+					filterMatchMode="contains">
+					<h:outputText value="#{agendador.minutosIntervalo}" />
 				</p:column>
 				<p:column style="width:4%">
 					<f:facet name="header">
 						<p:commandButton icon="ui-icon-plus" style="margin:0"
-							action="#{tipoDispositivoBean.novoTipoDispositivo}" ajax="false" />
+							action="#{agendadorBean.novoAgendador}" ajax="false" />
 					</f:facet>
 					<p:commandButton id="edit" icon="ui-icon-pencil"
-						action="/manter/ManterTipoDispositivo" title="Editar" ajax="false">
-						<f:setPropertyActionListener value="#{tipoDispositivo}"
-							target="#{tipoDispositivoBean.tipoDispositivo}" />
+						action="/manter/ManterAgendador" title="Editar" ajax="false">
+						<f:setPropertyActionListener value="#{agendador}"
+							target="#{agendadorBean.agendador}" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
