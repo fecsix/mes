@@ -48,9 +48,9 @@ public class DadosLeituraDispositivo implements Serializable {
 
 	@Column(name = "cvOrigemLeitura", nullable = true)
 	private OrigemDadosLeitura origem;
-
-	@Column(name = "cvOrdemProducao", nullable = true)
-	private OrdemProducao ordemProducao;
+	
+	@Column(name = "cvPlanoProducao", nullable = true)
+	private PlanoProducao planoProducao;
 
 	@Column(name = "cvTurno", nullable = true)
 	private Turno turno;
@@ -119,20 +119,20 @@ public class DadosLeituraDispositivo implements Serializable {
 		this.origem = origem;
 	}
 
-	public OrdemProducao getOrdemProducao() {
-		return ordemProducao;
-	}
-
-	public void setOrdemProducao(OrdemProducao ordemProducao) {
-		this.ordemProducao = ordemProducao;
-	}
-
 	public Turno getTurno() {
 		return turno;
 	}
 
 	public void setTurno(Turno turno) {
 		this.turno = turno;
+	}
+
+	public PlanoProducao getPlanoProducao() {
+		return planoProducao;
+	}
+
+	public void setPlanoProducao(PlanoProducao planoProducao) {
+		this.planoProducao = planoProducao;
 	}
 
 	@Override

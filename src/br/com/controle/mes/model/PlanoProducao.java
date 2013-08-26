@@ -39,6 +39,10 @@ public class PlanoProducao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cvRecurso")
 	private Recurso recurso;
+	
+	@ManyToOne
+	@JoinColumn(name = "cvDispositivo")
+	private Dispositivo dispositivo;
 
 	@ManyToOne
 	@JoinColumn(name = "cvCentroTrabalho")
@@ -120,6 +124,14 @@ public class PlanoProducao implements Serializable {
 
 	public void setTempoExecucao(Long tempoExecucao) {
 		this.tempoExecucao = tempoExecucao;
+	}
+
+	public Dispositivo getDispositivo() {
+		return dispositivo;
+	}
+
+	public void setDispositivo(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
 	}
 
 	@Override
