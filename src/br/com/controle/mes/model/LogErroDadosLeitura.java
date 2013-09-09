@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import br.com.controle.mes.enumerate.TipoErroDadosLeitura;
 
@@ -19,6 +21,10 @@ public class LogErroDadosLeitura implements Serializable {
 	@Column(name = "cvLogErroDadosLeitura", nullable = false)
 	private Long id;
 
+	@ManyToOne
+	@JoinColumn(name = "cvDadosLeituraDispositivo", nullable = false)
+	private DadosLeituraDispositivo dadosLeitura = new DadosLeituraDispositivo();
+
 	@Column(name = "cvTipoErro", nullable = true)
 	private TipoErroDadosLeitura tipoErro;
 
@@ -31,6 +37,14 @@ public class LogErroDadosLeitura implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public DadosLeituraDispositivo getDadosLeitura() {
+		return dadosLeitura;
+	}
+
+	public void setDadosLeitura(DadosLeituraDispositivo dadosLeitura) {
+		this.dadosLeitura = dadosLeitura;
 	}
 
 	public TipoErroDadosLeitura getTipoErro() {
