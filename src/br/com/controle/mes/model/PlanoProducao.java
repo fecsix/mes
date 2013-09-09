@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.controle.mes.enumerate.StatusPlanoProducao;
+
 @Entity(name = "MESPlanoProducao")
 public class PlanoProducao implements Serializable {
 
@@ -39,7 +41,7 @@ public class PlanoProducao implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "cvRecurso")
 	private Recurso recurso;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "cvDispositivo")
 	private Dispositivo dispositivo;
@@ -53,6 +55,9 @@ public class PlanoProducao implements Serializable {
 
 	@Column(name = "cvTempoExecucao", nullable = false)
 	private Long tempoExecucao;
+
+	@Column(name = "cvStatusPlanoProducao", nullable = false)
+	private StatusPlanoProducao status;
 
 	public Long getId() {
 		return id;
@@ -132,6 +137,14 @@ public class PlanoProducao implements Serializable {
 
 	public void setDispositivo(Dispositivo dispositivo) {
 		this.dispositivo = dispositivo;
+	}
+
+	public StatusPlanoProducao getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPlanoProducao status) {
+		this.status = status;
 	}
 
 	@Override
