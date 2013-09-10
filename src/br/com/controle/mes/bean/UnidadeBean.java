@@ -28,7 +28,7 @@ public class UnidadeBean implements Serializable {
 	private Long unidadeId;
 
 	@Inject
-	private DAO<Unidade> dao = new DAO<>(Unidade.class);
+	private DAO<Unidade> dao;
 
 	public Unidade getUnidade() {
 		return unidade;
