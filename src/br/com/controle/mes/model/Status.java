@@ -9,29 +9,22 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-@Entity(name = "MESRecurso")
-public class Recurso implements Serializable {
+@Entity(name = "MESStatus")
+public class Status implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvRecurso", nullable = false)
+	@Column(name = "cvStatus")
 	private Long id;
 
-	@NotEmpty(message = "Código do Recurso deve ser preenchido.")
-	@Column(name = "ccRecurso", length = 20, nullable = false)
-	private String codigo;
-
-	@NotEmpty(message = "Descrição do Recurso deve ser preenchida")
-	@Column(name = "ccDescricao", length = 50, nullable = false)
+	@Column(name = "ccDescricao")
 	private String descricao;
 
 	@ManyToOne
-	@JoinColumn(name = "cvCentroTrabalho")
-	private CentroTrabalho centroTrabalho;
+	@JoinColumn(name = "cvTipoStatus")
+	private TipoStatus tipoStatus;
 
 	public Long getId() {
 		return id;
@@ -49,20 +42,17 @@ public class Recurso implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getCodigo() {
-		return codigo;
+	public TipoStatus getTipoStatus() {
+		return tipoStatus;
 	}
 
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setTipoStatus(TipoStatus tipoStatus) {
+		this.tipoStatus = tipoStatus;
 	}
 
-	public CentroTrabalho getCentroTrabalho() {
-		return centroTrabalho;
-	}
-
-	public void setCentroTrabalho(CentroTrabalho centroTrabalho) {
-		this.centroTrabalho = centroTrabalho;
+	@Override
+	public String toString() {
+		return "Status [id=" + id + ", descricao=" + descricao + "]";
 	}
 
 	@Override
@@ -81,19 +71,13 @@ public class Recurso implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Recurso other = (Recurso) obj;
+		Status other = (Status) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Recurso [id=" + id + ", codigo=" + codigo + ", descricao="
-				+ descricao + "]";
 	}
 
 }

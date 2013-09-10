@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import br.com.controle.mes.enumerate.TipoCentroTrabalho;
+import br.com.controle.mes.enumerate.TipoCentroTrabalhoEnum;
 
 @Entity(name = "MESCentroTrabalho")
 public class CentroTrabalho implements Serializable {
@@ -31,7 +31,8 @@ public class CentroTrabalho implements Serializable {
 	@Column(name = "ccDescricao", length = 50, nullable = false)
 	private String descricao;
 
-	@Column(name = "cvTipoCentroTrabalho", nullable = false)
+	@ManyToOne
+	@JoinColumn(name = "cvTipoCentroTrabalho")
 	private TipoCentroTrabalho tipoCentroTrabalho;
 
 	@ManyToOne

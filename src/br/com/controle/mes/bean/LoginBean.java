@@ -8,8 +8,10 @@ import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
+import br.com.controle.mes.dao.FuncionarioDAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.dao.UsuarioDAO;
+import br.com.controle.mes.model.Funcionario;
 import br.com.controle.mes.model.Usuario;
 
 @RequestScoped
@@ -25,15 +27,20 @@ public class LoginBean implements Serializable {
 
 	private Usuario usuario = new Usuario();
 
+	private Funcionario funcionario = new Funcionario();
+
 	@Inject
 	private UsuarioLogado usuarioLogado;
 
 	@Inject
-	private UsuarioDAO dao;
+	private UsuarioDAO usuarioDao;
+
+	@Inject
+	private FuncionarioDAO funcionarioDao;
 
 	@Transactional
 	public String efetuaLogin() {
-		usuario = dao.existe(usuario);
+		usuario = usuarioDao.existe(usuario);
 		if (usuario != null) {
 			usuarioLogado.setUsuario(usuario);
 			return ConstantsBean.INIT_PAGE;
@@ -44,14 +51,14 @@ public class LoginBean implements Serializable {
 	}
 
 	@Transactional
-	public String efetuaLoginMatricula() {
-		System.out.println("ssssss");
-		usuario = dao.existeMatricula(usuario);
-		if (usuario != null) {
-			usuarioLogado.setUsuario(usuario);
+	public String efetuaLoginFuncionario() {
+		funcionario = funcionarioDao.existe(funcionario);
+		if (funcionario != null) {
+			usuarioLogado.setFuncionario(funcionario);
+			usuarioLogado.setUsuario(funcionario.getUsuario());
 			return ConstantsBean.INIT_PAGE_NOTE;
 		} else {
-			usuarioLogado.setUsuario(null);
+			usuarioLogado.setFuncionario(null);
 			return "loginApontamento?faces-redirect=true";
 		}
 	}
@@ -60,12 +67,17 @@ public class LoginBean implements Serializable {
 		return usuario;
 	}
 
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
 	public boolean isLogado() {
 		return usuarioLogado.isLogado();
 	}
 
 	public String logout() {
 		usuarioLogado.setUsuario(null);
+		usuarioLogado.setFuncionario(null);
 		usuarioLogado.setMenuModel(null);
 		return "/login?faces-redirect=true";
 	}

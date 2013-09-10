@@ -81,8 +81,8 @@ public class TarefaBean implements Serializable {
 	private boolean dadosOk() {
 		boolean dadosOk = true;
 		if (tarefa != null) {
-			if (tarefa.getTipo() == null
-					|| TipoTarefa.valueOf(tarefa.getTipo().toString()) == null) {
+			if (tarefa.getTipoTarefa() == null
+					|| TipoTarefa.valueOf(tarefa.getTipoTarefa().toString()) == null) {
 				GerarMensagem.addMsg(FacesMessage.SEVERITY_ERROR,
 						"Tipo de Tarefa Inválida !!");
 				dadosOk = false;
@@ -138,15 +138,15 @@ public class TarefaBean implements Serializable {
 	}
 
 	public String getTipoTarefa() {
-		if (tarefa != null && tarefa.getTipo() != null) {
-			return tarefa.getTipo().toString();
+		if (tarefa != null && tarefa.getTipoTarefa() != null) {
+			return tarefa.getTipoTarefa().toString();
 		}
 		return "";
 	}
 
 	public void setTipoTarefa(String tipo) {
 		if (tipo != null && tipo.length() > 0) {
-			tarefa.setTipo(TipoTarefa.valueOf(tipo));
+			tarefa.setTipoTarefa(TipoTarefa.valueOf(tipo));
 		}
 	}
 

@@ -7,26 +7,32 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:s="http://jboss.org/seam/faces">
 
+
 <ui:composition template="/_templateApontamento.xhtml">
 	<ui:define name="corpo">
 
 		<h:form id="cadastro">
+			<p:focus />
 			<p:messages id="messages" autoUpdate="true" closable="true" />
 			<h2>
 				<h:outputText value="#{bundle['LABEL_NOVO_MENU']}" />
 			</h2>
 
-			<p:panelGrid columns="2" styleClass="dados">
-
-				<h:outputText value="#{bundle['LABEL_NOME']}" for="nome" />
-
+			<p:panelGrid columns="1" styleClass="semBorda">
+				<h:outputText value="#{bundle['LABEL_APONTAMENTO_HORAS_DIRETA']}" />
+				<h:outputText value="#{bundle['LABEL_APONTAMENTO_HORAS_INDIRETA']}" />
+				<h:outputText value="#{bundle['LABEL_APONTAMENTO_QUANTIDADE']}" />
+				<h:outputText value="#{bundle['LABEL_APONTAMENTO_SAIR']}" />
 			</p:panelGrid>
 
-			<h:outputText value="#{bundle['LABEL_NOME']}" for="opcao" />
-			<p:inputText id="opcao" />
-			<p:commandButton value="#{bundle['BUTTON_SALVAR']}"
-						icon="ui-icon-check" style="margin:0"
-						action="#{clienteBean.salvar}" ajax="false" />
+			<p:panelGrid columns="4" styleClass="semBorda">
+				<h:outputText value="#{bundle['LABEL_NOME']}" for="opcao" />
+				<p:inputText id="opcao" value="#{apontamentoBean.opcaoMenu}"
+					maxlength="1" onfocus="this.value='';"/>
+				<p:commandButton value="#{bundle['BUTTON_APONTAMENTO_OK']}"
+					icon="ui-icon-check" style="margin:0; width:110px;"
+					action="#{apontamentoBean.escolheOpcaoMenu}" ajax="false" />
+			</p:panelGrid>
 
 		</h:form>
 

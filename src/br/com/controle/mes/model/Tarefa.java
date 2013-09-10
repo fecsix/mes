@@ -26,7 +26,7 @@ public class Tarefa implements Serializable {
 	private String descricao;
 
 	@Column(name = "cvTipo", nullable = false)
-	private TipoTarefa tipo;
+	private TipoTarefa tipoTarefa;
 
 	public Long getId() {
 		return id;
@@ -52,12 +52,12 @@ public class Tarefa implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public TipoTarefa getTipo() {
-		return tipo;
+	public TipoTarefa getTipoTarefa() {
+		return tipoTarefa;
 	}
 
-	public void setTipo(TipoTarefa tipo) {
-		this.tipo = tipo;
+	public void setTipoTarefa(TipoTarefa tipoTarefa) {
+		this.tipoTarefa = tipoTarefa;
 	}
 
 	@Override

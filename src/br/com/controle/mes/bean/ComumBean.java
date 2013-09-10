@@ -1,23 +1,27 @@
 package br.com.controle.mes.bean;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 
 import br.com.controle.mes.enumerate.SimNao;
-import br.com.controle.mes.enumerate.TipoCentroTrabalho;
+import br.com.controle.mes.enumerate.TipoCentroTrabalhoEnum;
 import br.com.controle.mes.enumerate.StatusOP;
 import br.com.controle.mes.enumerate.TipoItem;
 import br.com.controle.mes.enumerate.TipoTarefa;
 
 @RequestScoped
 @Named
-public class ComumBean {
+public class ComumBean implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	public SelectItem[] getTipoCentroTrabalho() {
-		SelectItem[] items = new SelectItem[TipoCentroTrabalho.values().length];
+		SelectItem[] items = new SelectItem[TipoCentroTrabalhoEnum.values().length];
 		int i = 0;
-		for (TipoCentroTrabalho item : TipoCentroTrabalho.values())
+		for (TipoCentroTrabalhoEnum item : TipoCentroTrabalhoEnum.values())
 			items[i++] = new SelectItem(item, item.getDescricao());
 		return items;
 	}
@@ -29,7 +33,7 @@ public class ComumBean {
 			items[i++] = new SelectItem(item, item.getDescricao());
 		return items;
 	}
-	
+
 	public SelectItem[] getTipoItem() {
 		SelectItem[] items = new SelectItem[TipoItem.values().length];
 		int i = 0;

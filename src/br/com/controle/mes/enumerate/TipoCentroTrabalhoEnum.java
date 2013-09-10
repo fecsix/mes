@@ -1,12 +1,12 @@
 package br.com.controle.mes.enumerate;
 
-public enum TipoCentroTrabalho {
+public enum TipoCentroTrabalhoEnum {
 
 	DIRETO("Direto"), INDIRETO("Indireto"), SUBCONTRATADO("Subcontratado");
 
 	private final String descricao;
 
-	private TipoCentroTrabalho(String descricao) {
+	private TipoCentroTrabalhoEnum(String descricao) {
 		this.descricao = descricao;
 	}
 

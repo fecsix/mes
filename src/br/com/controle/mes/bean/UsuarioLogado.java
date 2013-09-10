@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import org.primefaces.model.MenuModel;
 
+import br.com.controle.mes.model.Funcionario;
 import br.com.controle.mes.model.Usuario;
 
 @Named
@@ -16,6 +17,8 @@ public class UsuarioLogado implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Usuario usuario;
+
+	private Funcionario funcionario;
 
 	private MenuModel menuModel;
 
@@ -29,6 +32,14 @@ public class UsuarioLogado implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public MenuModel getMenuModel() {

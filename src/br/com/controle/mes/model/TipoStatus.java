@@ -7,24 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
-@Entity(name = "MESFornecedor")
-public class Fornecedor implements Serializable {
+@Entity(name = "MESTipoStatus")
+public class TipoStatus implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue
-	@Column(name = "cvFornecedor", nullable = false)
+	@Column(name = "cvTipoStatus")
 	private Long id;
 
-	@NotEmpty(message = "Código do Fornecedor deve ser preenchido.")
-	@Column(name = "ccFornecedor", length = 20, nullable = false)
-	private String codigo;
-
-	@NotEmpty(message = "Descrição do Fornecedor deve ser preenchida")
-	@Column(name = "ccDescricao", length = 50, nullable = false)
+	@Column(name = "ccDescricao")
 	private String descricao;
 
 	public Long getId() {
@@ -43,12 +36,9 @@ public class Fornecedor implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public String getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	@Override
+	public String toString() {
+		return "TipoStatus [id=" + id + ", descricao=" + descricao + "]";
 	}
 
 	@Override
@@ -67,19 +57,13 @@ public class Fornecedor implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Fornecedor other = (Fornecedor) obj;
+		TipoStatus other = (TipoStatus) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Fornecedor [id=" + id + ", codigo=" + codigo + ", descricao="
-				+ descricao + "]";
 	}
 
 }

@@ -10,7 +10,6 @@ import javax.inject.Named;
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
 import br.com.controle.mes.dao.Transactional;
-import br.com.controle.mes.model.CentroTrabalho;
 import br.com.controle.mes.model.Usuario;
 import br.com.controle.mes.util.BuscarAnotacoes;
 

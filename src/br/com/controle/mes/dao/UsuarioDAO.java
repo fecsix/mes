@@ -37,27 +37,10 @@ public class UsuarioDAO implements Serializable {
 		return usuarioEncontrado;
 	}
 
-	@SuppressWarnings("unchecked")
-	public Usuario existeMatricula(Usuario usuario) {
-
-		Usuario usuarioEncontrado = null;
-
-		Query query = em.createQuery(
-				"from MESUsuario where ativo = 1 "
-						+ "and matricula = :matricula").setParameter(
-				"matricula", usuario.getMatricula());
-
-		List<Usuario> lista = query.getResultList();
-
-		if (lista != null && lista.size() == 1)
-			usuarioEncontrado = lista.get(0);
-
-		return usuarioEncontrado;
-	}
-
 	public boolean existe(String login) {
 
-		Query query = em.createQuery("from MESUsuario where login = :login ")
+		Query query = em.createQuery(
+				"from MESUsuario where ativo = 1 and login = :login ")
 				.setParameter("login", login);
 
 		boolean encontrou = !query.getResultList().isEmpty();

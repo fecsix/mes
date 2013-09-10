@@ -34,7 +34,7 @@
 					maxlength="#{tarefaBean.getTamanhoCampo('descricao')}" />
 
 				<p:outputLabel for="tipoTarefa" value="#{bundle['LABEL_TIPO']}:" />
-				<p:selectOneMenu id="tipoTarefa" value="#{tarefaBean.tarefa.tipo}">
+				<p:selectOneMenu id="tipoTarefa" value="#{tarefaBean.tarefa.tipoTarefa}">
 					<f:selectItems value="#{comumBean.tipoTarefa}" />
 				</p:selectOneMenu>
 

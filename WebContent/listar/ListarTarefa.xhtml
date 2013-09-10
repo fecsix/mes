@@ -31,8 +31,8 @@
 				</p:column>
 				<p:column sortBy="#{tarefa.tipo.descricao}"
 					headerText="#{bundle['LABEL_TIPO']}"
-					filterBy="#{tarefa.tipo.descricao}" filterMatchMode="contains">
-					<h:outputText value="#{tarefa.tipo.descricao}" />
+					filterBy="#{tarefa.tipoTarefa.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{tarefa.tipoTarefa.descricao}" />
 				</p:column>
 				<p:column style="width:4%">
 					<f:facet name="header">

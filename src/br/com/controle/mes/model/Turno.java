@@ -7,7 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-
 @Entity(name = "MESTurno")
 public class Turno implements Serializable {
 
@@ -75,7 +74,8 @@ public class Turno implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Turno [id=" + id + ", descricao=" + descricao + "]";
+		return "Turno [id=" + id + ", codigo=" + codigo + ", descricao="
+				+ descricao + "]";
 	}
 
 }

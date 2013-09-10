@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:s="http://jboss.org/seam/faces">
+
+<ui:composition template="/_templateApontamento.xhtml">
+	<ui:define name="corpo">
+
+		<h:form id="cadastro">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<h2>
+				<h:outputText value="#{bundle['LABEL_APONTAMENTO_HORAS_INDIRETA']}" />
+			</h2>
+
+			<p:focus />
+
+			<p:panelGrid columns="1" styleClass="semBorda">
+
+				<p:panelGrid id="panelRecurso" columns="4" styleClass="semBorda">
+					<h:outputText value="#{bundle['LABEL_RECURSO']}" for="codigo" />
+					<p:inputText id="codigo"
+						value="#{apontamentoBean.apontamento.recurso.codigo}"
+						readonly="#{not empty apontamentoBean.apontamento.recurso.id}"
+						immediate="true">
+					</p:inputText>
+					<p:commandButton value="#{bundle['BUTTON_APONTAMENTO_OK']}"
+						icon="ui-icon-check" style="margin:0; width:110px;"
+						action="#{apontamentoBean.escolheRecurso}"
+						rendered="#{empty apontamentoBean.apontamento.recurso.id}"
+						ajax="false" />
+					<p:commandButton id="voltar"
+						value="#{bundle['BUTTON_APONTAMENTO_VOLTAR']}"
+						icon="ui-icon-arrowreturn-1-w" style="margin:0; width:110px;"
+						action="#{apontamentoBean.retornaMenu}"
+						rendered="#{empty apontamentoBean.apontamento.recurso.id}"
+						ajax="false" immediate="true" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelTarefa" columns="4" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.recurso.id}">
+					<h:outputText value="#{bundle['LABEL_TAREFA']}" for="tarefa" />
+					<p:inputText id="tarefa"
+						value="#{apontamentoBean.apontamento.tarefa.codigo}"
+						readonly="#{not empty apontamentoBean.apontamento.tarefa.id}">
+					</p:inputText>
+
+					<p:commandButton value="#{bundle['BUTTON_APONTAMENTO_OK']}"
+						icon="ui-icon-check" style="margin:0; width:110px;"
+						action="#{apontamentoBean.escolheTarefa}" ajax="false"
+						rendered="#{empty apontamentoBean.apontamento.tarefa.id}" />
+					<p:commandButton value="#{bundle['BUTTON_APONTAMENTO_VOLTAR']}"
+						icon="ui-icon-arrowreturn-1-w" style="margin:0; width:110px;"
+						action="#{apontamentoBean.retornaRecurso}" ajax="false"
+						rendered="#{empty apontamentoBean.apontamento.tarefa.id}"
+						immediate="true" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelDataInicio" columns="2" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.tarefa.id}">
+					<h:outputText value="#{bundle['LABEL_DATA_INICIO']}"
+						for="dataInicio" />
+					<p:inputText id="dataInicio"
+						value="#{apontamentoBean.apontamento.dataInicio.time}"
+						readonly="true">
+						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm" />
+					</p:inputText>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelDataFim" columns="2" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.status.id}">
+					<h:outputText value="#{bundle['LABEL_DATA_FIM']}" for="dataFim" />
+					<p:inputText id="dataFim"
+						value="#{apontamentoBean.apontamento.dataFim.time}"
+						readonly="true">
+						<f:convertDateTime locale="pt_BR" pattern="dd/MM/yyyy HH:mm" />
+					</p:inputText>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelListaTarefa" columns="4" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.recurso.id and empty apontamentoBean.apontamento.tarefa.id}">
+					<p:dataTable id="tableTarefaIndireta"
+						value="#{apontamentoBean.listaTarefaIndireta}" var="tarefa">
+						<p:column headerText="#{bundle['LABEL_CODIGO']}">
+							<h:outputText value="#{tarefa.codigo}" />
+						</p:column>
+						<p:column headerText="#{bundle['LABEL_DESCRICAO']}">
+							<h:outputText value="#{tarefa.descricao}" />
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+
+				<p:panelGrid id="panelInicia" columns="1" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.tarefa.id and empty apontamentoBean.apontamento.status.id}">
+					<h:outputText value="#{bundle['MESSAGE_CONFIRMA']}" for="inicia" />
+					<p:inputText id="inicia" value="#{apontamentoBean.opcaoInicia}" />
+					<p:commandButton value="#{bundle['BUTTON_1SIM']}"
+						icon="ui-icon-check" style="margin:0; width:110px;"
+						action="#{apontamentoBean.iniciaApontamentoHoraIndireta}"
+						ajax="false" />
+					<p:commandButton value="#{bundle['BUTTON_2NAO']}"
+						icon="ui-icon-arrowreturn-1-w" style="margin:0; width:110px;"
+						action="#{apontamentoBean.iniciaApontamentoHoraIndireta}"
+						ajax="false" />
+				</p:panelGrid>
+
+				<p:panelGrid id="panelEncerra" columns="1" styleClass="semBorda"
+					rendered="#{not empty apontamentoBean.apontamento.status.id}">
+					<h:outputText value="#{bundle['MESSAGE_CONFIRMA']}" for="encerra" />
+					<p:inputText id="encerra" value="#{apontamentoBean.opcaoEncerra}" />
+					<p:commandButton value="#{bundle['BUTTON_1SIM']}"
+						icon="ui-icon-check" style="margin:0; width:110px;"
+						action="#{apontamentoBean.encerraApontamentoHoraIndireta}"
+						ajax="false" />
+					<p:commandButton value="#{bundle['BUTTON_2NAO']}"
+						icon="ui-icon-arrowreturn-1-w" style="margin:0; width:110px;"
+						action="#{apontamentoBean.encerraApontamentoHoraIndireta}"
+						ajax="false" />
+				</p:panelGrid>
+
+			</p:panelGrid>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>
+
+</html>

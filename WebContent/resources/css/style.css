@@ -1,23 +1,26 @@
 /* base */
-* { margin:0px; padding:0px; }
+* {
+	margin: 0px;
+	padding: 0px;
+}
 
-body{ 
-	font-size:12px; 
-	color:#000; 
-	font-family:helvetica, arial, sans-serif;
+body {
+	font-size: 12px;
+	color: #000;
+	font-family: helvetica, arial, sans-serif;
 	padding-bottom: 30px;
-	text-align:center;
+	text-align: center;
 }
 
 /** cabecalho **/
-#cabecalho, header{
-	background-color:#6D85F2;
+#cabecalho,header {
+	background-color: #6D85F2;
 	height: 60px;
 	position: relative;
 }
 
 #logoCompany {
-	float:left;
+	float: left;
 	position: absolute;
 	top: 0px;
 	left: 50%;
@@ -25,14 +28,14 @@ body{
 }
 
 #i18n {
-	float:right;
+	float: right;
 	position: absolute;
 	top: 0px;
 	right: 50%;
 	margin-right: -450px;
 }
 
-#usuarioLogado  {
+#usuarioLogado {
 	color: white;
 	display: block;
 	float: right;
@@ -61,37 +64,37 @@ body{
 }
 
 /* miolo */
-#conteudo, section {
-	width:900px;
-	height:auto;
-	position:relative;
-	padding:10px 0px;
-	background-color:#FFF;
+#conteudo,section {
+	width: 900px;
+	height: auto;
+	position: relative;
+	padding: 10px 0px;
+	background-color: #FFF;
 	margin: 0 auto;
 }
 
 /** rodape **/
-#rodape, footer { 
-	background-color:#6D85F2;
-	width:100%;
-	position:fixed;
+#rodape,footer {
+	background-color: #6D85F2;
+	width: 100%;
+	position: fixed;
 	bottom: 0;
-	padding:10px 0px;
+	padding: 10px 0px;
 	text-align: center;
-	font-size:10px; 
-	color:#FFF;
+	font-size: 10px;
+	color: #FFF;
 	display: block;
 }
 
 /* TITULO */
-h2{
-	display:block;
-	position:relative;
-	overflow:hidden;
-	color:#2B2926;
-	text-align:left;
-	height:auto;
-	margin-bottom:10px;
+h2 {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	color: #2B2926;
+	text-align: left;
+	height: auto;
+	margin-bottom: 10px;
 	border-bottom: 1px solid;
 	clear: both;
 	font-size: x-large;
@@ -99,8 +102,8 @@ h2{
 }
 
 /* FORM */
-input, textarea, select {
-	display: block;	
+input,textarea,select {
+	display: block;
 	margin-bottom: 3px !important;
 }
 
@@ -108,17 +111,17 @@ textarea {
 	width: 300px;
 }
 
-input:not(.ui-widget), textarea:not(.ui-widget), select {
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	border-radius:5px 5px 5px 5px;
-	
-	background:url("../resources/imagens/txt.gif") repeat-x scroll 0 0 transparent;
-	border:1px solid #999999;
-	padding:5px 2px;
+input:not (.ui-widget ),textarea:not (.ui-widget ),select {
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+	background: url("../resources/imagens/txt.gif") repeat-x scroll 0 0
+		transparent;
+	border: 1px solid #999999;
+	padding: 5px 2px;
 }
 
-label:not(.ui-selectonemenu-label){
+label:not (.ui-selectonemenu-label ){
 	display: block;
 	float: left;
 	margin-right: 20px;
@@ -132,32 +135,32 @@ input:after {
 
 .ui-spinner {
 	float: left;
-	margin-left: 303px;	
+	margin-left: 303px;
 }
 
 .ui-editor {
-	margin-left: 140px;	
+	margin-left: 140px;
 	margin-bottom: 5px;
 	width: 600px !important;
 }
 
-input[type=submit], button {
+input[type=submit],button {
 	margin: 0 auto;
 	margin-left: 140px;
 }
 
 input[type=submit] {
-	background:url("../resources/imagens/fundo_botao.gif") repeat-x scroll 0 0 #2A2A2A;
-	border:1px solid #272727;
-	color:#FFFFFF;
-	cursor:pointer;
-	padding:3px;
+	background: url("../resources/imagens/fundo_botao.gif") repeat-x scroll
+		0 0 #2A2A2A;
+	border: 1px solid #272727;
+	color: #FFFFFF;
+	cursor: pointer;
+	padding: 3px;
 	position: relative;
-	text-shadow:1px 1px 0 #000000;
-	
-	-moz-border-radius:5px 5px 5px 5px;
-	-webkit-border-radius:5px 5px 5px 5px;
-	border-radius:5px 5px 5px 5px;
+	text-shadow: 1px 1px 0 #000000;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
 }
 
 table button {
@@ -169,7 +172,7 @@ table button {
 }
 
 form {
-	margin-bottom:10px;
+	margin-bottom: 10px;
 	position: relative;
 	text-align: left;
 }
@@ -186,12 +189,12 @@ form .ui-fieldset {
 }
 
 .ui-tabs {
-	clear: both;	
+	clear: both;
 	margin-bottom: 20px;
 }
 
 .ui-tabs fieldset {
-	width:830px;	
+	width: 830px;
 }
 
 form fieldset legend {
@@ -200,27 +203,27 @@ form fieldset legend {
 }
 
 form .campos {
-	display:block;
-	position:relative;
-	overflow:hidden;	
+	display: block;
+	position: relative;
+	overflow: hidden;
 }
 
 /* tabela zebrada */
-table.dados{
-	height:auto;
+table.dados {
+	height: auto;
 	margin-bottom: 10px;
-	width:100%;
+	width: 100%;
 }
 
-table.dados tr th{
-	background-color:#0B0F19;
-	color:#fff;
-	color:1em;
-	padding:10px;
+table.dados tr th {
+	background-color: #0B0F19;
+	color: #fff;
+	color: 1em;
+	padding: 10px;
 }
 
-table.dados tr td{
-	padding:5px 10px;
+table.dados tr td {
+	padding: 5px 10px;
 }
 
 .campos tbody tr td {
@@ -229,15 +232,15 @@ table.dados tr td{
 }
 
 .dados {
-	width: 100%;	
+	width: 100%;
 }
 
-.par  {
+.par {
 	background-color: #F0F9FF;
 }
 
 .impar {
-	background:none repeat scroll 0 0 #DDDDDD;
+	background: none repeat scroll 0 0 #DDDDDD;
 }
 
 /* validacao */
@@ -259,10 +262,10 @@ table.dados tr td{
 	margin: 3px;
 }
 
-.semBorda tr, .semBorda td {  
-    border: none !important;
-    margin-left: 0;
-    margin: 0;
-    border-style: none;
-    padding-left: 0; 
+.semBorda tr,.semBorda td {
+	border: none !important;
+	margin-left: 0;
+	margin: 0;
+	border-style: none;
+	padding-left: 0;
 }

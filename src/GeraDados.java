@@ -5,8 +5,14 @@ import javax.persistence.EntityManager;
 
 import br.com.controle.mes.dao.JPAUtil;
 import br.com.controle.mes.enumerate.SimNao;
+import br.com.controle.mes.model.Funcionario;
 import br.com.controle.mes.model.Menu;
 import br.com.controle.mes.model.Perfil;
+import br.com.controle.mes.model.Status;
+import br.com.controle.mes.model.TipoApontamento;
+import br.com.controle.mes.model.TipoCentroTrabalho;
+import br.com.controle.mes.model.TipoStatus;
+import br.com.controle.mes.model.Turno;
 import br.com.controle.mes.model.Usuario;
 
 public class GeraDados {
@@ -474,7 +480,6 @@ public class GeraDados {
 		u1.setNome("Administrador");
 		u1.setLogin("admin");
 		u1.setSenha("123");
-		u1.setMatricula(1);
 		u1.setPerfil(p1);
 		u1.setAtivo(SimNao.SIM);
 		em.persist(u1);
@@ -483,10 +488,85 @@ public class GeraDados {
 		u2.setNome("Wilson");
 		u2.setLogin("wilson");
 		u2.setSenha("123");
-		u1.setMatricula(2);
 		u2.setPerfil(p2);
 		u2.setAtivo(SimNao.SIM);
 		em.persist(u2);
+
+		TipoStatus ts1 = new TipoStatus();
+		ts1.setId(1L);
+		ts1.setDescricao("MESApontamento");
+		em.persist(ts1);
+
+		TipoStatus ts2 = new TipoStatus();
+		ts2.setId(2L);
+		ts2.setDescricao("MESOrdemProducao");
+		em.persist(ts1);
+
+		Status s1 = new Status();
+		s1.setId(1L);
+		s1.setDescricao("Aberto");
+		s1.setTipoStatus(ts1);
+		em.persist(s1);
+
+		Status s2 = new Status();
+		s2.setId(2L);
+		s2.setDescricao("Encerrado");
+		s2.setTipoStatus(ts1);
+		em.persist(s2);
+
+		Status s3 = new Status();
+		s3.setId(3L);
+		s3.setDescricao("Planejada");
+		s3.setTipoStatus(ts2);
+		em.persist(s3);
+
+		TipoApontamento ta1 = new TipoApontamento();
+		ta1.setId(0L);
+		ta1.setDescricao("Produção");
+		em.persist(ta1);
+
+		TipoApontamento ta2 = new TipoApontamento();
+		ta2.setId(1L);
+		ta2.setDescricao("Setup");
+		em.persist(ta2);
+
+		TipoApontamento ta3 = new TipoApontamento();
+		ta3.setId(2L);
+		ta3.setDescricao("Hora Indireta");
+		em.persist(ta3);
+
+		TipoCentroTrabalho tct1 = new TipoCentroTrabalho();
+		tct1.setId(0L);
+		tct1.setCodigo("Direto");
+		tct1.setDescricao("Direto");
+		em.persist(tct1);
+
+		TipoCentroTrabalho tct2 = new TipoCentroTrabalho();
+		tct2.setId(1L);
+		tct2.setCodigo("Indireto");
+		tct2.setDescricao("Indireto");
+		em.persist(tct2);
+
+		TipoCentroTrabalho tct3 = new TipoCentroTrabalho();
+		tct3.setId(2L);
+		tct3.setCodigo("Subcontratado");
+		tct3.setDescricao("Subcontratado");
+		em.persist(tct3);
+
+		Turno tu1 = new Turno();
+		tu1.setId(1L);
+		tu1.setCodigo("Comercial");
+		tu1.setDescricao("Comercial");
+		em.persist(tu1);
+
+		Funcionario f1 = new Funcionario();
+		f1.setId(1L);
+		f1.setCodigo("1");
+		f1.setNome("Wilson");
+		f1.setMail("wilsonbernache@pecsys.com");
+		f1.setUsuario(u1);
+		f1.setTurno(tu1);
+		em.persist(f1);
 
 		em.getTransaction().commit();
 		em.close();
