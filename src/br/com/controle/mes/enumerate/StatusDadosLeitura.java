@@ -2,7 +2,7 @@ package br.com.controle.mes.enumerate;
 
 public enum StatusDadosLeitura {
 
-	LIDA("Lida"), PROCESSADA("Processada"), ATUALIZADA("Atualizada"), ERRO(
+	LIDA("Lida"), ATUALIZADA("Atualizada"), PROCESSADA("Processada"), ERRO(
 			"Erro"), CANCELADA("Cancelada");
 
 	private final String descricao;
