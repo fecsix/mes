@@ -500,7 +500,7 @@ public class GeraDados {
 		TipoStatus ts2 = new TipoStatus();
 		ts2.setId(2L);
 		ts2.setDescricao("MESOrdemProducao");
-		em.persist(ts1);
+		em.persist(ts2);
 
 		Status s1 = new Status();
 		s1.setId(1L);
@@ -522,16 +522,19 @@ public class GeraDados {
 
 		TipoApontamento ta1 = new TipoApontamento();
 		ta1.setId(0L);
+		ta1.setCodigo("Produção");
 		ta1.setDescricao("Produção");
 		em.persist(ta1);
 
 		TipoApontamento ta2 = new TipoApontamento();
 		ta2.setId(1L);
+		ta2.setCodigo("Setup");
 		ta2.setDescricao("Setup");
 		em.persist(ta2);
 
 		TipoApontamento ta3 = new TipoApontamento();
 		ta3.setId(2L);
+		ta3.setCodigo("Hora Indireta");
 		ta3.setDescricao("Hora Indireta");
 		em.persist(ta3);
 
@@ -554,13 +557,11 @@ public class GeraDados {
 		em.persist(tct3);
 
 		Turno tu1 = new Turno();
-		tu1.setId(1L);
 		tu1.setCodigo("Comercial");
 		tu1.setDescricao("Comercial");
 		em.persist(tu1);
 
 		Funcionario f1 = new Funcionario();
-		f1.setId(1L);
 		f1.setCodigo("1");
 		f1.setNome("Wilson");
 		f1.setMail("wilsonbernache@pecsys.com");
