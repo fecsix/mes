@@ -12,6 +12,7 @@ import javax.inject.Named;
 
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.DadosLeituraDispositivoDAO;
 import br.com.controle.mes.dao.DispositivoDAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.enumerate.SimNao;
@@ -43,6 +44,9 @@ public class DadosLeituraDispositivoBean implements Serializable {
 
 	@Inject
 	private DAO<DadosLeituraDispositivo> dao;
+	
+	@Inject
+	private DadosLeituraDispositivoDAO dadosLeituraDAO;
 
 	@Inject
 	private DAO<Agendador> agendadaorDao;

@@ -6,7 +6,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import br.com.controle.mes.enumerate.StatusPlanoProducao;
 import br.com.controle.mes.model.Dispositivo;
@@ -33,13 +35,14 @@ public class PlanoProducaoDAO implements Serializable {
 	@SuppressWarnings("unchecked")
 	public List<PlanoProducao> listPlanoProducao(Dispositivo dispositivo,
 			StatusPlanoProducao status) {
-		CriteriaQuery<PlanoProducao> query = em.getCriteriaBuilder()
+		CriteriaBuilder builder = em.getCriteriaBuilder();
+		CriteriaQuery<PlanoProducao> query = builder
 				.createQuery(PlanoProducao.class);
-		query.where(em.getCriteriaBuilder()
-				.equal(query.from(PlanoProducao.class).get("dispositivo"),
-						dispositivo));
-		query.where(em.getCriteriaBuilder().equal(
-				query.from(PlanoProducao.class).get("status"), status));
+		Root<PlanoProducao> root = query.from(PlanoProducao.class);
+		query.select(root);
+		query.where(builder.and(
+				builder.equal(root.get("dispositivo"), dispositivo),
+				builder.equal(root.get("status"), status)));
 		return em.createQuery(query).getResultList();
 	}
 

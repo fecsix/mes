@@ -2,6 +2,7 @@ package br.com.controle.mes.bean;
 
 import br.com.controle.mes.dao.Auditavel;
 import br.com.controle.mes.dao.DAO;
+import br.com.controle.mes.dao.LogErroDadosLeituraDAO;
 import br.com.controle.mes.dao.Transactional;
 import br.com.controle.mes.enumerate.TipoErroDadosLeitura;
 import br.com.controle.mes.model.DadosLeituraDispositivo;
@@ -19,10 +20,14 @@ public class LogErroDadosLeituraBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private LogErroDadosLeitura logErroDadosLeitura = new LogErroDadosLeitura();
+	@Inject
+	private LogErroDadosLeitura logErroDadosLeitura;
 
 	@Inject
 	private DAO<LogErroDadosLeitura> dao;
+
+	@Inject
+	private LogErroDadosLeituraDAO logErroDadosLeituraDao;
 
 	public LogErroDadosLeitura getLogErroDadosLeitura() {
 		return logErroDadosLeitura;
@@ -56,10 +61,13 @@ public class LogErroDadosLeituraBean implements Serializable {
 
 	public void incluiLogErro(DadosLeituraDispositivo dadosLeitura,
 			TipoErroDadosLeitura tipoErro) {
-		logErroDadosLeitura.setDadosLeitura(dadosLeitura);
-		logErroDadosLeitura.setTipoErro(tipoErro);
-		logErroDadosLeitura.setMensagem(tipoErro.getDescricao());
-		this.gravar();
+		if (!(logErroDadosLeituraDao.listLogErroDadosLeitura(dadosLeitura,
+				tipoErro).size() > 0)) {
+			logErroDadosLeitura.setDadosLeitura(dadosLeitura);
+			logErroDadosLeitura.setTipoErro(tipoErro);
+			logErroDadosLeitura.setMensagem(tipoErro.getDescricao());
+			this.gravar();
+		}
 	}
 
 }
